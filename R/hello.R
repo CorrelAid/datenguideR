@@ -2,7 +2,7 @@
 #'
 #' @param x A number.
 #' @param y A number.
-#' @return The sum of \code{x} and \code{y}.
+#' @return The sum of `x` and `y`.
 #' @export
 #' @examples
 #' add(1, 1)

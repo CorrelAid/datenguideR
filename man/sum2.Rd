@@ -14,13 +14,13 @@ be removed?}
 }
 \value{
 If all inputs are integer and logical, then the output
-  will be an integer. If integer overflow
-  \url{http://en.wikipedia.org/wiki/Integer_overflow} occurs, the output
-  will be NA with a warning. Otherwise it will be a length-one numeric or
-  complex vector.
+will be an integer. If integer overflow
+\url{http://en.wikipedia.org/wiki/Integer_overflow} occurs, the output
+will be NA with a warning. Otherwise it will be a length-one numeric or
+complex vector.
 
-  Zero-length vectors have sum 0 by definition. See
-  \url{http://en.wikipedia.org/wiki/Empty_sum} for more details.
+Zero-length vectors have sum 0 by definition. See
+\url{http://en.wikipedia.org/wiki/Empty_sum} for more details.
 }
 \description{
 \code{sum2} returns the sum of all the values present in its arguments.
