@@ -91,10 +91,10 @@ get_results <- function(parties = c("SPD", "AFD", "DIELINKE")) {
 }
 
 
-get_results() %>% 
-  purrr::flatten()%>% 
-  purrr::flatten()%>% 
-  purrr::flatten() %>% as_tibble()
+# get_results() %>% 
+#   purrr::flatten()%>% 
+#   purrr::flatten()%>% 
+#   purrr::flatten() %>% as_tibble()
  
   
 
