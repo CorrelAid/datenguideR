@@ -1,7 +1,7 @@
 
 
 
-curl 'https://api-next.datengui.de/graphql' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Connection: keep-alive' -H 'DNT: 1' -H 'Origin: https://api-next.datengui.de' --data-binary '{"query":"# Write your query or mutation here\n{\n region(id: \"11\") {\n id\n name\n WAHL09(year: 2017, PART04: CDU) {\n year\n value\n PART04\n }\n }\n}"}' --compressed
+# curl 'https://api-next.datengui.de/graphql' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Connection: keep-alive' -H 'DNT: 1' -H 'Origin: https://api-next.datengui.de' --data-binary '{"query":"# Write your query or mutation here\n{\n region(id: \"11\") {\n id\n name\n WAHL09(year: 2017, PART04: CDU) {\n year\n value\n PART04\n }\n }\n}"}' --compressed
 
 
 httr::POST()
