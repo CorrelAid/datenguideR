@@ -119,22 +119,8 @@ query <- '{
   }'
   parze(cont(do_POST("https://api-next.datengui.de/graphql", query)))
 # }
-
-list(query = query) %>% jsonlite::toJSON(auto_unbox = T)
-
-
-do_POST <- function(url, query, ...){
-  temp <- httr::POST(
-    url,
-    body = list(query = query) ,
-    encode = "json",
-    httr::add_headers(.headers = c("Content-Type"="application/json")),
-    ...)
-  # httr::stop_for_status(temp)
-  temp
-}
-
-cont <- function(x) httr::content(x, as = 'text', encoding = "UTF-8")
-
-parze <- function(x) jsonlite::fromJSON(x)
-
+# 
+# cont <- function(x) httr::content(x, as = 'text', encoding = "UTF-8")
+# 
+# parze <- function(x) jsonlite::fromJSON(x)
+# 

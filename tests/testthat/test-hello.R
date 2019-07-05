@@ -9,11 +9,3 @@ test_that("supplying string should throw error", {
   )
   
 })
-
-test_that("result is more than 15", {
-  
-  result <- add(5, 5)
-  
-  expect_more_than(result, 15)
-  
-})
