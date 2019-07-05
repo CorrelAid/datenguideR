@@ -243,3 +243,19 @@ get_description <- function() {
 # pbody <- list(query = query, variables = query_variables)
 # # 
 # # list(query = query)
+
+
+### --- #### Create Sticker
+
+
+# library(hexSticker)
+# sticker(package="", p_size=8, subplot = 
+#         filename="datenguide.png")
+# 
+# urlname <- "https://www.miz-babelsberg.de/tl_files/miz/images/foerderung/medienprofis/2018-medienprofis%20-%20datenguide%20datenportal/miz-innovationsfoerderung2018-datenguide-datenportal_250x250.png"
+# 
+# sticker(urlname, package="", #p_size=8, s_x=1, s_y=.75, s_width=.6,
+#         filename="datenguideR_hexagon.png", dpi = 1000, h_color = "black", h_fill = "#eef8fb")
+# 
+# 
+# usethis::use_logo("datenguideR_hexagon.png")

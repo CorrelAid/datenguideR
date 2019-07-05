@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# datenguideR
+# datenguideR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
@@ -35,18 +35,18 @@ datenguideR::dg_descriptions %>%
   knitr::kable()
 ```
 
-| name    | description                                  |
-| :------ | :------------------------------------------- |
-| BEV085  | Zuzüge über die Kreisgrenzen                 |
-| FLC006  | Gebietsfläche                                |
-| PFL008  | Pflegedienste                                |
-| PEN099  | Pendlersaldo (über Kreisgrenze)              |
-| AI\_Z16 | Eigentümerquote                              |
-| PFL021  | Pflegegeldempfänger                          |
-| STEU09  | Gewerbesteuerumlage                          |
-| AI0706  | Anteil Erwerbstätige Dienstleistungsbereiche |
-| AI2104  | Empfänger Arbeitslosengeld II                |
-| AI\_Z19 | Durchschnittliche Wohnfläche je Wohnung      |
+| name   | description                                        |
+| :----- | :------------------------------------------------- |
+| AI0303 | Anteil betreute Kinder 3-5 Jahre in Tageseinricht. |
+| BEVZ21 | Bevölkerung in privaten Haushalten                 |
+| ERWN09 | Arbeitslosenquote bez. auf alle Erwerbspers.       |
+| name   | NA                                                 |
+| PFL023 | mit erheblich eingeschränkter Alltagskompetenz     |
+| PFL012 | Pflegebedürftige der Pflegeheime m.Kurzzeitpflege  |
+| UNT019 | Handwerksunternehmen                               |
+| AI0401 | Gewerbeanmeldungen je 10.000 Einwohner             |
+| AI0708 | Ant ET Finanz-, Vers., Unt-dl., Grundst-, Wohngsw. |
+| AI0809 | Anteil arbeitslose Ausländer an Arbeitslosen insg. |
 
 Pick a variable and put it into `dg_call`.
 
