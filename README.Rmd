@@ -11,6 +11,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+
 ```
 # datenguideR
 
@@ -18,6 +20,25 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/Projects)](https://cran.r-project.org/package=Projects)
 <!-- badges: end -->
+
+
+## Usage
+
+First, install package from GitHub:
+
+```{r}
+devtools::install_github("CorrelAid/datenguideR", ref = "dev")
+```
+
+
+Load package:
+
+```{r}
+library(peRspective)
+
+```
+
+```
 
 
 This is a:
