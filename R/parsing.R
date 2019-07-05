@@ -1,9 +1,4 @@
 
-dg_glue <- function(...) {
-  
-  glue::glue(..., .open = "<<", .close = ">>")
-  
-}
 
 
 vector_collapse <- function(vector) {
@@ -41,6 +36,7 @@ query_builder <- function(regions = "11",
     
   }
   
+  ## this needs to be reimplemented
   # if (all == T) {
   #   
   #   all <- ", filter: { PART04: { nin: []}}"
@@ -51,7 +47,7 @@ query_builder <- function(regions = "11",
   #    
   # }
   
-  
+   ## create query
    query <- glue::glue(
    'query ($region_id :String!,$includeSource : Boolean = false){
       region(id:$region_id) {
@@ -71,6 +67,7 @@ query_builder <- function(regions = "11",
       }
     }', .open = "<<", .close = ">>")
     
+    ## create variables
     query_variables <- glue::glue('{
                                      "region_id": "<<regions>>", 
                                      "includeSource": <<include_source>>
@@ -119,10 +116,15 @@ clean_it <- function(results) {
   return(tidy_dat)
 }
 
-
+#' Make a call to the Datenguide GraphQL API
+#' 
+#' Thins function will work with non-complex GraphQL API requests
+#' 
+#' @param region_id provide a valid region_id
+#' @param years provide the years you want to make your request for
 #' @export
-dg_call <- function(...) {
-  api_results <- get_results(...) %>% clean_it()
+dg_call <- function(region_id, years) {
+  api_results <- get_results(region_id = region_id, year = years) %>% clean_it()
   return(api_results)
 }
 

@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 First, install package from GitHub:
 
-```{r}
+```{r, eval = F}
 devtools::install_github("CorrelAid/datenguideR", ref = "dev")
 ```
 
@@ -34,15 +34,47 @@ devtools::install_github("CorrelAid/datenguideR", ref = "dev")
 Load package:
 
 ```{r}
-library(peRspective)
-
-```
-
+library(datenguideR)
 ```
 
 
-This is a:
+
+## Examples
+
+Show overview of all available variables:
+
+```{r}
+datenguideR::dg_descriptions %>%
+  dplyr::sample_n(10) %>% 
+  knitr::kable()
+```
+
+Pick a variable and put it into `dg_call`.
+
+For example:
+
++ *AI0202*: Bevölkerungsentwicklung im Jahr je 10.000 Einw.
+
+
+```{r}
+dg_call(variable = "AI0202", year = 1990:2018, regions = "11")
+```
+
+
+
+This is a
 
 ![](http://www.wipsociology.org/wp-content/uploads/2017/12/banner.png)
+
+But after 
+
+![](https://media1.tenor.com/images/72bf7922ac0b07b2f7f8f630e4ae01d2/tenor.gif?itemid=11364811)
+
+it's going to be 
+
+![](https://media.giphy.com/media/5fQyd7jM58m5y/giphy.gif)
+
+
+![](https://media.giphy.com/media/26n6xUPFFv1DtdO80/giphy.gif)
 
 
