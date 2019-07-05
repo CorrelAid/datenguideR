@@ -43,12 +43,13 @@ query_builder <- function(regions = "11",
   } else if (all == F) {
     
     all <- NULL
-    
+     
   }
   
   
-    query <- glue::glue('{
-      region(id: "<<regions>>") {
+query <- glue::glue(
+'query ($x :String!){
+      region(id:$x) {
         id
         name
         WAHL09(year: <<year>>, PART04: <<parties>>) {
@@ -65,10 +66,20 @@ query_builder <- function(regions = "11",
         }
       }
     }', .open = "<<", .close = ">>")
+    
+    query_variables <- glue::glue('{"x": "<<regions>>"}', .open = "<<", .close = ">>")
+    
+    
+    pbody <- list(query = query, variables = query_variables)
   
-    return(query)
+    return(pbody)
   
 }
+
+query_builder(year = 2017,
+              parties = parties)
+
+
 
 # query_builder(parties = "CDU")
 
@@ -76,8 +87,7 @@ query_builder <- function(regions = "11",
 get_results <- function(parties = c("SPD", "AFD", "DIELINKE")) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = list(query = query_builder(year = 2017,
-                                      parties = parties)),
+    body = query_builder(year = 2017, parties = parties),
     encode = "json",
     httr::add_headers(.headers = c("Content-Type"="application/json"))
   )
@@ -91,7 +101,7 @@ get_results <- function(parties = c("SPD", "AFD", "DIELINKE")) {
 }
 
 
-# get_results() %>% 
+get_results() #%>%
 #   purrr::flatten()%>% 
 #   purrr::flatten()%>% 
 #   purrr::flatten() %>% as_tibble()
@@ -100,3 +110,52 @@ get_results <- function(parties = c("SPD", "AFD", "DIELINKE")) {
 
 # query_builder(year = 2017,
               # parties = c("SPD", "AFD", "DIELINKE"))
+
+
+
+
+variable_and_inclusion_example ={
+  "query": """
+query foo ($x :String!,$includeSource : Boolean = false)       {
+  region(id:$x) {
+    id
+    name
+    	BEVMK3 {
+    value
+    year
+    source @include(if: $includeSource) {
+      name
+      url
+    }
+    }
+  }
+}
+"""
+  ,
+  "operationName": "foo",
+  "variables": { "x": "01" ,
+    "includeSource" : False}
+}
+
+
+# url <- "https://granddebat.fr/graphql/internal"
+# 
+query <- "query ($x :String!,$includeSource : Boolean = false)       {
+   region(id:$x) {
+     id
+     name
+     	BEVMK3 {
+     value
+     year
+     source @include(if: $includeSource) {
+       name
+       url
+     }
+     }
+   }
+}"
+
+query_variables <- '{"cursor": null,"count": 3000,"theme": null,"project": null,"userType": null,"search": null,"isFuture": null}'
+pbody <- list(query = query, variables = query_variables)
+# 
+# list(query = query)
