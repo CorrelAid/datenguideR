@@ -11,7 +11,7 @@
 #                      body = query,
 #                      httr::add_headers(.headers = c("Content-Type"="application/json")))
 # 
-# httr::content(result, "text") 
+# httr::content(result, "text")
 # 
 # httr::content_type(result)
 # 

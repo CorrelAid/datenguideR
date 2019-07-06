@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 First, install package from GitHub:
 
 ```{r, eval = F}
-devtools::install_github("CorrelAid/datenguideR", ref = "dev")
+devtools::install_github("CorrelAid/datenguideR")
 ```
 
 
