@@ -22,7 +22,7 @@ query_builder <- function(field, substat_name){
     a <- glue::glue('( <<a>> )', .open = "<<", .close = ">>")
   } 
   if (length(field$arguments) == 0) {
-      a <- NULL
+      a <- ''
     }
   
   # check for subfields
@@ -30,14 +30,12 @@ query_builder <- function(field, substat_name){
     query <- glue::glue('<<field$name>> <<a>> { }', .open = "<<", .close = ">>")
   } else {
     subfield <- field$subfield
-    glue::glue('<<field$name>>
-          <<a>>
-          {
-          <<glue::glue("<<purrr::map_chr(subfield, query_builder, substat_name = substat_name)>>", .open = "<<", .close = ">>")>>
-          }', .open = "<<", .close = ">>")
+    query <- glue::glue('<<field$name>> <<a>> {<<glue::glue("<<purrr::map_chr(subfield, query_builder, substat_name = substat_name)>>", .open = "<<", .close = ">>")>>}',
+                        .open = "<<", .close = ">>")
   }
 
- }
+  }
+
 }
 
 #*******************
@@ -61,6 +59,7 @@ stat_name <- 'BAU001'
 substat_name <- 'BAUNW2'
 parameter <- 'BAUNW101'
 year <- 2002
+
 
 substat <- list('name' = substat_name,
                 'value' = parameter,
@@ -93,14 +92,14 @@ region <- list('name' = 'region',
                'subfield' = list(stat),
                'type' = 'Region')
 
+query_region <- list('name' = 'region', # how to preserve blank space?
+                     'value' = list(),
+                     'arguments' = list(),
+                     'subfield' = list(region),
+                     'type' = 'Region')
 
-
-query <- query_builder(field = region, substat_name = 'BAUNW2')
-# region id not quoted....
 
 ####################
-
-
 
 
 allRegions <- list('name' = 'allRegions',
@@ -114,5 +113,43 @@ regions <- list('name' = 'regions',
                 'subfield' = )
 
 #######################################################################
+
+query_builderfin <- function(field, substat_name) {
+  query <- query_builder(field = field, substat_name = substat_name)
+  query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
+}
+
+
+#' @export
+get_results <- function(field, substat_name...) {
+  result <- httr::POST(
+    url = "https://api-next.datengui.de/graphql",
+    body = query_builderfin(field = field, substat_name = substat_name),
+    #body = query_fin,
+    encode = "json",
+    httr::add_headers(.headers = c("Content-Type"="application/json"))
+  )
+  
+  
+  ## Stop if Error
+  httr::stop_for_status(result)
+  
+  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
+    jsonlite::fromJSON()  
+}
+
+res <- get_results(field = query_region, substat_name = 'BAUNW2')
+qu <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
+
+#' @export
+clean_it <- function(results) {
+  tidy_dat <- results %>%
+    purrr::flatten() %>%
+    purrr::flatten() %>%
+    purrr::flatten() %>% 
+    tibble::as_tibble() 
+  
+  return(tidy_dat)
+}
 
 
