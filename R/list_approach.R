@@ -42,7 +42,7 @@ query_builder <- function(field, substat_name){
 
 paste_nv <- function(field){
   if(field$type == 'String'){
-    value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>")
+    value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>") # backslashes rausnehmen?!
     glue::glue('<<field[["name"]]>> : <<value>>', .sep = ' ', .open = "<<", .close = ">>")
   } else {
     glue::glue('<<field[["name"]]>> : <<field[["value"]]>>', .sep = ' ', .open = "<<", .close = ">>")
@@ -117,11 +117,13 @@ regions <- list('name' = 'regions',
 query_builderfin <- function(field, substat_name) {
   query <- query_builder(field = field, substat_name = substat_name)
   query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
+  cat(query_fin)
 }
-
+query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
+cat(query)
 
 #' @export
-get_results <- function(field, substat_name...) {
+get_results <- function(field, substat_name, ...) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
     body = query_builderfin(field = field, substat_name = substat_name),
