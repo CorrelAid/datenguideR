@@ -117,7 +117,6 @@ regions <- list('name' = 'regions',
 query_builderfin <- function(field, substat_name) {
   query <- query_builder(field = field, substat_name = substat_name)
   query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
-  cat(query_fin)
 }
 query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
 cat(query)
