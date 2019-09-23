@@ -5,7 +5,7 @@ library(tidyverse)
 query_builder <- function(field, substat_name){
   
   if(field$name == substat_name){ # stop recursive function on substat-level
-    glue::glue('year, <<substat_name>>', .open = "<<", .close = ">>") # preliminary
+    glue::glue('year, <<substat_name>> : value', .open = "<<", .close = ">>") 
   } else {
   
   # check for field arguments
@@ -116,8 +116,9 @@ regions <- list('name' = 'regions',
 
 query_builderfin <- function(field, substat_name) {
   query <- query_builder(field = field, substat_name = substat_name)
-  query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
+  query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>") # add 'query' at the beginning
 }
+
 query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
 cat(query)
 
@@ -140,7 +141,7 @@ get_results <- function(field, substat_name, ...) {
 }
 
 res <- get_results(field = query_region, substat_name = 'BAUNW2')
-qu <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
+
 
 #' @export
 clean_it <- function(results) {
