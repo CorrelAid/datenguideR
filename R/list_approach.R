@@ -30,7 +30,9 @@ query_builder <- function(field, substat_name){
     query <- glue::glue('<<field$name>> <<a>> { }', .open = "<<", .close = ">>")
   } else {
     subfield <- field$subfield
-    query <- glue::glue('<<field$name>> <<a>> {<<glue::glue("<<purrr::map_chr(subfield, query_builder, substat_name = substat_name)>>", .open = "<<", .close = ">>")>>}',
+    query <- glue::glue('<<field$name>> <<a>> {<<insert_regname(field)>>
+                        <<glue::glue("<<purrr::map_chr(subfield, query_builder, substat_name = substat_name)>>",
+                        .open = "<<", .close = ">>")>>}',
                         .open = "<<", .close = ">>")
   }
 
@@ -49,6 +51,15 @@ paste_nv <- function(field){
   }
 }
 
+# insert 'id, name,' after region to ensure that region id and name are always returned
+insert_regname <- function(field){
+  if(field$type == 'Region'){
+    b <- glue::glue('id, name,', .sep = ' ', .open = "<<", .close = ">>")
+  } else {
+    b <- ''
+  }
+  return(b)
+}
 
 
 
@@ -92,11 +103,11 @@ region <- list('name' = 'region',
                'subfield' = list(stat),
                'type' = 'Region')
 
-query_region <- list('name' = 'region', # how to preserve blank space?
+query_region <- list('name' = 'region',
                      'value' = list(),
                      'arguments' = list(),
                      'subfield' = list(region),
-                     'type' = 'Region')
+                     'type' = 'query') # not sure if this is an official type of the API, but I used it to avoid conflicts with list region
 
 
 ####################
