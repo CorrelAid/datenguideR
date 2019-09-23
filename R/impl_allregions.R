@@ -53,7 +53,7 @@ query_builder <- function(field, substat_name){
       a <- lapply(field[['arguments']], paste_nv) %>%
         unlist(.) %>%
         paste0(., collapse = ', ')
-      if (!(a == '')) { # make sure that no brackets appear if no argument has a given value
+      if (!(a == '')) {
         a <- glue::glue('( <<a>> )', .open = "<<", .close = ">>")
       } else {
         a <- ''
@@ -62,7 +62,7 @@ query_builder <- function(field, substat_name){
     if (length(field$arguments) == 1) {
       a <- field[['arguments']][[1]] %>%
         paste_nv(.) 
-      if (!(a == '')) { # make sure that no brackets appear if the argument has no given value
+      if (!(a == '')) {
         a <- glue::glue('( <<a>> )', .open = "<<", .close = ">>")
       } else {
         a <- ''
@@ -81,11 +81,11 @@ query_builder <- function(field, substat_name){
                           <<glue::glue("<<purrr::map_chr(subfield, query_builder, substat_name = substat_name)>>",
                           .open = "<<", .close = ">>")>>}',
                           .open = "<<", .close = ">>")
-    }
-    
   }
-  
+    
 }
+  
+  }
 
 #*******************
 
@@ -95,13 +95,21 @@ query_builderfin <- function(field, substat_name) {
 }
 #*******************
 
-# erstmal ohne allRegions
+# region_id <- '11'
+# stat_name <- 'BAU001'
+# substat_name <- 'BAUNW2'
+# parameter <- 'BAUNW101'
+# year <- 2002
 
-region_id <- '11'
-stat_name <- 'BAU001'
-substat_name <- 'BAUNW2'
-parameter <- 'BAUNW101'
-year <- 2002
+pagenr <- NULL
+ipp <- 50
+nutsnr <- 1
+launr <- NULL
+parentchr <- NULL
+stat_name <- 'BETR08'
+substat_name <- 'TIERA8'
+parameter <- 'TIERART3'
+year <- 2007
 
 
 substat <- list('name' = substat_name,
@@ -121,60 +129,78 @@ stat <- list('name' = stat_name,
              'arguments' = list(year, substat),
              'subfield'= list(substat),
              'type' = stat_name)
-
-id <-list('name' = 'id',
-          'value' = region_id,
-          'arguments' = list(),
-          'subfield'= list(),
-          'type' = 'String')
-
-
-region <- list('name' = 'region',
-               'value' = list(),
-               'arguments' = list(id),
-               'subfield' = list(stat),
-               'type' = 'Region')
-
-query_region <- list('name' = 'region',
-                     'value' = list(),
-                     'arguments' = list(),
-                     'subfield' = list(region),
-                     'type' = 'query') # not sure if this is an official type of the API, but I used it to avoid conflicts with list region
-
-#######################################################################
-query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
-query
-
-#' @export
-get_results <- function(field, substat_name, ...) {
-  result <- httr::POST(
-    url = "https://api-next.datengui.de/graphql",
-    body = query_builderfin(field = field, substat_name = substat_name),
-    #body = query_fin,
-    encode = "json",
-    httr::add_headers(.headers = c("Content-Type"="application/json"))
-  )
-  
-  
-  ## Stop if Error
-  httr::stop_for_status(result)
-  
-  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
-    jsonlite::fromJSON()  
-}
-
-res <- get_results(field = query_region, substat_name = 'BAUNW2')
+# 
+# id <-list('name' = 'id',
+#           'value' = region_id,
+#           'arguments' = list(),
+#           'subfield'= list(),
+#           'type' = 'String')
 
 
-#' @export
-clean_it <- function(results) {
-  tidy_dat <- results %>%
-    purrr::flatten() %>%
-    purrr::flatten() %>%
-    purrr::flatten() %>% 
-    tibble::as_tibble() 
-  
-  return(tidy_dat)
-}
+# region <- list('name' = 'region',
+#                'value' = list(),
+#                'arguments' = list(id),
+#                'subfield' = list(stat),
+#                'type' = 'Region')
+# 
+# query_region <- list('name' = 'region',
+#                      'value' = list(),
+#                      'arguments' = list(),
+#                      'subfield' = list(region),
+#                      'type' = 'query') # not sure if this is an official type of the API, but I used it to avoid conflicts with list region
 
 
+####################
+
+
+page <- list('name' = 'page',
+             'value' = pagenr, # if not given graphql default is 0
+             'arguments' = list(),
+             'subfield' = list(),
+             'type' = 'Int')
+
+itemsPerPage <- list('name' = 'itemsPerPage',
+             'value' = ipp, # if not given graphql default is 10
+             'arguments' = list(),
+             'subfield' = list(),
+             'type' = 'Int')
+
+nuts <- list('name' = 'nuts',
+             'value' = nutsnr,
+             'arguments' = list(),
+             'subfield' = list(),
+             'type' = 'Int')
+
+lau <- list('name' = 'lau',
+             'value' = launr,
+             'arguments' = list(),
+             'subfield' = list(),
+             'type' = 'Int')
+
+parent <- list('name' = 'parent',
+                'value' = parentchr,
+                'arguments' = list(),
+                'subfield' = list(),
+                'type' = 'String')
+
+
+regions <- list('name' = 'regions',
+                'value' = list(),
+                'arguments' = list(nuts, lau, parent), # make sure that name only appears if value is not NUll
+                'subfield' = list(stat),
+                'type' = 'Region')
+
+allRegions <- list('name' = 'allRegions',
+                   'value' = list(),
+                   'arguments' = list(page, itemsPerPage), 
+                   'subfield' = list(regions),
+                   'type' = 'RegionsResult')
+
+query_allRegions <- list('name' = 'allRegions',
+                         'value' = list(),
+                         'arguments' = list(),
+                         'subfield' = list(allRegions),
+                         'type' = 'query')
+
+queryall <- query_builderfin(field = query_allRegions, substat_name = "TIERA8")
+queryall
