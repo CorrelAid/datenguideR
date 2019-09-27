@@ -54,11 +54,11 @@ paste_nv <- function(field){
 
 # erstmal ohne allRegions
 
-#region_id <- '11'
-#stat_name <- 'BAU001'
-#substat_name <- 'BAUNW2'
-#parameter <- 'BAUNW101'
-#year <- 2002
+region_id <- '11'
+stat_name <- 'BAU001'
+substat_name <- 'BAUNW2'
+parameter <- 'BAUNW101'
+year <- 2002
 
 
 substat <- list('name' = substat_name,
