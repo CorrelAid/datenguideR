@@ -75,17 +75,3 @@ dg_call(variable = "AI0202", year = 1990:2018, regions = "11")
 #> 12 11    Berlin  2014  139. 
 #> 13 11    Berlin  2015  144.
 ```
-
-This is a
-
-![](http://www.wipsociology.org/wp-content/uploads/2017/12/banner.png)
-
-But after
-
-![](https://media1.tenor.com/images/72bf7922ac0b07b2f7f8f630e4ae01d2/tenor.gif?itemid=11364811)
-
-it’s going to be
-
-![](https://media.giphy.com/media/5fQyd7jM58m5y/giphy.gif)
-
-![](https://media.giphy.com/media/26n6xUPFFv1DtdO80/giphy.gif)
