@@ -125,7 +125,6 @@ get_results <- function(field, substat_name, ...) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
     body = list('query' = query_builderfin(field = field, substat_name = substat_name)),
-    #body = query_fin,
     encode = "json",
     httr::add_headers(.headers = c("Content-Type"="application/json"))
   )
@@ -134,7 +133,7 @@ get_results <- function(field, substat_name, ...) {
   ## Stop if Error
   httr::stop_for_status(result)
   
-httr::content(result, as = 'text', encoding = "UTF-8") %>% 
+  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
     jsonlite::fromJSON()  
 
 }
