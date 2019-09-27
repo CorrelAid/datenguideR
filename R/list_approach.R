@@ -119,13 +119,12 @@ query_builderfin <- function(field, substat_name) {
   query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
 }
 query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
-cat(query)
 
 #' @export
 get_results <- function(field, substat_name, ...) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = query_builderfin(field = field, substat_name = substat_name),
+    body = list('query' = query_builderfin(field = field, substat_name = substat_name)),
     #body = query_fin,
     encode = "json",
     httr::add_headers(.headers = c("Content-Type"="application/json"))
@@ -135,12 +134,13 @@ get_results <- function(field, substat_name, ...) {
   ## Stop if Error
   httr::stop_for_status(result)
   
-  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
+httr::content(result, as = 'text', encoding = "UTF-8") %>% 
     jsonlite::fromJSON()  
+
 }
 
 res <- get_results(field = query_region, substat_name = 'BAUNW2')
-qu <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
+#qu <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
 
 #' @export
 clean_it <- function(results) {
@@ -153,4 +153,5 @@ clean_it <- function(results) {
   return(tidy_dat)
 }
 
+test_df <- clean_it(res)
 
