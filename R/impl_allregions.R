@@ -202,5 +202,43 @@ query_allRegions <- list('name' = 'allRegions',
                          'subfield' = list(allRegions),
                          'type' = 'query')
 
-queryall <- query_builderfin(field = query_allRegions, substat_name = "TIERA8")
-queryall
+query_all <- query_builderfin(field = query_allRegions, substat_name = "TIERA8")
+query_all
+
+
+
+#' @export
+get_results <- function(field, substat_name, ...) {
+  result <- httr::POST(
+    url = "https://api-next.datengui.de/graphql",
+    body = list('query' = query_all),
+    encode = "json",
+    httr::add_headers(.headers = c("Content-Type"="application/json"))
+  )
+  
+  
+  ## Stop if Error
+  httr::stop_for_status(result)
+  
+  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
+    jsonlite::fromJSON()  
+  
+}
+
+res <- get_results(field = query_allRegions, substat_name = "TIERA8")
+
+#' @export
+clean_it <- function(results) {
+  tidy_dat <- results %>%
+    purrr::flatten() %>%
+    purrr::flatten() %>%
+    purrr::flatten() %>% 
+    tibble::as_tibble() 
+  
+  return(tidy_dat)
+}
+
+test_all_df <- clean_it(res)
+
+
+## TODO: Variablen und Formatierung in test_all_df anpassen.

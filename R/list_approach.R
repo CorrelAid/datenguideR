@@ -153,4 +153,3 @@ clean_it <- function(results) {
 }
 
 test_df <- clean_it(res)
-
