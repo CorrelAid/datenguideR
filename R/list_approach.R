@@ -1,3 +1,5 @@
+#### This code builds and executes the query ####
+
 library(tidyverse)
 
 #*******************
@@ -5,7 +7,7 @@ library(tidyverse)
 query_builder <- function(field, substat_name){
   
   if(field$name == substat_name){ # stop recursive function on substat-level
-    glue::glue('year, <<substat_name>>', .open = "<<", .close = ">>") # preliminary
+    glue::glue('year, <<substat_name>>', .open = "<<", .close = ">>")
   } else {
   
   # check for field arguments
@@ -50,15 +52,13 @@ paste_nv <- function(field){
 }
 
 
-
-
 # erstmal ohne allRegions
 
-region_id <- '11'
-stat_name <- 'BAU001'
-substat_name <- 'BAUNW2'
-parameter <- 'BAUNW101'
-year <- 2002
+#region_id <- '11'
+#stat_name <- 'BAU001'
+#substat_name <- 'BAUNW2'
+#parameter <- 'BAUNW101'
+#year <- 2002
 
 
 substat <- list('name' = substat_name,
@@ -99,38 +99,24 @@ query_region <- list('name' = 'region', # how to preserve blank space?
                      'type' = 'Region')
 
 
-####################
-
-
-allRegions <- list('name' = 'allRegions',
-                   'arguments' = list(page, itemsPerPage),
-                   'subfield' = list(regions))
-
-regions <- list('name' = 'regions',
-                'nuts' = ,
-                'lau' = ,
-                'parent' = ,
-                'subfield' = )
 
 #######################################################################
 
-query_builderfin <- function(field, substat_name) {
+query_builder_final <- function(field, substat_name) {
   query <- query_builder(field = field, substat_name = substat_name)
-  query_fin <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
+  query_final <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
 }
-query <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
 
 #' @export
 get_results <- function(field, substat_name, ...) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = list('query' = query_builderfin(field = field, substat_name = substat_name)),
+    body = list('query' = query_builder_final(field = field, substat_name = substat_name)),
     encode = "json",
     httr::add_headers(.headers = c("Content-Type"="application/json"))
   )
   
-  
-  ## Stop if Error
+  ## Stop if error
   httr::stop_for_status(result)
   
   httr::content(result, as = 'text', encoding = "UTF-8") %>% 
@@ -138,10 +124,8 @@ get_results <- function(field, substat_name, ...) {
 
 }
 
-res <- get_results(field = query_region, substat_name = 'BAUNW2')
-#qu <- query_builderfin(field = query_region, substat_name = 'BAUNW2')
 
-#' @export
+# Clean results
 clean_it <- function(results) {
   tidy_dat <- results %>%
     purrr::flatten() %>%
@@ -152,4 +136,11 @@ clean_it <- function(results) {
   return(tidy_dat)
 }
 
-test_df <- clean_it(res)
+# Make a call to the Datenguide GraphQL API
+dg_call <- function(field, substat_name) {
+  api_results <- get_results(field = query_region, substat_name = substat_name) %>% clean_it()
+  return(api_results)
+}
+
+# Test call
+result_df <- dg_call(field = query_region, substat_name = 'BAUNW2')
