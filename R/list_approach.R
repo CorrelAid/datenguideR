@@ -157,7 +157,7 @@ clean_it <- function(results) {
 
 ## Call to the Datenguide GraphQL API
 
-dg_call <- function(field, substat_name, year) {
+dg_call <- function(field, substat_name) {
   api_results <- get_results(field = query_region, substat_name = substat_name) %>% 
     clean_it()
   return(api_results)
