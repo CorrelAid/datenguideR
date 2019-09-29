@@ -14,6 +14,7 @@ paste_nv <- function(field){
   }
 }
 
+
 query_builder <- function(field, substat_name){
   
   if(field$name == substat_name){ # stop recursive function on substat-level
@@ -52,50 +53,49 @@ query_builder <- function(field, substat_name){
 
 
 # Test values (without allRegions)
-#region_id <- '11'
-#stat_name <- 'BAU001'
-#substat_name <- 'BAUNW2'
-#parameter <- 'BAUNW101'
-#year <- 2002
+region_id <- '11'
+stat_name <- 'BAU001'
+substat_name <- 'BAUNW2'
+parameter <- 'BAUNW101'
+year <- 2002
 
-dg_values <- function(region_id, stat_name, substat_name, parameter, year) {
-  values <- tibble(
-    region_id = region_id, 
-    stat_name = stat_name, 
-    substat_name = substat_name, 
-    parameter = parameter, 
-    year = year)
-  return(values)
-}
+#dg_values <- function(region_id, stat_name, substat_name, parameter, year) {
+#  values <- tibble(
+#    region_id = region_id, 
+#    stat_name = stat_name, 
+#    substat_name = substat_name, 
+#    parameter = parameter, 
+#    year = year)
+#  return(values)
+#}
 
 # Test values
-query_input <- dg_values('11', 'BAU001', 'BAUNW2', 'BAUNW101', '2002') 
+#query_input <- dg_values('11', 'BAU001', 'BAUNW2', 'BAUNW101', '2002') 
 
 
-substat <- list('name' = query_input$substat_name,
+substat <- list('name' = substat_name,
                 'value' = parameter,
                 'arguments' = list(),
                 'subfield'= list(),
-                'type' = query_input$substat_name)
+                'type' = substat_name)
 
 year <- list('name' = 'year',
-             'value' = query_input$year,
+             'value' = year,
              'arguments' = list(),
              'subfield'= list(),
              'type' = 'Int')
 
-stat <- list('name' = query_input$stat_name, 
+stat <- list('name' = stat_name, 
              'value' = list(),
              'arguments' = list(year, substat),
              'subfield'= list(substat),
-             'type' = query_input$stat_name)
+             'type' = stat_name)
 
 id <- list('name' = 'id',
-           'value' = query_input$region_id,
+           'value' = region_id,
            'arguments' = list(),
            'subfield'= list(),
            'type' = 'String')
-
 
 region <- list('name' = 'region',
                'value' = list(),
@@ -130,7 +130,7 @@ get_results <- function(field, substat_name, ...) {
   # stop if error
   httr::stop_for_status(result)
   
-  httr::content(result, as = 'text', encoding = "UTF-8") %>% 
+  httr::content(result, as = "text", encoding = "UTF-8") %>% 
     jsonlite::fromJSON()  
 
 }
