@@ -2,7 +2,17 @@
 
 library(tidyverse)
 
-#*******************
+
+## Query builder
+
+paste_nv <- function(field){
+  if(field$type == 'String'){
+    value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>") # backslashes rausnehmen?!
+    glue::glue('<<field[["name"]]>> : <<value>>', .sep = ' ', .open = "<<", .close = ">>")
+  } else {
+    glue::glue('<<field[["name"]]>> : <<field[["value"]]>>', .sep = ' ', .open = "<<", .close = ">>")
+  }
+}
 
 query_builder <- function(field, substat_name){
   
@@ -40,50 +50,58 @@ query_builder <- function(field, substat_name){
 
 }
 
-#*******************
 
-paste_nv <- function(field){
-  if(field$type == 'String'){
-    value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>") # backslashes rausnehmen?!
-    glue::glue('<<field[["name"]]>> : <<value>>', .sep = ' ', .open = "<<", .close = ">>")
-  } else {
-    glue::glue('<<field[["name"]]>> : <<field[["value"]]>>', .sep = ' ', .open = "<<", .close = ">>")
-  }
+query_values <- function(region_id, stat_name, substat_name, parameter, year) {
+  region_id <- region_id
+  stat_name <- stat_name
+  substat_name <- 
+  return(api_results)
 }
 
+# Test values (without allRegions)
+#region_id <- '11'
+#stat_name <- 'BAU001'
+#substat_name <- 'BAUNW2'
+#parameter <- 'BAUNW101'
+#year <- 2002
 
-# erstmal ohne allRegions
+dg_values <- function(region_id, stat_name, substat_name, parameter, year) {
+  values <- tibble(
+    region_id = region_id, 
+    stat_name = stat_name, 
+    substat_name = substat_name, 
+    parameter = parameter, 
+    year = year)
+  return(values)
+}
 
-region_id <- '11'
-stat_name <- 'BAU001'
-substat_name <- 'BAUNW2'
-parameter <- 'BAUNW101'
-year <- 2002
+# Test values
+query_input <- dg_values('11', 'BAU001', 'BAUNW2', 'BAUNW101', '2002') 
 
 
-substat <- list('name' = substat_name,
+substat <- list('name' = query_input$substat_name,
                 'value' = parameter,
                 'arguments' = list(),
                 'subfield'= list(),
-                'type' = substat_name)
+                'type' = query_input$substat_name)
 
 year <- list('name' = 'year',
-             'value' = year,
+             'value' = query_input$year,
              'arguments' = list(),
              'subfield'= list(),
              'type' = 'Int')
 
-stat <- list('name' = stat_name, 
+stat <- list('name' = query_input$stat_name, 
              'value' = list(),
              'arguments' = list(year, substat),
              'subfield'= list(substat),
-             'type' = stat_name)
+             'type' = query_input$stat_name)
 
-id <-list('name' = 'id',
-          'value' = region_id,
-          'arguments' = list(),
-          'subfield'= list(),
-          'type' = 'String')
+id <- list('name' = 'id',
+           'value' = query_input$region_id,
+           'arguments' = list(),
+           'subfield'= list(),
+           'type' = 'String')
 
 
 region <- list('name' = 'region',
@@ -99,13 +117,13 @@ query_region <- list('name' = 'region', # how to preserve blank space?
                      'type' = 'Region')
 
 
-
-#######################################################################
-
 query_builder_final <- function(field, substat_name) {
   query <- query_builder(field = field, substat_name = substat_name)
   query_final <- glue::glue('query <<query>>', .open = "<<", .close = ">>")
 }
+
+
+## Get results
 
 #' @export
 get_results <- function(field, substat_name, ...) {
@@ -116,7 +134,7 @@ get_results <- function(field, substat_name, ...) {
     httr::add_headers(.headers = c("Content-Type"="application/json"))
   )
   
-  ## Stop if error
+  # stop if error
   httr::stop_for_status(result)
   
   httr::content(result, as = 'text', encoding = "UTF-8") %>% 
@@ -125,22 +143,27 @@ get_results <- function(field, substat_name, ...) {
 }
 
 
-# Clean results
+## Clean results
+
 clean_it <- function(results) {
   tidy_dat <- results %>%
     purrr::flatten() %>%
     purrr::flatten() %>%
     purrr::flatten() %>% 
     tibble::as_tibble() 
-  
   return(tidy_dat)
 }
 
-# Make a call to the Datenguide GraphQL API
-dg_call <- function(field, substat_name) {
-  api_results <- get_results(field = query_region, substat_name = substat_name) %>% clean_it()
+
+## Call to the Datenguide GraphQL API
+
+dg_call <- function(field, substat_name, year) {
+  api_results <- get_results(field = query_region, substat_name = substat_name) %>% 
+    clean_it()
   return(api_results)
 }
 
-# Test call
+
+## Test call
+
 result_df <- dg_call(field = query_region, substat_name = 'BAUNW2')
