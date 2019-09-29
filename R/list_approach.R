@@ -51,13 +51,6 @@ query_builder <- function(field, substat_name){
 }
 
 
-query_values <- function(region_id, stat_name, substat_name, parameter, year) {
-  region_id <- region_id
-  stat_name <- stat_name
-  substat_name <- 
-  return(api_results)
-}
-
 # Test values (without allRegions)
 #region_id <- '11'
 #stat_name <- 'BAU001'
