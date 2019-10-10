@@ -32,16 +32,16 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
   #*********************
   # region and general fields
   substat <- list('name' = substat_name,
-                  'value' = parameter,
+                  'value' = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
                   'arguments' = list(),
                   'subfield'= list(),
                   'type' = substat_name)
   
   years <- list('name' = 'year',
-               'value' = year,
-               'arguments' = list(),
-               'subfield'= list(),
-               'type' = 'Int')
+                'value' = ifelse(length(year) == 1, year, vector_collapse(year)),
+                'arguments' = list(),
+                'subfield'= list(),
+                'type' = 'Int')
   
   stat <- list('name' = stat_name, 
                'value' = list(),
@@ -49,7 +49,7 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
                'subfield'= list(substat),
                'type' = stat_name)
   
-  id <-list('name' = 'id',
+  id <- list('name' = 'id',
             'value' = region_id,
             'arguments' = list(),
             'subfield'= list(),
@@ -133,4 +133,5 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
 
 ## Test call
 
-results <- dg_call()
+results <- dg_call(region_id = "11", year = c(2001, 2007), parameter = c("TIERART2", "TIERART3"))
+## TODO: Mehrere Regionen implementieren, Parameter als Name ausgeben lassen.

@@ -4,6 +4,14 @@ library(tidyverse)
 
 #*******************
 
+vector_collapse <- function(vector) {
+  vector %>% 
+    paste0(collapse = ", ") %>% 
+    paste0("[", ., "]")
+}
+
+#*******************
+
 paste_nv <- function(field){
   if(!is.null(field$value)){
     if(field$type == 'String'){
