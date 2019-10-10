@@ -25,18 +25,18 @@ get_results <- function(field, substat_name) {
 
 #' @export
 dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat_name = 'TIERA8', 
-                        parameter = 'TIERART3', pagenr = NULL, ipp = NULL, nutsnr = NULL,
+                        parameter = NULL, pagenr = NULL, ipp = NULL, nutsnr = NULL,
                         launr = NULL, parentchr = NULL) {
   #**************************************************
   # define fields
   #*********************
   # region and general fields
-  substat <- list('name' = substat_name,
-                  'value' = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
-                  'arguments' = list(),
-                  'subfield'= list(),
+  substat <- list('name' = substat_name, 
+                  'value' = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)), 
+                  'arguments' = list(), 
+                  'subfield'= list(), 
                   'type' = substat_name)
-  
+
   years <- list('name' = 'year',
                 'value' = ifelse(length(year) == 1, year, vector_collapse(year)),
                 'arguments' = list(),
@@ -45,8 +45,8 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
   
   stat <- list('name' = stat_name, 
                'value' = list(),
-               'arguments' = list(years, substat),
-               'subfield'= list(substat),
+               'arguments' = list(years, substat), 
+               'subfield'= list(substat),          
                'type' = stat_name)
   
   id <- list('name' = 'id',
@@ -133,5 +133,10 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
 
 ## Test call
 
-results <- dg_call(region_id = "11", year = c(2001, 2007), parameter = c("TIERART2", "TIERART3"))
-## TODO: Mehrere Regionen implementieren, Parameter als Name ausgeben lassen.
+# Ohne Parameter (d.h. alle)
+results <- dg_call(region_id = "11", year = c(2001, 2007))
+
+# Mit Parameter (default == NULL)
+results <- dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', parameter = c("TIERART2", "TIERART3"))
+
+## TODO: Mehrere Regionen implementieren, Parametername als zusätzliche Variable ausgeben lassen.
