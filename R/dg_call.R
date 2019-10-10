@@ -1,4 +1,5 @@
-#### This code returns the api request results  ####
+#### This code returns the API request results  ####
+
 library(tidyverse)
 
 ## Clean results
