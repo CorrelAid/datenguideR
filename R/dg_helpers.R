@@ -1,3 +1,5 @@
+#### This code contains helper functions ####
+
 library(tidyverse)
 
 #*******************
