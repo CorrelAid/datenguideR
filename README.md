@@ -35,43 +35,34 @@ datenguideR::dg_descriptions %>%
   knitr::kable()
 ```
 
-| name   | description                                        |
-| :----- | :------------------------------------------------- |
-| AI0303 | Anteil betreute Kinder 3-5 Jahre in Tageseinricht. |
-| BEVZ21 | Bevölkerung in privaten Haushalten                 |
-| ERWN09 | Arbeitslosenquote bez. auf alle Erwerbspers.       |
-| name   | NA                                                 |
-| PFL023 | mit erheblich eingeschränkter Alltagskompetenz     |
-| PFL012 | Pflegebedürftige der Pflegeheime m.Kurzzeitpflege  |
-| UNT019 | Handwerksunternehmen                               |
-| AI0401 | Gewerbeanmeldungen je 10.000 Einwohner             |
-| AI0708 | Ant ET Finanz-, Vers., Unt-dl., Grundst-, Wohngsw. |
-| AI0809 | Anteil arbeitslose Ausländer an Arbeitslosen insg. |
+|name   |description                                        |
+|:------|:--------------------------------------------------|
+|AI0209 |Lebendgeborene je 10.000 Einwohner                 |
+|ERWN10 |Arbeitslosenquote bez. auf abhäng. Erwerbsp.       |
+|AI_Z06 |Anteil Personen mit MHG 20 bis 59 Jahre            |
+|ERW006 |Arbeitslose                                        |
+|PFL004 |Personal der Pflegeheime                           |
+|RME009 |Räume in Wohnungen mit 7 oder mehr Räumen          |
+|WAS005 |Einw. m. Anschl. an d. öffentl. Wasserversorgung   |
+|ARBST2 |geleistete Arbeiterstunden                         |
+|AI0304 |Anteil Schulabgänger mit allgem. Hochschulreife    |
+|EKM014 |verfüg. Einkommen der priv. Haushalte je Einwohner |
 
 Pick a statistic and put it into `dg_call`.
 
 For example:
 
-  - *AI0202*: Bevölkerungsentwicklung im Jahr je 10.000 Einw.
+  - *BETR08*: Landwirtschaftliche Betriebe mit Tierhaltung
 
 <!-- end list -->
 
 ``` r
-dg_call(stat_name = "AI0202", year = 1990:2018, region_id = "11")
-#> # A tibble: 13 x 4
-#>    id    name    year AI0202
-#>    <chr> <chr>  <int>  <dbl>
-#>  1 11    Berlin  1995    0  
-#>  2 11    Berlin  2000    0  
-#>  3 11    Berlin  2005    0  
-#>  4 11    Berlin  2006   26  
-#>  5 11    Berlin  2007   35.9
-#>  6 11    Berlin  2008   45  
-#>  7 11    Berlin  2009   32  
-#>  8 11    Berlin  2010   52.4
-#>  9 11    Berlin  2011    0  
-#> 10 11    Berlin  2012  147. 
-#> 11 11    Berlin  2013  137. 
-#> 12 11    Berlin  2014  139. 
-#> 13 11    Berlin  2015  144.
+dg_call(region_id = "11", year = c(2001, 2007), stat_name = 'BETR08', substat_name = 'TIERA8', parameter = c("TIERART2", "TIERART3"))
+# A tibble: 4 x 4
+  id    name    year TIERA8
+  <chr> <chr>  <int>  <int>
+1 11    Berlin  2001      8
+2 11    Berlin  2001      7
+3 11    Berlin  2007     11
+4 11    Berlin  2007      5
 ```
