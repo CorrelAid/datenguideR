@@ -27,7 +27,7 @@ library(datenguideR)
 
 ## Examples
 
-Show overview of all available variables:
+Show overview of all available statistics:
 
 ``` r
 datenguideR::dg_descriptions %>%
@@ -48,7 +48,7 @@ datenguideR::dg_descriptions %>%
 | AI0708 | Ant ET Finanz-, Vers., Unt-dl., Grundst-, Wohngsw. |
 | AI0809 | Anteil arbeitslose Ausländer an Arbeitslosen insg. |
 
-Pick a variable and put it into `dg_call`.
+Pick a statistic and put it into `dg_call`.
 
 For example:
 
@@ -57,7 +57,7 @@ For example:
 <!-- end list -->
 
 ``` r
-dg_call(variable = "AI0202", year = 1990:2018, regions = "11")
+dg_call(stat_name = "AI0202", year = 1990:2018, region_id = "11")
 #> # A tibble: 13 x 4
 #>    id    name    year AI0202
 #>    <chr> <chr>  <int>  <dbl>
