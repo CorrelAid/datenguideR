@@ -12,6 +12,10 @@ vector_collapse <- function(vector) {
 
 #*******************
 
+is_not_null <- function(x) !is.null(x)
+
+#*******************
+
 paste_nv <- function(field){
   if(!is.null(field$value)){
     if(field$type == 'String'){

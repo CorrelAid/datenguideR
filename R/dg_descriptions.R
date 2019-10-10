@@ -31,6 +31,9 @@ get_description <- function() {
 dg_descriptions <- get_description() %>% 
   mutate(description = str_extract(description, '\\*\\*([^*]*)\\*\\*') %>% 
            str_remove_all("\\*")) %>%
-  tail(-2)
+  tail(-2) %>%
+  # rename_all combined with recode works as "if var exists, then rename" function
+  rename_all(recode, name = "stat_name")
+
 
 usethis::use_data(dg_descriptions, overwrite = T)
