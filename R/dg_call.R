@@ -132,19 +132,3 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
 ## Test call
 
 results <- dg_call()
-
-
-# Bin mir nicht sicher wofür das genutzt werden sollt (Lisa?):
-
-#dg_values <- function(region_id, stat_name, substat_name, parameter, year) {
-#  values <- tibble(
-#    region_id = region_id, 
-#    stat_name = stat_name, 
-#    substat_name = substat_name, 
-#    parameter = parameter, 
-#    year = year)
-#  return(values)
-#}
-
-# Test values
-#query_input <- dg_values('11', 'BAU001', 'BAUNW2', 'BAUNW101', '2002') 
