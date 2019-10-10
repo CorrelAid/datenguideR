@@ -117,7 +117,8 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
                            'type' = 'query')
   
   #**************************************************
-  if(!is.null(region_id)){ #  condition is probably not sufficient (throw error if region ids are not given for neither region nor allregions query)
+  
+  if(!is.null(region_id)){ # condition is probably not sufficient (throw error if region ids are not given for neither region nor allregions query)
     field <- query_region
   } else {
     field <- query_allRegions
@@ -128,7 +129,7 @@ dg_call <- function(region_id = '03', stat_name = 'BETR08', year = 2007, substat
   return(api_results)
 }
 
-
+#**************************************************
 
 ## Test call
 
