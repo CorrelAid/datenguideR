@@ -1,4 +1,4 @@
-## This code gets all variable descriptions ####
+#### This code gets all variable descriptions ####
 
 #' @export
 get_description <- function() {
