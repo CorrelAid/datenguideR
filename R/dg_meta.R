@@ -57,7 +57,7 @@ dg_meta <- get_meta() %>%
   rename_all(recode, name = "stat_name", description = "stat_description") %>%
   unnest(args) %>%
   filter(name != "year", name != "statistics", name != "filter") %>%
-  mutate(substat_description = dg_meta$type$ofType$description) %>%
+  mutate(substat_description = type$ofType$description) %>%
   rename(substat_name = "name") %>%
   select(-type)
 
