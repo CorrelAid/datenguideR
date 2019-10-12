@@ -1,36 +1,28 @@
-#### This code gets all descriptions on statistics and sub-statistics ####
+#### This code gets all descriptions on statistics, sub-statistics, and parameters ####
 
 #' @export
 get_meta <- function() {
   meta_query <-
     '{ __type(name: "Region") {
-  kind
-  enumValues {
-    name
-    description
-  }
   fields {
     name
-    type {
-      ofType {
-        name
-      }
-      kind
-      name
-      description
-    }
     description
     args {
       name
       type {
+        name
         ofType {
+          name
           description
+          enumValues {
+            name
+            description
+          }
         }
       }
     }
   }
-}
-}'
+}}'
   
   meta_results <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
@@ -47,8 +39,7 @@ get_meta <- function() {
   
 }
 
-# *Functional* way to get (sub)stat_name and (sub)stat_description...
-## TODO: Add information on parameters!
+# Functional way to get (sub)stat_name,(sub)stat_description, and parameters
 dg_meta <- get_meta() %>%
   select(name, description, args) %>%
   mutate(description = str_extract(description, '\\*\\*([^*]*)\\*\\*') %>% 
@@ -59,7 +50,8 @@ dg_meta <- get_meta() %>%
   filter(name != "year", name != "statistics", name != "filter") %>%
   mutate(substat_description = type$ofType$description) %>%
   rename(substat_name = "name") %>%
+  mutate(parameters = type$ofType$enumValues) %>%
   select(-type)
 
 
-#usethis::use_data(dg_meta, overwrite = T)
+usethis::use_data(dg_meta, overwrite = T)
