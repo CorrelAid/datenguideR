@@ -1,4 +1,4 @@
-#### This code gets all descriptions on statistics, sub-statistics, and parameters ####
+#### This code gets all meta data on statistics, sub-statistics, and parameters ####
 
 #' @export
 get_meta <- function() {
@@ -42,6 +42,7 @@ get_meta <- function() {
 # Functional way to get (sub)stat_name,(sub)stat_description, and parameters
 dg_meta <- get_meta() %>%
   select(name, description, args) %>%
+  mutate(stat_description_full = description) %>%
   mutate(description = str_extract(description, '\\*\\*([^*]*)\\*\\*') %>% 
            str_remove_all("\\*")) %>%
   tail(-2) %>%
@@ -50,8 +51,9 @@ dg_meta <- get_meta() %>%
   filter(name != "year", name != "statistics", name != "filter") %>%
   mutate(substat_description = type$ofType$description) %>%
   rename(substat_name = "name") %>%
-  mutate(parameters = type$ofType$enumValues) %>%
-  select(-type)
+  mutate(parameter = type$ofType$enumValues) %>%
+  select(stat_name, stat_description, stat_description_full, substat_name, substat_description,
+         parameter)
 
 
 usethis::use_data(dg_meta, overwrite = T)
