@@ -1,4 +1,4 @@
-#### This code gets (almost) all meta data ####
+#### This code gets all descriptions on statistics and sub-statistics ####
 
 #' @export
 get_meta <- function() {
@@ -47,19 +47,19 @@ get_meta <- function() {
   
 }
 
-# *Functional* way to get substat_name and description...
-## TODO: substat description is still in a weird format -> fix and rename!
+# *Functional* way to get (sub)stat_name and (sub)stat_description...
+## TODO: Add information on parameters!
 dg_meta <- get_meta() %>%
   select(name, description, args) %>%
   mutate(description = str_extract(description, '\\*\\*([^*]*)\\*\\*') %>% 
            str_remove_all("\\*")) %>%
   tail(-2) %>%
-  rename_all(recode, name = "stat_name") %>%
-  mutate(args_full = map(args, ~ data.frame((.)))) %>%
-  unnest(args_full) %>%
-  select(-args) %>%
+  rename_all(recode, name = "stat_name", description = "stat_description") %>%
+  unnest(args) %>%
   filter(name != "year", name != "statistics", name != "filter") %>%
-  rename(substat_name = "name")
-  
+  mutate(substat_description = dg_meta$type$ofType$description) %>%
+  rename(substat_name = "name") %>%
+  select(-type)
+
 
 #usethis::use_data(dg_meta, overwrite = T)
