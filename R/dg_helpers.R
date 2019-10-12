@@ -19,7 +19,7 @@ is_not_null <- function(x) !is.null(x)
 paste_nv <- function(field){
   if(!is.null(field$value)){
     if(field$type == 'String'){
-      value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>") # backslashes rausnehmen?!
+      value <- glue::glue('"<<field$value>>"', .sep = ' ', .open = "<<", .close = ">>")
       nv <- glue::glue('<<field[["name"]]>> : <<value>>', .sep = ' ', .open = "<<", .close = ">>")
     } else {
       nv <- glue::glue('<<field[["name"]]>> : <<field[["value"]]>>', .sep = ' ', .open = "<<", .close = ">>")
@@ -53,6 +53,7 @@ insert_pagenr <- function(field){
   }
   return(b)
 }
+
 #*******************
 
 clean_it <- function(results) {
