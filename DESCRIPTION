@@ -1,13 +1,22 @@
 Package: datenguideR
-Title: What the Package Does (One Line, Title Case)
+Title: Access and Download German Regional Statistics from the Datenguide Project
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
+Authors@R: c(
+    person(given = "Lisa",
+           family = "Hehnke",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "lisa.hehnke@googlemail.com"),
+    person(given = "Fabio",
+           family = "Votta",
+           role = c("aut", "cre"),
+           email = "fabio.votta@gmail.com"),
+    person(given = "Veronika",
+           family = "Grupp",
+           role = c("aut", "cre"),
+           email = "vroni.grupp@web.de"))
+Description: Access and download German regional statistics from Datenguide <http://datengui.de>. 
+    datenguideR provides a wrapper for their GraphQL API and also includes metadata for
+    all available statistics and regions.
 License: GPL-3
 Suggests: 
     testthat (>= 2.1.0)
