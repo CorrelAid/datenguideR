@@ -8,11 +8,11 @@ Authors@R: c(
            email = "lisa.hehnke@googlemail.com"),
     person(given = "Fabio",
            family = "Votta",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "fabio.votta@gmail.com"),
     person(given = "Veronika",
            family = "Grupp",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "vroni.grupp@web.de"))
 Description: Access and download German regional statistics from Datenguide <http://datengui.de>. 
     datenguideR provides a wrapper for their GraphQL API and also includes metadata for
