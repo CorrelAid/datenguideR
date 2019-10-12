@@ -45,8 +45,7 @@ dg_meta <- get_meta() %>%
   select(name, description, args) %>%
   mutate(stat_description_full = description %>% 
            str_trim()) %>%
-  mutate(description = str_extract(description, '\\*\\*([^*]*)\\*\\*') %>% 
-           str_remove_all("\\*")) %>%
+  mutate(description = str_extract(description, '(?<=\\*\\*)[^*]*(?=\\*\\*)')) %>%
   tail(-2) %>%
   rename_all(recode, name = "stat_name", description = "stat_description") %>%
   unnest(args) %>%
