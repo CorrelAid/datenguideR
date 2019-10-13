@@ -13,11 +13,16 @@ Authors@R: c(
     person(given = "Veronika",
            family = "Grupp",
            role = c("aut"),
-           email = "vroni.grupp@web.de"))
+           email = "vroni.grupp@web.de"),
+    person(given = "Konrad",
+           family = "Wölms",
+           role = c("ctb"),
+           email = "konrad.woelms@gmail.com"))
 Description: Access and download German regional statistics from Datenguide <http://datengui.de>. 
     datenguideR provides a wrapper for their GraphQL API and also includes metadata for
     all available statistics and regions.
 License: GPL-3
+Depends: R (>= 2.10)
 Suggests: 
     testthat (>= 2.1.0)
 Encoding: UTF-8
@@ -25,7 +30,17 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports:
+    dplyr,
     glue,
     httr,
+    jsonlite,
     magrittr,
-    tidyverse
+    purrr,
+    readr,
+    rlang,
+    stringr,
+    tibble,
+    tidyr,
+    usethis,
+    utils
+    
