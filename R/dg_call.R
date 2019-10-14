@@ -29,13 +29,23 @@ get_results <- function(field, substat_name) {
 }
 
 #' @export
-dg_call <- function(region_id = "03", stat_name = "BETR08", year = 2007, substat_name = "TIERA8",
-                    parameter = NULL, pagenr = NULL, ipp = NULL, nutsnr = NULL,
-                    launr = NULL, parentchr = NULL) {
+dg_call <- function(region_id = "03", 
+                    stat_name = "BETR08", 
+                    year = 2007, 
+                    substat_name = "TIERA8",
+                    parameter = NULL, 
+                    pagenr = NULL, 
+                    ipp = NULL, 
+                    nutsnr = NULL,
+                    launr = NULL, 
+                    parentchr = NULL) {
   #**************************************************
   # define fields
   #*********************
   # region and general fields
+  
+  
+  
   substat <- list(
     "name" = substat_name,
     "value" = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),

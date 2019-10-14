@@ -60,7 +60,8 @@ For example:
 
 
 ```{r}
-dg_call(variable = "AI0202", year = 1990:2018, regions = "11")
+dg_call()
+dg_call(region_id = "03", "UMS011")
 ```
 
 

@@ -13,6 +13,7 @@
 #' @export
 
 query_builder_pre <- function(field, substat_name) {
+  substat_name <- "TIERA8"
   if (field$name == substat_name) { # stop recursive function on substat-level
     glue::glue("year, <<substat_name>> : value", .open = "<<", .close = ">>")
   } else {
@@ -46,11 +47,21 @@ query_builder_pre <- function(field, substat_name) {
       query <- glue::glue("<<field$name>> <<a>> { }", .open = "<<", .close = ">>")
     } else {
       subfield <- field$subfield
-      query <- glue::glue('<<field$name>> <<a>> {<<insert_regname(field)>> <<insert_pagenr(field)>>
-                          <<glue::glue("<<purrr::map_chr(subfield, query_builder_pre, substat_name = substat_name)>>",
-                          .open = "<<", .close = ">>")>>}',
-        .open = "<<", .close = ">>"
+      
+
+      
+      field_name <- field$name
+      reg_name <- insert_regname(field)
+      page_nr <- insert_pagenr(field)
+      recursive_part <- purrr::map_chr(subfield, query_builder_pre, substat_name = substat_name)
+      
+      
+      query <- glue::glue('<<field_name>> <<a>> {<<reg_name>> <<page_nr>>
+                          <<recursive_part>>}',
+                          .open = "<<", .close = ">>"
       )
+      
+      
     }
   }
 }
