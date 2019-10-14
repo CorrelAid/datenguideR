@@ -52,11 +52,17 @@ insert_pagenr <- function(field) {
 
 ## -----##
 
-clean_it <- function(results) {
-  tidy_dat <- results %>%
+clean_it <- function(.data) {
+  raw <- .data %>%
     purrr::flatten() %>%
     purrr::flatten() %>%
     purrr::flatten() %>%
     tibble::as_tibble()
+  
+  tidy_dat <- raw %>% 
+    purrr::discard(is.list) %>%
+    ##TODO: Rename name in source sub dataset because there is already a "name" variable in main
+    dplyr::bind_cols(raw$source)
+  
   return(tidy_dat)
 }

@@ -13,9 +13,9 @@
 #' @export
 
 query_builder_pre <- function(field, substat_name) {
-  substat_name <- "TIERA8"
+  # substat_name <- "TIERA8"
   if (field$name == substat_name) { # stop recursive function on substat-level
-    glue::glue("year, <<substat_name>> : value", .open = "<<", .close = ">>")
+    glue::glue("year, <<substat_name>> : value source { title_de name }", .open = "<<", .close = ">>")
   } else {
 
     # check for field arguments
@@ -55,6 +55,7 @@ query_builder_pre <- function(field, substat_name) {
       page_nr <- insert_pagenr(field)
       recursive_part <- purrr::map_chr(subfield, query_builder_pre, substat_name = substat_name)
       
+      # ww <- query_builder_pre(subfield[[1]], substat_name)
       
       query <- glue::glue('<<field_name>> <<a>> {<<reg_name>> <<page_nr>>
                           <<recursive_part>>}',

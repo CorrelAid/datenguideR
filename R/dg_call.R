@@ -24,8 +24,10 @@ get_results <- function(field, substat_name) {
   # stop if error
   httr::stop_for_status(result)
 
-  httr::content(result, as = "text", encoding = "UTF-8") %>%
+  final <- httr::content(result, as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
+  
+  return(final)
 }
 
 #' @export

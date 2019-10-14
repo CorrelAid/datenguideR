@@ -61,7 +61,7 @@ For example:
 
 ```{r}
 dg_call()
-dg_call(region_id = "03", "UMS011")
+# dg_call(region_id = "03", "UMS011")
 ```
 
 
