@@ -85,7 +85,11 @@ Pick a statistic and put it into `dg_call`.
 
 For example:
 
-  - *BETR08*: Landwirtschaftliche Betriebe mit Tierhaltung
+  - **Statistik:** BETR08 *(Landwirtschaftliche Betriebe mit Tierhaltung)*
+  - **Substatistik:** TIERA8 *(Landwirtschaftliche Betriebe mit Viehhaltung)*
+  - **Parameter:** 
+    - TIERART2 *(Rinder)*
+    - TIERART3 *(Schweine)*
 
 <!-- end list -->
 
