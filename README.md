@@ -81,7 +81,7 @@ datenguideR::dg_descriptions %>%
 |AI0304 |Anteil Schulabgänger mit allgem. Hochschulreife    |
 |EKM014 |verfüg. Einkommen der priv. Haushalte je Einwohner |
 
-Pick a statistic and put it into `dg_call`.
+Pick a statistic and put it into `dg_call` (infos can be retrieved from `dg_meta`).
 
 For example:
 
