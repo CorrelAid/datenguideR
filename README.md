@@ -27,6 +27,33 @@ library(datenguideR)
 
 ## Examples
 
+Get IDs of all available NUTS-1 regions:
+
+``` r
+datenguideR::dg_regions %>%
+  dplyr::filter(level == "nuts1") %>%
+  knitr::kable()
+```
+
+| id|name                   |level |parent |
+|--:|:----------------------|:-----|:------|
+| 10|Saarland               |nuts1 |DG     |
+| 11|Berlin                 |nuts1 |DG     |
+| 12|Brandenburg            |nuts1 |DG     |
+| 13|Mecklenburg-Vorpommern |nuts1 |DG     |
+| 14|Sachsen                |nuts1 |DG     |
+| 15|Sachsen-Anhalt         |nuts1 |DG     |
+| 16|Thüringen              |nuts1 |DG     |
+|  1|Schleswig-Holstein     |nuts1 |DG     |
+|  2|Hamburg                |nuts1 |DG     |
+|  3|Niedersachsen          |nuts1 |DG     |
+|  4|Bremen                 |nuts1 |DG     |
+|  5|Nordrhein-Westfalen    |nuts1 |DG     |
+|  6|Hessen                 |nuts1 |DG     |
+|  7|Rheinland-Pfalz        |nuts1 |DG     |
+|  8|Baden-Württemberg      |nuts1 |DG     |
+|  9|Bayern                 |nuts1 |DG     |
+
 Show overview of all available statistics:
 
 ``` r
