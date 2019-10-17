@@ -54,7 +54,13 @@ datenguideR::dg_regions %>%
 |  8|Baden-Württemberg      |nuts1 |DG     |
 |  9|Bayern                 |nuts1 |DG     |
 
-Show overview of all available statistics:
+Get all available meta data on statistics, substatistics, and parameters:
+
+``` r
+datenguideR::dg_meta
+```
+
+Alternatively, you can get a more condensed overview of all available statistics:
 
 ``` r
 datenguideR::dg_descriptions %>%
