@@ -1,11 +1,14 @@
 #' dg_regions.R
 #'
 #' Imports information on all regions.
+#' 
+#' @param var Character string naming variable for filtering. Can be either id, name, level or parent.
+#' @param val Character string naming the value for filtering.
 #'
 #' @return Data frame containing information on all regions
 #'
 #' @examples
-#' dg_regions <- get_region()
+#' dg_regions <- get_region(var = level, val = "nuts1")
 #' dg_regions
 #'
 #' @export

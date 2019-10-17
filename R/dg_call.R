@@ -36,11 +36,11 @@ dg_call <- function(region_id = "03",
                     year = 2007, 
                     substat_name = "TIERA8",
                     parameter = NULL, 
-                    pagenr = NULL, 
+                    page_nr = NULL, 
                     ipp = NULL, 
-                    nutsnr = NULL,
-                    launr = NULL, 
-                    parentchr = NULL) {
+                    nuts_nr = NULL,
+                    lau_nr = NULL, 
+                    parent_chr = NULL) {
   #**************************************************
   # define fields
   #*********************
@@ -99,7 +99,7 @@ dg_call <- function(region_id = "03",
   # allRegions fields
   page <- list(
     "name" = "page",
-    "value" = pagenr, # if not given graphql default is 0
+    "value" = page_nr, # if not given graphql default is 0
     "arguments" = list(),
     "subfield" = list(),
     "type" = "Int"
@@ -115,7 +115,7 @@ dg_call <- function(region_id = "03",
 
   nuts <- list(
     "name" = "nuts",
-    "value" = nutsnr,
+    "value" = nuts_nr,
     "arguments" = list(),
     "subfield" = list(),
     "type" = "Int"
@@ -123,7 +123,7 @@ dg_call <- function(region_id = "03",
 
   lau <- list(
     "name" = "lau",
-    "value" = launr,
+    "value" = lau_nr,
     "arguments" = list(),
     "subfield" = list(),
     "type" = "Int"
@@ -131,7 +131,7 @@ dg_call <- function(region_id = "03",
 
   parent <- list(
     "name" = "parent",
-    "value" = parentchr,
+    "value" = parent_chr,
     "arguments" = list(),
     "subfield" = list(),
     "type" = "String"

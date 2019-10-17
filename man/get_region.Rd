@@ -6,6 +6,11 @@
 \usage{
 get_region(var = NULL, val = NULL)
 }
+\arguments{
+\item{var}{Character string naming variable for filtering. Can be either id, name, level or parent.}
+
+\item{val}{Character string naming the value for filtering.}
+}
 \value{
 Data frame containing information on all regions
 }
@@ -13,7 +18,7 @@ Data frame containing information on all regions
 Imports information on all regions.
 }
 \examples{
-dg_regions <- get_region()
+dg_regions <- get_region(var = level, val = "nuts1")
 dg_regions
 
 }
