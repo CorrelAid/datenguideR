@@ -62,7 +62,9 @@ clean_it <- function(.data) {
   tidy_dat <- raw %>% 
     purrr::discard(is.list) %>%
     ##TODO: Rename name in source sub dataset because there is already a "name" variable in main
-    dplyr::bind_cols(raw$source)
-  
+    ##NOTE Lisa: Those two vars should not be overall source, but rather source for e.g. different params in TIERA8!
+    dplyr::bind_cols(raw$source) %>%
+    dplyr::rename(GENESIS_stat_name = "title_de", GENESIS_stat_nr = "name1")
+    
   return(tidy_dat)
 }
