@@ -206,7 +206,7 @@ dg_call <- function(region_id = "11",
   if (!is.null(parameter)) {
     stat_name_ <- stat_name
     
-    meta_info <- dg_meta %>%  
+    meta_info <- dg_descriptions %>%  
       dplyr::filter(stat_name == stat_name_) %>% 
       dplyr::filter(param_name %in% parameter)
     
