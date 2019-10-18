@@ -47,7 +47,7 @@ get_results <- function(field, substat_name) {
 #' @examples
 #' dg_call(region_id = "11", 
 #'    year = c(2001, 2007), 
-#'    stat_name = "TIERA8",
+#'    stat_name = "BETR08",
 #'    substat_name = 'TIERA8', 
 #'    parameter = c("TIERART2", "TIERART3"))
 #'
