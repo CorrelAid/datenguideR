@@ -77,9 +77,15 @@ For example:
     
     
 ```{r}
+
+
 dg_call(region_id = "11", 
-        year = c(2001, 2007), 
+        year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
-        parameter = c("TIERART2", "TIERART3"))
+        parameter = c("TIERART2", "TIERART3")) 
+
 ```
+
+
+

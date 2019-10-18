@@ -185,5 +185,41 @@ dg_call <- function(region_id = "03",
 
   api_results <- get_results(field = field, substat_name = substat_name) %>%
     clean_it()
+  
+  ## This is an if statement that handles when we need to get more info on a substat and its parameters
+  ## TODO: is this the right condition to trigger getting subinfos??
+  if (!is.null(parameter)) {
+    stat_name_ <- stat_name
+    
+    meta_info <- dg_meta %>%  
+      dplyr::filter(stat_name == stat_name_) %>% 
+      dplyr::filter(param_name %in% parameter)
+    
+    # n_year <- api_results %>% distinct(year) %>% nrow
+    
+    api_results <- api_results %>% 
+      dplyr::group_by(year) %>% 
+      dplyr::mutate(param_name = meta_info$param_name) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::left_join(meta_info, by = "param_name") %>% 
+      dplyr::select(-substat_name) %>% 
+      tidyr::pivot_wider(names_from = param_name,
+                  values_from = substat_name, 
+                  id_cols = year) %>% 
+      ## TODO: pivoting removed all previous variables so binding them again
+      ## may not be the most elegant solution
+      cbind(meta_info %>% 
+                  dplyr::slice(1) %>%
+                  dplyr::select(-param_name, -param_description)) %>% 
+      cbind(api_results %>%
+                  dplyr::slice(1) %>% 
+                  dplyr::select(GENESIS_source, GENESIS_source_nr)) %>% 
+      tibble::as_tibble()
+  }
+  
+
+  
+
+  
   return(api_results)
 }
