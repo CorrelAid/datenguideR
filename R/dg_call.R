@@ -45,8 +45,11 @@ get_results <- function(field, substat_name) {
 #' @return Data frame containing the requested data
 #'
 #' @examples
-#' dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', 
-#' parameter = c("TIERART2", "TIERART3"))
+#' dg_call(region_id = "11", 
+#'    year = c(2001, 2007), 
+#'    stat_name = "TIERA8",
+#'    substat_name = 'TIERA8', 
+#'    parameter = c("TIERART2", "TIERART3"))
 #'
 #' @export
 dg_call <- function(region_id = "11", 
@@ -209,8 +212,6 @@ dg_call <- function(region_id = "11",
     meta_info <- dg_descriptions %>%  
       dplyr::filter(stat_name == stat_name_) %>% 
       dplyr::filter(param_name %in% parameter)
-    
-    # n_year <- api_results %>% distinct(year) %>% nrow
     
     api_results <- api_results %>% 
       dplyr::group_by(year) %>% 

@@ -58,7 +58,7 @@ Get all available meta data on statistics, substatistics, and
 parameters:
 
 ``` r
-datenguideR::dg_meta 
+datenguideR::dg_descriptions
 #> # A tibble: 3,419 x 7
 #>    stat_name stat_description stat_descriptio… substat_name
 #>    <chr>     <chr>            <chr>            <chr>       
@@ -76,32 +76,26 @@ datenguideR::dg_meta
 #> #   param_name <chr>, param_description <chr>
 ```
 
-Alternatively, you can get a more condensed overview of all available
-statistics:
-
-``` r
-datenguideR::dg_descriptions %>%
-  dplyr::sample_n(10) %>% 
-  knitr::kable()
-```
-
-| stat\_name | description                                      |
-| :--------- | :----------------------------------------------- |
-| STENW5     | Gewerbesteuereinnahmen (Aufkommen abzgl. Umlage) |
-| AI\_Z15    | Wohnungen je Wohngebäude                         |
-| ETG009     | Pachtentgelt je ha                               |
-| AI0606     | Wahlbeteiligung, Europawahl                      |
-| AI1902     | Haus- und Sperrmüll                              |
-| WAS004     | Wassergewinnung                                  |
-| AUSNW4     | Nettoausgaben der Gemeinden                      |
-| VER009     | Getötete Personen                                |
-| AEW008     | Entsorgungs- und Behandlungsanlagen              |
-| UMSN3      | Auslandsumsatz                                   |
-
 Pick a statistic and put it into `dg_call()` (infos can be retrieved
-from `dg_meta`).
+from `dg_descriptions`).
 
 For example:
+
+  - **Statistic** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+
+<!-- end list -->
+
+``` r
+dg_call(region_id = "11",
+        year = 2002,
+        stat_name = 'AI0506')
+#> # A tibble: 1 x 6
+#>   id    name    year AI0506 GENESIS_source            GENESIS_source_nr
+#>   <chr> <chr>  <int>  <dbl> <chr>                     <chr>            
+#> 1 11    Berlin  2002   77.6 Regionalatlas Deutschland 99910
+```
+
+A slightly more complex call with substatistics:
 
   - **Statistic:** BETR08 *(Landwirtschaftliche Betriebe mit
     Tierhaltung)*
@@ -121,12 +115,12 @@ dg_call(region_id = "11",
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
         parameter = c("TIERART2", "TIERART3")) 
-#> # A tibble: 3 x 10
-#>    year TIERART2 TIERART3 stat_name stat_description stat_descriptio…
-#>   <int>    <int>    <int> <chr>     <chr>            <chr>           
-#> 1  2001        8        7 BETR08    Landwirtschaftl… "**Landwirtscha…
-#> 2  2003        9        7 BETR08    Landwirtschaftl… "**Landwirtscha…
-#> 3  2007       11        5 BETR08    Landwirtschaftl… "**Landwirtscha…
-#> # … with 4 more variables: substat_name <chr>, substat_description <chr>,
+#> # A tibble: 3 x 9
+#>    year TIERART2 TIERART3 stat_name stat_description substat_name
+#>   <int>    <int>    <int> <chr>     <chr>            <chr>       
+#> 1  2001        8        7 BETR08    Landwirtschaftl… TIERA8      
+#> 2  2003        9        7 BETR08    Landwirtschaftl… TIERA8      
+#> 3  2007       11        5 BETR08    Landwirtschaftl… TIERA8      
+#> # … with 3 more variables: substat_description <chr>,
 #> #   GENESIS_source <chr>, GENESIS_source_nr <chr>
 ```

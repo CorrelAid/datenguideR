@@ -55,19 +55,15 @@ datenguideR::dg_regions %>%
 Get all available meta data on statistics, substatistics, and parameters:
 
 ```{r}
-datenguideR::dg_meta 
+datenguideR::dg_descriptions
 ```
 
-Alternatively, you can get a more condensed overview of all available statistics:
-
-```{r}
-datenguideR::dg_descriptions %>%
-  dplyr::sample_n(10) %>% 
-  knitr::kable()
-```
+Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_descriptions`).
 
 
-Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_meta`).
+For example:
+
+ - **Statistic** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
 
 ```{r}
 dg_call(region_id = "11",
@@ -75,7 +71,7 @@ dg_call(region_id = "11",
         stat_name = 'AI0506')
 ```
 
-For example:
+A slightly more complex call with substatistics:
 
   - **Statistic:** BETR08 *(Landwirtschaftliche Betriebe mit Tierhaltung)*
   - **Substatistic:** TIERA8 *(Landwirtschaftliche Betriebe mit Viehhaltung)*
@@ -91,8 +87,7 @@ dg_call(region_id = "11",
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
-        parameter = c("TIERART2", "TIERART3")) %>% View()
-
+        parameter = c("TIERART2", "TIERART3")) 
 
 
 ```

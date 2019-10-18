@@ -4,7 +4,7 @@
 \alias{dg_call}
 \title{dg_call.R}
 \usage{
-dg_call(region_id = "03", stat_name = "BETR08", year = 2007,
+dg_call(region_id = "11", stat_name = "AI0506", year = 2002,
   substat_name = NULL, parameter = NULL, page_nr = NULL,
   ipp = NULL, nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL,
   full_descriptions = FALSE)
@@ -39,7 +39,10 @@ Data frame containing the requested data
 Makes a call to the Datenguide GraphQL API and returns the results.
 }
 \examples{
-dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', 
-parameter = c("TIERART2", "TIERART3"))
+dg_call(region_id = "11", 
+   year = c(2001, 2007), 
+   stat_name = "TIERA8",
+   substat_name = 'TIERA8', 
+   parameter = c("TIERART2", "TIERART3"))
 
 }
