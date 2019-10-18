@@ -2,7 +2,8 @@
 #'
 #' Imports information on all regions.
 #' 
-#' @param var Character string naming variable for filtering. Can be either id, name, level or parent.
+#' @param var Character string naming variable for filtering. 
+#' Can be either id, name, level or parent.
 #' @param val Character string naming the value for filtering.
 #'
 #' @return Data frame containing information on all regions
@@ -20,7 +21,7 @@ get_region <- function(var = NULL, val = NULL) {
     var <- rlang::parse_expr(rlang::quo_name(rlang::enquo(var)))
 
     df <- readr::read_csv(system.file("extdata", "regions.csv", package = "datenguideR")) %>%
-      filter(!!var == val)
+      dplyr::filter(!!var == val)
   }
 
   return(df)

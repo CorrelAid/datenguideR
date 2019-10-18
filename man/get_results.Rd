@@ -2,23 +2,18 @@
 % Please edit documentation in R/dg_call.R
 \name{get_results}
 \alias{get_results}
-\title{dg_call.R}
+\title{get_results()}
 \usage{
 get_results(field, substat_name)
 }
 \arguments{
 \item{field}{description}
 
-\item{stubstat_name}{description
-TODO: Update and add parameters!}
+\item{substat_name}{description}
 }
 \value{
 Data frame containing the requested data
 }
 \description{
-Makes a call to the Datenguide GraphQL API and returns the results.
-}
-\examples{
-dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', parameter = c("TIERART2", "TIERART3"))
-
+POST file to the GraphQL API.
 }

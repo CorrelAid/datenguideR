@@ -7,7 +7,8 @@
 get_region(var = NULL, val = NULL)
 }
 \arguments{
-\item{var}{Character string naming variable for filtering. Can be either id, name, level or parent.}
+\item{var}{Character string naming variable for filtering.
+Can be either id, name, level or parent.}
 
 \item{val}{Character string naming the value for filtering.}
 }

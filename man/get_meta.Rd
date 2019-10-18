@@ -10,7 +10,7 @@ get_meta()
 Data frame containing all available meta data
 }
 \description{
-Gets all available meta data on statistics, sub-statistics, and parameters
+Gets all available meta data on statistics, sub-statistics, and parameters.
 }
 \examples{
 dg_meta <- get_meta()

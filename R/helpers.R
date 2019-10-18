@@ -1,6 +1,6 @@
-#' dg_helpers.R
+#' vector_collapse()
 #'
-#' Contains various helper functions.
+#' @param vector Vector to collapse
 #'
 #' @export
 
@@ -10,7 +10,11 @@ vector_collapse <- function(vector) {
     paste0("[", ., "]")
 }
 
-## -----##
+#' paste_nv()
+#'
+#' @param field description
+#'
+#' @export
 
 paste_nv <- function(field) {
   if (!is.null(field$value)) {
@@ -26,9 +30,14 @@ paste_nv <- function(field) {
   return(nv)
 }
 
-## -----##
+#' insert_regname()
+#' 
+#' Insert 'id, name,' after region to ensure that region id and name are always returned.
+#'
+#' @param field description
+#'
+#' @export
 
-# insert 'id, name,' after region to ensure that region id and name are always returned
 insert_regname <- function(field) {
   if (field$type == "Region") {
     b <- glue::glue("id, name,", .sep = " ", .open = "<<", .close = ">>")
@@ -38,10 +47,15 @@ insert_regname <- function(field) {
   return(b)
 }
 
-## -----##
+#' insert_page_nr()
+#' 
+#' Insert 'page, total, itemsPerPage,' after allRegions by default.
+#'
+#' @param field description
+#'
+#' @export
 
-# insert 'page, total, itemsPerPage,' after allRegions by default
-insert_pagenr <- function(field) {
+insert_page_nr <- function(field) {
   if (field$type == "RegionsResult") {
     b <- glue::glue("page, total, itemsPerPage,", .sep = " ", .open = "<<", .close = ">>")
   } else {
@@ -50,7 +64,15 @@ insert_pagenr <- function(field) {
   return(b)
 }
 
-## -----##
+#' clean_it()
+#' 
+#' Clean retrieved data.
+#'
+#' @param .data description
+#' 
+#' @return Tidy data frame containing the retrieved results from the API call
+#'
+#' @export
 
 clean_it <- function(.data) {
   raw <- .data %>%

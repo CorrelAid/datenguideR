@@ -1,6 +1,6 @@
 #' dg_meta.R
 #'
-#' Gets all available meta data on statistics, sub-statistics, and parameters
+#' Gets all available meta data on statistics, sub-statistics, and parameters.
 #'
 #' @return Data frame containing all available meta data
 #'

@@ -1,20 +1,22 @@
-#' dg_querybuilder.R
+#' dg_query_builder.R
 #'
-#' Builds the query with a recursive function iterating over fields
+#' Builds the query with a recursive function iterating over fields.
 #' 
 #' @param field description
 #' @param substat_name description
 #'
-#' @return Query builder
+#' @return Query
 #'
 #' @examples
-#' query_builder <- function(field, substat_name)
+#' dg_query_builder <- function(field, substat_name)
 #'
 #' @export
 
-query_builder_pre <- function(field, substat_name) {
-  # substat_name <- "TIERA8"
-  if (field$name == substat_name) { # stop recursive function on substat-level
+# Recursive query builder -----------------------------------------------------
+
+query_builder <- function(field, substat_name) {
+
+    if (field$name == substat_name) { # stop recursive function on substat-level
     glue::glue("year, <<substat_name>> : value source { title_de name }", .open = "<<", .close = ">>")
   } else {
 
@@ -47,29 +49,22 @@ query_builder_pre <- function(field, substat_name) {
       query <- glue::glue("<<field$name>> <<a>> { }", .open = "<<", .close = ">>")
     } else {
       subfield <- field$subfield
-      
-
-      
       field_name <- field$name
       reg_name <- insert_regname(field)
-      page_nr <- insert_pagenr(field)
-      recursive_part <- purrr::map_chr(subfield, query_builder_pre, substat_name = substat_name)
-      
-      # ww <- query_builder_pre(subfield[[1]], substat_name)
-      
-      query <- glue::glue('<<field_name>> <<a>> {<<reg_name>> <<page_nr>>
-                          <<recursive_part>>}',
-                          .open = "<<", .close = ">>"
+      page_nr <- insert_page_nr(field)
+      recursive_part <- purrr::map_chr(subfield, query_builder, substat_name = substat_name)
+
+      query <- glue::glue("<<field_name>> <<a>> {<<reg_name>> <<page_nr>>
+                          <<recursive_part>>}",
+        .open = "<<", .close = ">>"
       )
-      
-      
     }
   }
 }
 
-#*******************
+# Final query builder -----------------------------------------------------
 
-query_builder <- function(field, substat_name) {
-  q <- query_builder_pre(field = field, substat_name = substat_name)
+dg_query_builder <- function(field, substat_name) {
+  q <- query_builder(field = field, substat_name = substat_name)
   query <- glue::glue("query <<q>>", .open = "<<", .close = ">>") # add 'query' at the beginning
 }

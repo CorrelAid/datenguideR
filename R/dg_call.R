@@ -1,22 +1,18 @@
-#' dg_call.R
+#' get_results()
 #'
-#' Makes a call to the Datenguide GraphQL API and returns the results.
+#' POST file to the GraphQL API.
 #' 
 #' @param field description
-#' @param stubstat_name description
-#' TODO: Update and add parameters!
+#' @param substat_name description
 #'
 #' @return Data frame containing the requested data
-#'
-#' @examples
-#' dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', parameter = c("TIERART2", "TIERART3"))
 #'
 #' @export
 
 get_results <- function(field, substat_name) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = list("query" = query_builder(field = field, substat_name = substat_name)),
+    body = list("query" = dg_query_builder(field = field, substat_name = substat_name)),
     encode = "json",
     httr::add_headers(.headers = c("Content-Type" = "application/json"))
   )
@@ -30,6 +26,27 @@ get_results <- function(field, substat_name) {
   return(final)
 }
 
+#' dg_call.R
+#'
+#' Makes a call to the Datenguide GraphQL API and returns the results.
+#' 
+#' @param region_id description
+#' @param stat_name description
+#' @param year description
+#' @param substat_name description
+#' @param parameter description
+#' @param page_nr description
+#' @param ipp description
+#' @param nuts_nr description
+#' @param lau_nr description
+#' @param parent_chr description
+#'
+#' @return Data frame containing the requested data
+#'
+#' @examples
+#' dg_call(region_id = "11", year = c(2001, 2007), substat_name = 'TIERA8', 
+#' parameter = c("TIERART2", "TIERART3"))
+#'
 #' @export
 dg_call <- function(region_id = "03", 
                     stat_name = "BETR08", 
@@ -41,12 +58,8 @@ dg_call <- function(region_id = "03",
                     nuts_nr = NULL,
                     lau_nr = NULL, 
                     parent_chr = NULL) {
-  #**************************************************
-  # define fields
-  #*********************
-  # region and general fields
   
-  
+  # Define fields -----------------------------------------------------
   
   substat <- list(
     "name" = substat_name,
@@ -95,8 +108,9 @@ dg_call <- function(region_id = "03",
     "subfield" = list(region),
     "type" = "query"
   )
-  #*********************
-  # allRegions fields
+
+  # Define allRegions fields -----------------------------------------------------
+  
   page <- list(
     "name" = "page",
     "value" = page_nr, # if not given graphql default is 0
@@ -161,8 +175,8 @@ dg_call <- function(region_id = "03",
     "type" = "query"
   )
 
-  #**************************************************
-
+  # Get results -----------------------------------------------------
+  
   if (!is.null(region_id)) { # condition is probably not sufficient (throw error if region ids are not given for neither region nor allregions query)
     field <- query_region
   } else {
