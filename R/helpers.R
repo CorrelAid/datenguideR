@@ -1,8 +1,6 @@
 #' vector_collapse()
 #'
 #' @param vector Vector to collapse
-#'
-#' @export
 
 vector_collapse <- function(vector) {
   vector %>%
@@ -13,8 +11,6 @@ vector_collapse <- function(vector) {
 #' paste_nv()
 #'
 #' @param field description
-#'
-#' @export
 
 paste_nv <- function(field) {
   if (!is.null(field$value)) {
@@ -35,8 +31,6 @@ paste_nv <- function(field) {
 #' Insert 'id, name,' after region to ensure that region id and name are always returned.
 #'
 #' @param field description
-#'
-#' @export
 
 insert_regname <- function(field) {
   if (field$type == "Region") {
@@ -52,8 +46,6 @@ insert_regname <- function(field) {
 #' Insert 'page, total, itemsPerPage,' after allRegions by default.
 #'
 #' @param field description
-#'
-#' @export
 
 insert_page_nr <- function(field) {
   if (field$type == "RegionsResult") {
@@ -71,8 +63,6 @@ insert_page_nr <- function(field) {
 #' @param .data description
 #' 
 #' @return Tidy data frame containing the retrieved results from the API call
-#'
-#' @export
 
 clean_it <- function(.data) {
   raw <- .data %>%
