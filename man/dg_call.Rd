@@ -5,8 +5,9 @@
 \title{dg_call.R}
 \usage{
 dg_call(region_id = "03", stat_name = "BETR08", year = 2007,
-  substat_name = "TIERA8", parameter = NULL, page_nr = NULL,
-  ipp = NULL, nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL)
+  substat_name = NULL, parameter = NULL, page_nr = NULL,
+  ipp = NULL, nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL,
+  full_descriptions = FALSE)
 }
 \arguments{
 \item{region_id}{description}
@@ -28,6 +29,8 @@ dg_call(region_id = "03", stat_name = "BETR08", year = 2007,
 \item{lau_nr}{description}
 
 \item{parent_chr}{description}
+
+\item{full_descriptions}{description}
 }
 \value{
 Data frame containing the requested data

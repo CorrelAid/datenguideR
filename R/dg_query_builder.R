@@ -15,6 +15,10 @@
 # Recursive query builder -----------------------------------------------------
 
 query_builder <- function(field, substat_name) {
+  
+  if (is.null(substat_name)) {
+    substat_name <- "not given"
+  }
 
     if (field$name == substat_name) { # stop recursive function on substat-level
     glue::glue("year, <<substat_name>> : value source { title_de name }", .open = "<<", .close = ">>")
@@ -66,5 +70,16 @@ query_builder <- function(field, substat_name) {
 
 dg_query_builder <- function(field, substat_name) {
   q <- query_builder(field = field, substat_name = substat_name)
+  
+  ##TODO: This is a hacky solution when substat_name is not given
+  if (is.null(substat_name)) {
+    
+    stat_name <- field$subfield[[1]]$subfield[[1]]$type
+    
+    q <- q %>%
+      stringr::str_replace("\\{ \\}",
+                           glue::glue("{year, <<stat_name>> : value, source { title_de name }}", .open = "<<", .close = ">>"))
+  }
+  
   query <- glue::glue("query <<q>>", .open = "<<", .close = ">>") # add 'query' at the beginning
 }

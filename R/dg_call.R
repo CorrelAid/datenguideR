@@ -40,6 +40,7 @@ get_results <- function(field, substat_name) {
 #' @param nuts_nr description
 #' @param lau_nr description
 #' @param parent_chr description
+#' @param full_descriptions description
 #'
 #' @return Data frame containing the requested data
 #'
@@ -48,27 +49,20 @@ get_results <- function(field, substat_name) {
 #' parameter = c("TIERART2", "TIERART3"))
 #'
 #' @export
-dg_call <- function(region_id = "03", 
-                    stat_name = "BETR08", 
-                    year = 2007, 
-                    substat_name = "TIERA8",
+dg_call <- function(region_id = "11", 
+                    stat_name = "AI0506", 
+                    year = 2002, 
+                    substat_name = NULL,
                     parameter = NULL, 
                     page_nr = NULL, 
                     ipp = NULL, 
                     nuts_nr = NULL,
                     lau_nr = NULL, 
-                    parent_chr = NULL) {
+                    parent_chr = NULL,
+                    full_descriptions = FALSE) {
   
   # Define fields -----------------------------------------------------
   
-  substat <- list(
-    "name" = substat_name,
-    "value" = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = substat_name
-  )
-
   years <- list(
     "name" = "year",
     "value" = ifelse(length(year) == 1, year, vector_collapse(year)),
@@ -76,14 +70,35 @@ dg_call <- function(region_id = "03",
     "subfield" = list(),
     "type" = "Int"
   )
+  
+  if (!is.null(substat_name)) {
+    substat <- list(
+      "name" = substat_name,
+      "value" = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = substat_name
+    )    
+    
+    stat <- list(
+      "name" = stat_name,
+      "value" = list(),
+      "arguments" = list(years, substat),
+      "subfield" = list(substat),
+      "type" = stat_name
+    )
+  }
+  
+  if (is.null(substat_name)) {
+    stat <- list(
+      "name" = stat_name,
+      "value" = list(),
+      "arguments" = list(years),
+      "type" = stat_name
+    )
+  }
+  
 
-  stat <- list(
-    "name" = stat_name,
-    "value" = list(),
-    "arguments" = list(years, substat),
-    "subfield" = list(substat),
-    "type" = stat_name
-  )
 
   id <- list(
     "name" = "id",
@@ -215,6 +230,11 @@ dg_call <- function(region_id = "03",
                   dplyr::slice(1) %>% 
                   dplyr::select(GENESIS_source, GENESIS_source_nr)) %>% 
       tibble::as_tibble()
+    
+    if (!full_descriptions) {
+      api_results <- api_results %>% 
+        dplyr::select(-stat_description_full)
+    }
   }
   
 
