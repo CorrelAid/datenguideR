@@ -3,13 +3,13 @@
 \docType{data}
 \name{dg_descriptions}
 \alias{dg_descriptions}
-\title{Data on all available statistics and a short description}
-\format{A data frame with 473 obervations and 2 variables.}
+\title{Data on all available statistics, substatistics, and parameters}
+\format{A data frame with 3,419 obervations and 7 variables.}
 \usage{
 dg_descriptions
 }
 \description{
-A dataset containing the name and shortened description of all available
-statistics.
+A dataset containing the name, description, and source of all available
+statistics, substatistics, and parameters.
 }
 \keyword{datasets}

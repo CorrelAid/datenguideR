@@ -2,8 +2,7 @@
 
 export("%>%")
 export(dg_call)
-export(get_description)
-export(get_meta)
+export(get_descriptions)
 export(get_region)
 export(get_results)
 export(query_builder)
