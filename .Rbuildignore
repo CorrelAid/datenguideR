@@ -1,7 +1,13 @@
-^Projects\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
+^CODE_OF_CONDUCT\.md$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
 ^\.github$
 .travis.yml
+^\.travis\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^datenguideR_hexagon\.png$

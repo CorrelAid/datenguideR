@@ -74,5 +74,4 @@ dg_meta <- get_meta() %>%
     .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
   )
 
-
 usethis::use_data(dg_meta, overwrite = T)
