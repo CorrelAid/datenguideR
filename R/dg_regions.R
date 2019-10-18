@@ -17,7 +17,7 @@ get_region <- function(var = NULL, val = NULL) {
   if (missing(var) | missing(val)) {
     df <- readr::read_csv(system.file("extdata", "regions.csv", package = "datenguideR"))
   } else {
-    var <- rlang::parse_expr(quo_name(enquo(var)))
+    var <- rlang::parse_expr(rlang::quo_name(rlang::enquo(var)))
 
     df <- readr::read_csv(system.file("extdata", "regions.csv", package = "datenguideR")) %>%
       filter(!!var == val)

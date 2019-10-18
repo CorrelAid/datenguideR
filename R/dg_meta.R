@@ -48,7 +48,7 @@ get_meta <- function() {
   return(final)
 }
 
-## TODO: If no substat is available for stat, parameter should be empty (currently it displays data source)!
+## TODO (optional): Restructure data in dg_meta?
 dg_meta <- get_meta() %>%
   dplyr::select(name, description, args) %>%
   dplyr::mutate(stat_description_full = description %>%
@@ -66,7 +66,13 @@ dg_meta <- get_meta() %>%
     .funs = list(~ ifelse(. == "", NA, as.character(.)))
   ) %>%
   dplyr::mutate(parameter = type$ofType$enumValues) %>%
-  dplyr::select(stat_name, stat_description, stat_description_full, substat_name, substat_description, parameter)
+  dplyr::select(stat_name, stat_description, stat_description_full, substat_name, substat_description, parameter) %>%
+  tidyr::unnest(parameter) %>%
+  dplyr::rename(param_name = "name", param_description = "description") %>%
+  dplyr::mutate_at(
+    .vars = c("param_name", "param_description"),
+    .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
+  )
 
 
 usethis::use_data(dg_meta, overwrite = T)
