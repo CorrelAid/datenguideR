@@ -80,6 +80,9 @@ dg_call <- function(region_id = NULL,
   ## Alternatively, we need to implement a warning that single-digits regions ids need to have a 0 in front of the number provided in dg_regions.
   if (missing(region_id) & missing(nuts_nr) & missing(lau_nr)) {
     stop("Please provide either region_id to query regions or lau_nr/nuts_nr to query all regions. See ?dg_call for an example.")
+  } else {
+    ## define allRegions condtion
+    allRegions <- T
   }
 
   ## TODO: Add Warning for missing years.
@@ -147,69 +150,73 @@ dg_call <- function(region_id = NULL,
 
   # Define allRegions fields -----------------------------------------------------
   
-  page <- list(
-    "name" = "page",
-    "value" = page_nr, # if not given graphql default is 0
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "Int"
-  )
-
-  itemsPerPage <- list(
-    "name" = "itemsPerPage",
-    "value" = ipp, # if not given graphql default is 10
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "Int"
-  )
-
-  nuts <- list(
-    "name" = "nuts",
-    "value" = nuts_nr,
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "Int"
-  )
-
-  lau <- list(
-    "name" = "lau",
-    "value" = lau_nr,
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "Int"
-  )
-
-  parent <- list(
-    "name" = "parent",
-    "value" = parent_chr,
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "String"
-  )
-
-  regions <- list(
-    "name" = "regions",
-    "value" = list(),
-    "arguments" = list(nuts, lau, parent),
-    "subfield" = list(stat),
-    "type" = "Region"
-  )
-
-  allRegions <- list(
-    "name" = "allRegions",
-    "value" = list(),
-    "arguments" = list(page, itemsPerPage),
-    "subfield" = list(regions),
-    "type" = "RegionsResult"
-  )
-
-  query_allRegions <- list(
-    "name" = "allRegions",
-    "value" = list(),
-    "arguments" = list(),
-    "subfield" = list(allRegions),
-    "type" = "query"
-  )
+  if (allRegions) {
+    page <- list(
+      "name" = "page",
+      "value" = page_nr, # if not given graphql default is 0
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = "Int"
+    )
+    
+    itemsPerPage <- list(
+      "name" = "itemsPerPage",
+      "value" = ipp, # if not given graphql default is 10
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = "Int"
+    )
+    
+    nuts <- list(
+      "name" = "nuts",
+      "value" = nuts_nr,
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = "Int"
+    )
+    
+    lau <- list(
+      "name" = "lau",
+      "value" = lau_nr,
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = "Int"
+    )
+    
+    parent <- list(
+      "name" = "parent",
+      "value" = parent_chr,
+      "arguments" = list(),
+      "subfield" = list(),
+      "type" = "String"
+    )
+    
+    regions <- list(
+      "name" = "regions",
+      "value" = list(),
+      "arguments" = list(nuts, lau, parent),
+      "subfield" = list(stat),
+      "type" = "Region"
+    )
+    
+    allRegions <- list(
+      "name" = "allRegions",
+      "value" = list(),
+      "arguments" = list(page, itemsPerPage),
+      "subfield" = list(regions),
+      "type" = "RegionsResult"
+    )
+    
+    query_allRegions <- list(
+      "name" = "allRegions",
+      "value" = list(),
+      "arguments" = list(),
+      "subfield" = list(allRegions),
+      "type" = "query"
+    )
+    
+  }
+  
 
   # Get results -----------------------------------------------------
   
@@ -224,12 +231,21 @@ dg_call <- function(region_id = NULL,
   
   ## This is an if statement that handles when we need to get more info on a substat and its parameters
   ## TODO: is this the right condition to trigger getting subinfos??
-  if (!is.null(parameter)) {
+  if (!is.null(substat_name)) {
+    ## this is necessary unfortunately
     stat_name_ <- stat_name
     
+    ## get meta data for specific call
     meta_info <- dg_descriptions %>%  
       dplyr::filter(stat_name == stat_name_) %>% 
-      dplyr::filter(param_name %in% parameter)
+      tidyr::drop_na(substat_name)
+    
+    ## if parameter is given, filter by it 
+    if (!is.null(parameter)) {
+      meta_info <- meta_info %>% 
+        dplyr::filter(param_name %in% parameter)
+    }
+      
     
     api_results <- api_results %>% 
       dplyr::group_by(year) %>% 

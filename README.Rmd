@@ -89,7 +89,12 @@ dg_call(region_id = "11",
         substat_name = 'TIERA8', 
         parameter = c("TIERART2", "TIERART3")) 
 
-
+library(datenguideR)
+# dg_descriptions
+dg_call(region_id = "11", 
+        year = c(2001, 2003, 2007), 
+        stat_name = 'BETR08', 
+        substat_name = 'TIERA8') 
 ```
 
 
