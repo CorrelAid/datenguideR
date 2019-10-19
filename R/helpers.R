@@ -371,25 +371,32 @@ define_fields <- function(year,
 #' @param substat_name description
 #' @param parameter description
 #' @param full_descriptions description
-#' @param all_regions description
+#' @param all_regions description#' 
+#' @param long_format description
 #' 
-#' @return A list
+#' @return A tibble
 
 add_substat_info <- function(api_results, 
                              stat_name, 
                              substat_name, 
                              parameter, 
                              full_descriptions,
-                             all_regions) {
+                             all_regions,
+                             long_format) {
   
   
   
   ## this is necessary unfortunately
   stat_name_ <- stat_name
+  substat_name_ <- substat_name
+  
   
   ## get meta data for specific call
   meta_info <- dg_descriptions %>%  
     dplyr::filter(stat_name == stat_name_) %>% 
+    dplyr::filter(substat_name == substat_name_) %>% 
+    ##TODO: sometimes it says GESAMT sometimes it says INSGESAMT, really odd
+    dplyr::filter(param_name != "INSGESAMT") %>% 
     tidyr::drop_na(substat_name)
   
   ## if parameter is given, filter by it 
@@ -404,20 +411,27 @@ add_substat_info <- function(api_results,
       dplyr::group_by(year) %>% 
       dplyr::mutate(param_name = meta_info$param_name) %>% 
       dplyr::ungroup() %>% 
-      dplyr::left_join(meta_info, by = "param_name") %>% 
-      dplyr::select(-substat_name) %>% 
-      tidyr::pivot_wider(names_from = param_name,
+      dplyr::left_join(meta_info, by = "param_name") 
+    
+    if (!is.null(substat_name)) {
+      if (!long_format) {   
+        api_results <- api_results %>% 
+          dplyr::select(-substat_name) %>% 
+          tidyr::pivot_wider(names_from = param_name,
                          values_from = substat_name, 
                          id_cols = year) %>% 
-      ## TODO: pivoting removed all previous variables so binding them again
-      ## may not be the most elegant solution
-      cbind(meta_info %>% 
-              dplyr::slice(1) %>%
-              dplyr::select(-param_name, -param_description)) %>% 
-      cbind(api_results %>%
-              dplyr::slice(1) %>% 
-              dplyr::select(GENESIS_source, GENESIS_source_nr)) %>% 
-      tibble::as_tibble()
+          ## TODO: pivoting removed all previous variables so binding them again
+          ## may not be the most elegant solution
+          cbind(meta_info %>% 
+                  dplyr::slice(1) %>%
+                  dplyr::select(-param_name, -param_description)) %>% 
+          cbind(api_results %>%
+                  dplyr::slice(1) %>% 
+                  dplyr::select(GENESIS_source, GENESIS_source_nr)) %>% 
+          tibble::as_tibble()
+      }
+    }
+    
     
   } else {
     
@@ -427,18 +441,22 @@ add_substat_info <- function(api_results,
         dplyr::ungroup() %>% 
         dplyr::left_join(meta_info, by = "param_name") %>% 
         dplyr::select(-substat_name) %>% 
-        dplyr::mutate(year_id = paste0(year, "_", id)) %>% 
-        tidyr::pivot_wider(names_from = param_name,
-                           values_from = substat_name, 
-                           id_cols = year_id) %>%
-        tidyr::separate(year_id, into = c("year", "id"), sep = "_") %>% 
-        # dplyr::left_join(api_results %>% dplyr::select(id, name), by = "id") %>% 
-        ## TODO: pivoting removed all previous variables so binding them again
-        ## may not be the most elegant solution
-        cbind(meta_info %>% 
-                dplyr::slice(1) %>%
-                dplyr::select(-param_name, -param_description)) %>% 
-        tibble::as_tibble()
+        dplyr::mutate(year_id = paste0(year, "_", id)) #
+      
+      if (!long_format) {
+        api_results <- api_results %>% 
+          tidyr::pivot_wider(names_from = param_name,
+                             values_from = substat_name, 
+                             id_cols = year_id) %>%
+          tidyr::separate(year_id, into = c("year", "id"), sep = "_") %>% 
+          # dplyr::left_join(api_results %>% dplyr::select(id, name), by = "id") %>% 
+          ## TODO: pivoting removed all previous variables so binding them again
+          ## may not be the most elegant solution
+          cbind(meta_info %>% 
+                  dplyr::slice(1) %>%
+                  dplyr::select(-param_name, -param_description)) %>% 
+          tibble::as_tibble()
+      }   
 
   }
   

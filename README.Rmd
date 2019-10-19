@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Build_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/datenguideR)](https://cran.r-project.org/package=datenguideR)
+[![Codecov test coverage](https://codecov.io/gh/CorrelAid/datenguideR/branch/master/graph/badge.svg)](https://codecov.io/gh/CorrelAid/datenguideR?branch=master)
 <!-- badges: end -->
 
 
@@ -108,11 +109,27 @@ Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr` to get d
 
 ```{r}
 
-dg_call(year = c(2001, 2003, 2007), 
+dg_call(nuts_nr = 1,
+        year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
-        substat_name = 'TIERA8', 
-        nuts_nr = 1) 
+        substat_name = 'TIERA8') 
+
+
 ```
 
 
+
+```{r}
+
+dg_call(nuts_nr = 1,
+        stat_name =  "BAU018",
+        substat_name = "BAUAHZ",
+        year = 2016)
+
+```
+
+
+```{r}
+dg_call(nuts_nr = 2, stat_name = "GEBWOR", substat_name = "BAUAT2")
+```
 

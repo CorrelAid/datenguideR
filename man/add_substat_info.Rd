@@ -5,7 +5,7 @@
 \title{add_substat_info}
 \usage{
 add_substat_info(api_results, stat_name, substat_name, parameter,
-  full_descriptions, all_regions)
+  full_descriptions, all_regions, long_format)
 }
 \arguments{
 \item{api_results}{description}
@@ -18,10 +18,12 @@ add_substat_info(api_results, stat_name, substat_name, parameter,
 
 \item{full_descriptions}{description}
 
-\item{all_regions}{description}
+\item{all_regions}{description#'}
+
+\item{long_format}{description}
 }
 \value{
-A list
+A tibble
 }
 \description{
 Add Substat Info

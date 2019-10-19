@@ -41,6 +41,7 @@ get_results <- function(field, substat_name) {
 #' @param parent_chr description
 #' @param full_descriptions description
 #' @param page_nr description
+#' @param long_format description
 #'
 #' @return Data frame containing the requested data
 #'
@@ -62,7 +63,8 @@ dg_call <- function(region_id = NULL,
                     lau_nr = NULL, 
                     parent_chr = NULL,
                     full_descriptions = FALSE,
-                    page_nr = NULL) {
+                    page_nr = NULL,
+                    long_format = T) {
   
   if (missing(year)) {
     year <- c(1990:format(Sys.Date(), "%Y")) # Does this cover all years?
@@ -111,6 +113,16 @@ dg_call <- function(region_id = NULL,
   if (!all_regions) {
     api_results <- get_results(field = field, substat_name = substat_name) %>%
       clean_region()
+    
+    if (!long_format) {
+      
+      if (is.null(substat_name)) {
+        api_results <- api_results %>% 
+          tidyr::pivot_wider(names_from = year, values_from = stat_name)        
+      }
+      
+
+    }
   } else {
     api_results <- get_results(field = field, substat_name = substat_name) %>%
       clean_all_regions(
@@ -130,7 +142,8 @@ dg_call <- function(region_id = NULL,
                      substat_name, 
                      parameter, 
                      full_descriptions,
-                     all_regions
+                     all_regions,
+                     long_format
     ) 
     
     if (all_regions) {

@@ -9,6 +9,8 @@
 experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Build\_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/datenguideR)](https://cran.r-project.org/package=datenguideR)
+[![Codecov test
+coverage](https://codecov.io/gh/CorrelAid/datenguideR/branch/master/graph/badge.svg)](https://codecov.io/gh/CorrelAid/datenguideR?branch=master)
 <!-- badges: end -->
 
 ## Usage
@@ -151,10 +153,10 @@ to get data for multiple regions at once.
 
 ``` r
 
-dg_call(year = c(2001, 2003, 2007), 
+dg_call(nuts_nr = 1,
+        year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
-        substat_name = 'TIERA8', 
-        nuts_nr = 1) 
+        substat_name = 'TIERA8') 
 #> Joining, by = "id"
 #> # A tibble: 48 x 15
 #>    name  year     id TIERART2 TIERART210 TIERART3 TIERART304 TIERART309
@@ -172,4 +174,34 @@ dg_call(year = c(2001, 2003, 2007),
 #> # … with 38 more rows, and 7 more variables: TIERART4 <int>,
 #> #   TIERART502 <int>, GESAMT <int>, stat_name <chr>,
 #> #   stat_description <chr>, substat_name <chr>, substat_description <chr>
+```
+
+``` r
+
+dg_call(nuts_nr = 1,
+        stat_name =  "BAU018",
+        substat_name = "BAUAHZ",
+        year = 2016)
+#> Joining, by = "id"
+#> # A tibble: 16 x 14
+#>    name  year     id BAUAHZ1 BAUAHZ2 BAUAHZ3 BAUAHZ4 BAUAHZ5 BAUAHZ6 GESAMT
+#>    <chr> <chr> <dbl>   <int>   <int>   <int>   <int>   <int>   <int>  <int>
+#>  1 Saar… 2016     10       1      93      29     369      13       2    231
+#>  2 Berl… 2016     11     105     121      57      10     305       9      3
+#>  3 Bran… 2016     12      74       8     324     843       6     156    275
+#>  4 Meck… 2016     13      23     172     571      50      10     299     17
+#>  5 Sach… 2016     14      97      15     383       2      86     798   1381
+#>  6 Sach… 2016     15       0      37      32       9     189     438    705
+#>  7 Thür… 2016     16     719      10      29     198       4      37    441
+#>  8 Schl… 2016      1    1143     447     539      87      22       1     47
+#>  9 Hamb… 2016      2      72       2     155      31       6       3     41
+#> 10 Nied… 2016      3     125     121    1755      30    1359       6   3396
+#> 11 Brem… 2016      4      48       1      11      36     105       0      9
+#> 12 Nord… 2016      5       7     144    1452    3666     201      51   1811
+#> 13 Hess… 2016      6     119     720      27     668       5      47   1586
+#> 14 Rhei… 2016      7      49     937    1657      51      14     595     11
+#> 15 Bade… 2016      8     927    1500     105    1609     315       6   4462
+#> 16 Baye… 2016      9    2371     509      47       6     196    4909   8038
+#> # … with 4 more variables: stat_name <chr>, stat_description <chr>,
+#> #   substat_name <chr>, substat_description <chr>
 ```
