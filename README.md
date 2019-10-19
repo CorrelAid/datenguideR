@@ -109,7 +109,6 @@ A slightly more complex call with substatistics:
 
 ``` r
 
-
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
@@ -143,4 +142,34 @@ dg_call(region_id = "11",
 #> #   stat_name <chr>, stat_description <chr>, substat_name <chr>,
 #> #   substat_description <chr>, GENESIS_source <chr>,
 #> #   GENESIS_source_nr <chr>
+```
+
+### AllRegions
+
+Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr`
+to get data for multiple regions at once.
+
+``` r
+
+dg_call(year = c(2001, 2003, 2007), 
+        stat_name = 'BETR08', 
+        substat_name = 'TIERA8', 
+        nuts_nr = 1) 
+#> Joining, by = "id"
+#> # A tibble: 48 x 15
+#>    name  year     id TIERART2 TIERART210 TIERART3 TIERART304 TIERART309
+#>    <chr> <chr> <dbl>    <int>      <int>    <int>      <int>      <int>
+#>  1 Saar… 2001     10      199         67      374        383        964
+#>  2 Saar… 2003     10      930        261      374        337        179
+#>  3 Saar… 2007     10      267        792      128        222        316
+#>  4 Berl… 2001     11        3          0        8         15          8
+#>  5 Berl… 2003     11        0          9       12          0          9
+#>  6 Berl… 2007     11        3         11        5          0          0
+#>  7 Bran… 2001     12     3376       1243      449        969        663
+#>  8 Bran… 2003     12     3084        700     1183        899        666
+#>  9 Bran… 2007     12     1043       2913      403        750       1502
+#> 10 Meck… 2001     13      772        497      564       1104        304
+#> # … with 38 more rows, and 7 more variables: TIERART4 <int>,
+#> #   TIERART502 <int>, GESAMT <int>, stat_name <chr>,
+#> #   stat_description <chr>, substat_name <chr>, substat_description <chr>
 ```
