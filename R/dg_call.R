@@ -79,7 +79,7 @@ dg_call <- function(region_id = NULL,
   ## We should also implement a function to convert single-digit region ids to two-digits id (eg 3 to 03); otherwise this is misleading given the information in dg_regions!
   ## Alternatively, we need to implement a warning that single-digits regions ids need to have a 0 in front of the number provided in dg_regions.
   if (missing(region_id) & missing(nuts_nr) & missing(lau_nr)) {
-    stop("Please provide either region_id to query regions or lau_nr/nuts_nr to query all regions. See ?dg_call for an example.")
+    stop("Please provide either a region ID to query a single region or specify a NUTS or LAU level to query all regions on the selected regional level. See ?dg_call for an example.")
   } 
   
   if (missing(region_id)) {
