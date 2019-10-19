@@ -26,7 +26,7 @@ get_results <- function(field, substat_name) {
   return(final)
 }
 
-#' dg_call.R
+#' dg_call
 #'
 #' Makes a call to the Datenguide GraphQL API and returns the results.
 #' 
@@ -80,151 +80,23 @@ dg_call <- function(region_id = NULL,
   ## Alternatively, we need to implement a warning that single-digits regions ids need to have a 0 in front of the number provided in dg_regions.
   if (missing(region_id) & missing(nuts_nr) & missing(lau_nr)) {
     stop("Please provide either region_id to query regions or lau_nr/nuts_nr to query all regions. See ?dg_call for an example.")
-  } else {
-    ## define allRegions condtion
-    allRegions <- T
-  }
-
+  } 
+  
   ## TODO: Add Warning for missing years.
   
-  # Define fields -----------------------------------------------------
-  
-  years <- list(
-    "name" = "year",
-    "value" = ifelse(length(year) == 1, year, vector_collapse(year)),
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "Int"
+  ## Define Fields, handles allregions vs. regions internaly
+  field <- define_fields(
+    ## region provided
+    year, stat_name, substat_name, parameter, region_id, 
+    ## for allregions
+    page_nr, ipp, nuts_nr, lau_nr, parent_chr
   )
   
-  if (!is.null(substat_name)) {
-    substat <- list(
-      "name" = substat_name,
-      "value" = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = substat_name
-    )    
-    
-    stat <- list(
-      "name" = stat_name,
-      "value" = list(),
-      "arguments" = list(years, substat),
-      "subfield" = list(substat),
-      "type" = stat_name
-    )
-  }
-  
-  if (is.null(substat_name)) {
-    stat <- list(
-      "name" = stat_name,
-      "value" = list(),
-      "arguments" = list(years),
-      "type" = stat_name
-    )
-  }
-  
-  id <- list(
-    "name" = "id",
-    "value" = region_id,
-    "arguments" = list(),
-    "subfield" = list(),
-    "type" = "String"
-  )
 
-  region <- list(
-    "name" = "region",
-    "value" = list(),
-    "arguments" = list(id),
-    "subfield" = list(stat),
-    "type" = "Region"
-  )
 
-  query_region <- list(
-    "name" = "region",
-    "value" = list(),
-    "arguments" = list(),
-    "subfield" = list(region),
-    "type" = "query"
-  )
-
-  # Define allRegions fields -----------------------------------------------------
-  
-  if (allRegions) {
-    page <- list(
-      "name" = "page",
-      "value" = page_nr, # if not given graphql default is 0
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = "Int"
-    )
-    
-    itemsPerPage <- list(
-      "name" = "itemsPerPage",
-      "value" = ipp, # if not given graphql default is 10
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = "Int"
-    )
-    
-    nuts <- list(
-      "name" = "nuts",
-      "value" = nuts_nr,
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = "Int"
-    )
-    
-    lau <- list(
-      "name" = "lau",
-      "value" = lau_nr,
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = "Int"
-    )
-    
-    parent <- list(
-      "name" = "parent",
-      "value" = parent_chr,
-      "arguments" = list(),
-      "subfield" = list(),
-      "type" = "String"
-    )
-    
-    regions <- list(
-      "name" = "regions",
-      "value" = list(),
-      "arguments" = list(nuts, lau, parent),
-      "subfield" = list(stat),
-      "type" = "Region"
-    )
-    
-    allRegions <- list(
-      "name" = "allRegions",
-      "value" = list(),
-      "arguments" = list(page, itemsPerPage),
-      "subfield" = list(regions),
-      "type" = "RegionsResult"
-    )
-    
-    query_allRegions <- list(
-      "name" = "allRegions",
-      "value" = list(),
-      "arguments" = list(),
-      "subfield" = list(allRegions),
-      "type" = "query"
-    )
-    
-  }
   
 
   # Get results -----------------------------------------------------
-  
-  if (!missing(region_id)) {
-    field <- query_region
-  } else {
-    field <- query_allRegions
-  }
 
   api_results <- get_results(field = field, substat_name = substat_name) %>%
     clean_it()

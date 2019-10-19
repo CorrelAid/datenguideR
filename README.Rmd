@@ -89,8 +89,11 @@ dg_call(region_id = "11",
         substat_name = 'TIERA8', 
         parameter = c("TIERART2", "TIERART3")) 
 
-library(datenguideR)
-# dg_descriptions
+```
+
+If you give no parameters for a substat, it will default to return results for all of them.
+
+```{r}
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
@@ -100,4 +103,14 @@ dg_call(region_id = "11",
 
 
 
+### AllRegions
+
+```{r}
+# debugonce(dg_call)
+
+dg_call(year = c(2001, 2003, 2007), 
+        stat_name = 'BETR08', 
+        substat_name = 'TIERA8', 
+        nuts_nr = 1) 
+```
 

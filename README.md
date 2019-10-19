@@ -124,3 +124,23 @@ dg_call(region_id = "11",
 #> # … with 3 more variables: substat_description <chr>,
 #> #   GENESIS_source <chr>, GENESIS_source_nr <chr>
 ```
+
+If you give no parameters for a substat, it will default to return
+results for all of them.
+
+``` r
+dg_call(region_id = "11", 
+        year = c(2001, 2003, 2007), 
+        stat_name = 'BETR08', 
+        substat_name = 'TIERA8') 
+#> # A tibble: 3 x 15
+#>    year TIERART2 TIERART210 TIERART3 TIERART304 TIERART309 TIERART4
+#>   <int>    <int>      <int>    <int>      <int>      <int>    <int>
+#> 1  2001        3          0        8         15          8        6
+#> 2  2003        0          9       12          0          9        7
+#> 3  2007        3         11        5          0          0        8
+#> # … with 8 more variables: TIERART502 <int>, GESAMT <int>,
+#> #   stat_name <chr>, stat_description <chr>, substat_name <chr>,
+#> #   substat_description <chr>, GENESIS_source <chr>,
+#> #   GENESIS_source_nr <chr>
+```
