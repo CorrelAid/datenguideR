@@ -56,15 +56,16 @@ insert_page_nr <- function(field) {
   return(b)
 }
 
-#' clean_it()
+#' clean_region()
 #' 
-#' Clean retrieved data.
+#' Clean retrieved data (if region id provided).
 #'
 #' @param .data description
 #' 
 #' @return Tidy data frame containing the retrieved results from the API call
 
-clean_it <- function(.data) {
+clean_region <- function(.data) {
+
   raw <- .data %>%
     purrr::flatten() %>%
     purrr::flatten() %>%
@@ -82,6 +83,123 @@ clean_it <- function(.data) {
 }
 
 
+#' clean_all_regions()
+#' 
+#' Clean retrieved data (if AllRegions endpoint is being called).
+#'
+#' @param raw description
+#' @param region_id description
+#' @param stat_name description
+#' @param year description
+#' @param substat_name description
+#' @param parameter description
+#' @param page_nr description
+#' @param ipp description
+#' @param nuts_nr description
+#' @param lau_nr description
+#' @param parent_chr description
+#' @param all_regions description
+#' 
+#' @return Tidy data frame containing the retrieved results from the API call
+
+clean_all_regions <- function(raw, 
+                              year, 
+                              stat_name, 
+                              substat_name, 
+                              parameter, 
+                              region_id,
+                              page_nr,
+                              ipp, 
+                              nuts_nr,
+                              lau_nr, 
+                              parent_chr,
+                              all_regions) {
+  
+  # raw <- api_results
+  
+  current_page <- raw[["data"]][["allRegions"]][["page"]]
+  total_items <- raw[["data"]][["allRegions"]][["total"]]
+  items_per_page <- raw[["data"]][["allRegions"]][["itemsPerPage"]]
+  
+  # total_items <- 14
+  # items_per_page <- 7
+  
+  if (length(raw[["data"]][["allRegions"]][["regions"]])==0) {
+    stop("No data available for this variable! Try another one or a different nuts_nr/lau_nr.")
+  }
+  
+  if (items_per_page >= total_items) {
+    
+    ## you are good
+    final <- raw %>% 
+      clean_ar()
+    # print("you are good")
+  } else {
+    
+    if (total_items %% items_per_page != 0) {
+      n_pages <- floor(total_items/items_per_page)
+      # print(n_pages)
+    } else {
+      n_pages <- floor(total_items/items_per_page) - 1
+      # print(n_pages)
+    }
+    
+    final <- current_page:n_pages %>% 
+      purrr::map(~define_fields(
+        ## region provided
+        year, stat_name, substat_name, parameter, region_id, 
+        ## for allregions
+        page_nr = .x, ## iterate page num!
+        ipp, nuts_nr, lau_nr, parent_chr,
+        all_regions
+      )) %>% 
+      purrr::map_dfr(~get_results(.x, substat_name) %>% clean_ar)
+    
+  }
+  
+  return(final)
+  
+}
+
+
+
+
+clean_ar <- function(raw) {
+  
+  # raw <- get_results(field = field, substat_name = substat_name)
+  
+  id_dat <- raw[["data"]][["allRegions"]][["regions"]] %>%
+    magrittr::extract(1:2)
+  
+  list_dat <- raw[["data"]][["allRegions"]][["regions"]] %>%
+    magrittr::extract(3)
+  
+  source_dat <- raw[["data"]][["allRegions"]][["regions"]] %>% 
+    purrr::flatten() %>%
+    purrr::flatten() %>% 
+    magrittr::use_series(source) %>% 
+    tibble::as_tibble() %>% 
+    dplyr::slice(1) %>%
+    dplyr::rename_all(dplyr::recode, title_de = "GENESIS_source", name = "GENESIS_source_nr")
+    
+  
+  final <- list_dat %>%
+    purrr::flatten() %>%
+    purrr::map(tibble::as_tibble) %>%
+    purrr::map(~purrr::discard(.x, is.list)) %>%
+    purrr::set_names(id_dat$id) %>%
+    purrr::map_dfr(~ .x %>% tibble::as_tibble(), .id = "id") %>%
+    dplyr::left_join(id_dat, by = "id")  %>% 
+    cbind(source_dat) %>% 
+    tibble::as_tibble()
+  
+  
+  return(final)
+}
+
+
+  
+
 #' define_fields
 #'
 #' Creates fields for query.
@@ -96,6 +214,7 @@ clean_it <- function(.data) {
 #' @param nuts_nr description
 #' @param lau_nr description
 #' @param parent_chr description
+#' @param all_regions all_regions
 #' 
 #' @return A list
 
@@ -108,7 +227,8 @@ define_fields <- function(year,
                           ipp, 
                           nuts_nr,
                           lau_nr, 
-                          parent_chr) {
+                          parent_chr,
+                          all_regions) {
   
   # Define fields -----------------------------------------------------
   
@@ -172,7 +292,7 @@ define_fields <- function(year,
   )
   
   # Define allRegions fields -----------------------------------------------------
-  if (!missing(region_id)) {
+  if (all_regions) {
     page <- list(
       "name" = "page",
       "value" = page_nr, # if not given graphql default is 0
@@ -240,4 +360,92 @@ define_fields <- function(year,
   }
   
   return(query_list)
+}
+
+#' add_substat_info
+#'
+#' Add Substat Info
+#' 
+#' @param api_results description
+#' @param stat_name description
+#' @param substat_name description
+#' @param parameter description
+#' @param full_descriptions description
+#' @param all_regions description
+#' 
+#' @return A list
+
+add_substat_info <- function(api_results, 
+                             stat_name, 
+                             substat_name, 
+                             parameter, 
+                             full_descriptions,
+                             all_regions) {
+  
+  
+  
+  ## this is necessary unfortunately
+  stat_name_ <- stat_name
+  
+  ## get meta data for specific call
+  meta_info <- dg_descriptions %>%  
+    dplyr::filter(stat_name == stat_name_) %>% 
+    tidyr::drop_na(substat_name)
+  
+  ## if parameter is given, filter by it 
+  if (!is.null(parameter)) {
+    meta_info <- meta_info %>% 
+      dplyr::filter(param_name %in% parameter)
+  }
+  
+  if (!all_regions) {
+    
+    api_results <- api_results %>% 
+      dplyr::group_by(year) %>% 
+      dplyr::mutate(param_name = meta_info$param_name) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::left_join(meta_info, by = "param_name") %>% 
+      dplyr::select(-substat_name) %>% 
+      tidyr::pivot_wider(names_from = param_name,
+                         values_from = substat_name, 
+                         id_cols = year) %>% 
+      ## TODO: pivoting removed all previous variables so binding them again
+      ## may not be the most elegant solution
+      cbind(meta_info %>% 
+              dplyr::slice(1) %>%
+              dplyr::select(-param_name, -param_description)) %>% 
+      cbind(api_results %>%
+              dplyr::slice(1) %>% 
+              dplyr::select(GENESIS_source, GENESIS_source_nr)) %>% 
+      tibble::as_tibble()
+    
+  } else {
+    
+      api_results <- api_results %>% 
+        dplyr::group_by(id, year) %>%
+        dplyr::mutate(param_name = meta_info$param_name) %>% 
+        dplyr::ungroup() %>% 
+        dplyr::left_join(meta_info, by = "param_name") %>% 
+        dplyr::select(-substat_name) %>% 
+        dplyr::mutate(year_id = paste0(year, "_", id)) %>% 
+        tidyr::pivot_wider(names_from = param_name,
+                           values_from = substat_name, 
+                           id_cols = year_id) %>%
+        tidyr::separate(year_id, into = c("year", "id"), sep = "_") %>% 
+        # dplyr::left_join(api_results %>% dplyr::select(id, name), by = "id") %>% 
+        ## TODO: pivoting removed all previous variables so binding them again
+        ## may not be the most elegant solution
+        cbind(meta_info %>% 
+                dplyr::slice(1) %>%
+                dplyr::select(-param_name, -param_description)) %>% 
+        tibble::as_tibble()
+
+  }
+  
+  if (!full_descriptions) {
+    api_results <- api_results %>% 
+      dplyr::select(-stat_description_full)
+  }
+  
+  return(api_results)
 }

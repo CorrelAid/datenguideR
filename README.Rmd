@@ -82,7 +82,6 @@ A slightly more complex call with substatistics:
     
 ```{r}
 
-
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
@@ -105,12 +104,15 @@ dg_call(region_id = "11",
 
 ### AllRegions
 
+Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr` to get data for multiple regions at once.
+
 ```{r}
-# debugonce(dg_call)
 
 dg_call(year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
         nuts_nr = 1) 
 ```
+
+
 

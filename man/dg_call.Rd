@@ -2,12 +2,12 @@
 % Please edit documentation in R/dg_call.R
 \name{dg_call}
 \alias{dg_call}
-\title{dg_call.R}
+\title{dg_call}
 \usage{
 dg_call(region_id = NULL, stat_name = NULL, year = NULL,
-  substat_name = NULL, parameter = NULL, page_nr = NULL,
-  ipp = NULL, nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL,
-  full_descriptions = FALSE)
+  substat_name = NULL, parameter = NULL, ipp = NULL,
+  nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL,
+  full_descriptions = FALSE, page_nr = NULL)
 }
 \arguments{
 \item{region_id}{description}
@@ -20,8 +20,6 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
 
 \item{parameter}{description}
 
-\item{page_nr}{description}
-
 \item{ipp}{description}
 
 \item{nuts_nr}{description}
@@ -31,6 +29,8 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
 \item{parent_chr}{description}
 
 \item{full_descriptions}{description}
+
+\item{page_nr}{description}
 }
 \value{
 Data frame containing the requested data
