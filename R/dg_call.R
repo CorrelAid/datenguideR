@@ -52,9 +52,9 @@ get_results <- function(field, substat_name) {
 #'    parameter = c("TIERART2", "TIERART3"))
 #'
 #' @export
-dg_call <- function(region_id = "11", 
-                    stat_name = "AI0506", 
-                    year = 2002, 
+dg_call <- function(region_id = NULL, 
+                    stat_name = NULL, 
+                    year = NULL, 
                     substat_name = NULL,
                     parameter = NULL, 
                     page_nr = NULL, 
@@ -63,6 +63,26 @@ dg_call <- function(region_id = "11",
                     lau_nr = NULL, 
                     parent_chr = NULL,
                     full_descriptions = FALSE) {
+  
+  if (missing(year)) {
+    year <- c(1990:format(Sys.Date(), "%Y")) # Does this cover all years?
+  }
+  
+  # Errors and warnings -----------------------------------------------------
+  
+  if (missing(stat_name)) {
+    stop("Please provide the name of the statistic you want to retrieve.")
+  }
+  
+  ## TODO: We should change param input for region_id/nuts_nr/lau_nr so that dg_call accepts both num and char and converts it internally.
+  ## But we have to make sure that the string doesn't reduce to e.g. 3 (needs to be 03) for single-digit region ids.
+  ## We should also implement a function to convert single-digit region ids to two-digits id (eg 3 to 03); otherwise this is misleading given the information in dg_regions!
+  ## Alternatively, we need to implement a warning that single-digits regions ids need to have a 0 in front of the number provided in dg_regions.
+  if (missing(region_id) & missing(nuts_nr) & missing(lau_nr)) {
+    stop("Please provide either region_id to query regions or lau_nr/nuts_nr to query all regions. See ?dg_call for an example.")
+  }
+
+  ## TODO: Add Warning for missing years.
   
   # Define fields -----------------------------------------------------
   
@@ -101,8 +121,6 @@ dg_call <- function(region_id = "11",
     )
   }
   
-
-
   id <- list(
     "name" = "id",
     "value" = region_id,
@@ -195,7 +213,7 @@ dg_call <- function(region_id = "11",
 
   # Get results -----------------------------------------------------
   
-  if (!is.null(region_id)) { # condition is probably not sufficient (throw error if region ids are not given for neither region nor allregions query)
+  if (!missing(region_id)) {
     field <- query_region
   } else {
     field <- query_allRegions
@@ -237,10 +255,6 @@ dg_call <- function(region_id = "11",
         dplyr::select(-stat_description_full)
     }
   }
-  
-
-  
-
   
   return(api_results)
 }
