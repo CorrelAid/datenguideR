@@ -76,7 +76,7 @@ clean_it <- function(.data) {
     ##TODO: Rename name in source sub dataset because there is already a "name" variable in main
     ##NOTE Lisa: Those two vars should not be overall source, but rather source for e.g. different params in TIERA8!
     dplyr::bind_cols(raw$source) %>%
-    dplyr::rename(GENESIS_source = "title_de", GENESIS_source_nr = "name1")
+    dplyr::rename_all(dplyr::recode, title_de = "GENESIS_source", name1 = "GENESIS_source_nr")
     
   return(tidy_dat)
 }
