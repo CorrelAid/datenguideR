@@ -115,7 +115,7 @@ clean_all_regions <- function(raw,
                               parent_chr,
                               all_regions) {
   
-  # raw <- api_results
+  # raw <- final
   
   current_page <- raw[["data"]][["allRegions"]][["page"]]
   total_items <- raw[["data"]][["allRegions"]][["total"]]
@@ -153,7 +153,7 @@ clean_all_regions <- function(raw,
         ipp, nuts_nr, lau_nr, parent_chr,
         all_regions
       )) %>% 
-      purrr::map_dfr(~get_results(.x, substat_name) %>% clean_ar)
+      purrr::map_dfr(~get_results(.x, stat_name, substat_name) %>% clean_ar)
     
   }
   

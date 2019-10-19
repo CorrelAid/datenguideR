@@ -130,6 +130,10 @@ dg_call(nuts_nr = 1,
 
 
 ```{r}
-dg_call(nuts_nr = 2, stat_name = "GEBWOR", substat_name = "BAUAT2")
+dg_call(nuts_nr = 2, 
+        stat_name = "GEBWOR", 
+        substat_name = "BAUAT2", 
+        long_format = T)
 ```
+
 

@@ -3,16 +3,17 @@
 #' POST file to the GraphQL API.
 #' 
 #' @param field description
+#' @param stat_name description
 #' @param substat_name description
 #'
 #' @return Data frame containing the requested data
 #'
 #' @export
 
-get_results <- function(field, substat_name) {
+get_results <- function(field, stat_name, substat_name) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = list("query" = dg_query_builder(field = field, substat_name = substat_name)),
+    body = list("query" = dg_query_builder(field = field, stat_name = stat_name, substat_name = substat_name)),
     encode = "json",
     httr::add_headers(.headers = c("Content-Type" = "application/json"))
   )
@@ -66,6 +67,15 @@ dg_call <- function(region_id = NULL,
                     page_nr = NULL,
                     long_format = T) {
   
+  
+  if (!is.null(lau_nr)) {
+    yea_right <- usethis::ui_yeah("Using lau_nr as input might take an hour or more. Are you sure you want to continue?")
+    if (!yea_right) {
+      message("That's ok! I'll be here when you have more time :)")
+      return(NULL)
+    }
+  }
+  
   if (missing(year)) {
     year <- c(1990:format(Sys.Date(), "%Y")) # Does this cover all years?
   }
@@ -111,7 +121,7 @@ dg_call <- function(region_id = NULL,
   # Get results -----------------------------------------------------
 
   if (!all_regions) {
-    api_results <- get_results(field = field, substat_name = substat_name) %>%
+    api_results <- get_results(field = field, stat_name = stat_name, substat_name = substat_name) %>%
       clean_region()
     
     if (!long_format) {
@@ -124,7 +134,7 @@ dg_call <- function(region_id = NULL,
 
     }
   } else {
-    api_results <- get_results(field = field, substat_name = substat_name) %>%
+    api_results <- get_results(field = field, stat_name = stat_name, substat_name = substat_name) %>%
       clean_all_regions(
         ## region provided
         year, stat_name, substat_name, parameter, region_id, 

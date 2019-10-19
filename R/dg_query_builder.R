@@ -3,6 +3,7 @@
 #' Builds the query with a recursive function iterating over fields.
 #' 
 #' @param field description
+#' @param stat_name description
 #' @param substat_name description
 #'
 #' @return Query
@@ -14,7 +15,7 @@
 
 # Recursive query builder -----------------------------------------------------
 
-query_builder <- function(field, substat_name) {
+query_builder <- function(field, stat_name, substat_name) {
   
   if (is.null(substat_name)) {
     substat_name <- "not given"
@@ -68,13 +69,11 @@ query_builder <- function(field, substat_name) {
 
 # Final query builder -----------------------------------------------------
 
-dg_query_builder <- function(field, substat_name) {
-  q <- query_builder(field = field, substat_name = substat_name)
+dg_query_builder <- function(field, stat_name, substat_name) {
+  q <- query_builder(field = field, stat_name = stat_name, substat_name = substat_name)
   
   ##TODO: This is a hacky solution when substat_name is not given
   if (is.null(substat_name)) {
-    
-    stat_name <- field$subfield[[1]]$subfield[[1]]$type
     
     q <- q %>%
       stringr::str_replace("\\{ \\}",

@@ -4,10 +4,12 @@
 \alias{get_results}
 \title{get_results()}
 \usage{
-get_results(field, substat_name)
+get_results(field, stat_name, substat_name)
 }
 \arguments{
 \item{field}{description}
+
+\item{stat_name}{description}
 
 \item{substat_name}{description}
 }

@@ -31,6 +31,8 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
 \item{full_descriptions}{description}
 
 \item{page_nr}{description}
+
+\item{long_format}{description}
 }
 \value{
 Data frame containing the requested data

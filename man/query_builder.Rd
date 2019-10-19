@@ -4,10 +4,12 @@
 \alias{query_builder}
 \title{dg_query_builder.R}
 \usage{
-query_builder(field, substat_name)
+query_builder(field, stat_name, substat_name)
 }
 \arguments{
 \item{field}{description}
+
+\item{stat_name}{description}
 
 \item{substat_name}{description}
 }
