@@ -63,7 +63,8 @@ query_builder <- function(field, stat_name, substat_name) {
       page_nr <- insert_page_nr(field)
       recursive_part <- purrr::map_chr(subfield, query_builder, substat_name = substat_name) # use subfield as anew input for query_builder 
 
-      query <- glue::glue("<<field_name>> <<a>> {<<reg_name>> <<page_nr>> # paste default return variables for different field types 
+      # paste default return variables for different field types 
+      query <- glue::glue("<<field_name>> <<a>> {<<reg_name>> <<page_nr>> 
                           <<recursive_part>>}", # query_builder is called again for the subfield
         .open = "<<", .close = ">>"
       )

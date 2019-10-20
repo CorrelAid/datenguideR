@@ -4,6 +4,7 @@
 # datenguideR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
+
 [![Build\_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/datenguideR)](https://cran.r-project.org/package=datenguideR)
 [![Codecov test
@@ -113,14 +114,17 @@ dg_call(region_id = "11",
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
         parameter = c("TIERART2", "TIERART3")) 
-#> # A tibble: 3 x 9
-#>    year TIERART2 TIERART3 stat_name stat_description substat_name
-#>   <int>    <int>    <int> <chr>     <chr>            <chr>       
-#> 1  2001        8        7 BETR08    Landwirtschaftl… TIERA8      
-#> 2  2003        9        7 BETR08    Landwirtschaftl… TIERA8      
-#> 3  2007       11        5 BETR08    Landwirtschaftl… TIERA8      
-#> # … with 3 more variables: substat_description <chr>,
-#> #   GENESIS_source <chr>, GENESIS_source_nr <chr>
+#> # A tibble: 6 x 12
+#>   id    name   year TIERA8 GENESIS_source GENESIS_source_… param_name
+#>   <chr> <chr> <int>  <int> <chr>          <chr>            <chr>     
+#> 1 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART2  
+#> 2 11    Berl…  2001      7 Allgemeine Ag… 41120            TIERART3  
+#> 3 11    Berl…  2003      9 Allgemeine Ag… 41120            TIERART2  
+#> 4 11    Berl…  2003      7 Allgemeine Ag… 41120            TIERART3  
+#> 5 11    Berl…  2007     11 Allgemeine Ag… 41120            TIERART2  
+#> 6 11    Berl…  2007      5 Allgemeine Ag… 41120            TIERART3  
+#> # … with 5 more variables: stat_name <chr>, stat_description <chr>,
+#> #   substat_name <chr>, substat_description <chr>, param_description <chr>
 ```
 
 If you give no parameters for a substat, it will default to return
@@ -131,16 +135,22 @@ dg_call(region_id = "11",
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8') 
-#> # A tibble: 3 x 15
-#>    year TIERART2 TIERART210 TIERART3 TIERART304 TIERART309 TIERART4
-#>   <int>    <int>      <int>    <int>      <int>      <int>    <int>
-#> 1  2001        3          0        8         15          8        6
-#> 2  2003        0          9       12          0          9        7
-#> 3  2007        3         11        5          0          0        8
-#> # … with 8 more variables: TIERART502 <int>, GESAMT <int>,
-#> #   stat_name <chr>, stat_description <chr>, substat_name <chr>,
-#> #   substat_description <chr>, GENESIS_source <chr>,
-#> #   GENESIS_source_nr <chr>
+#> # A tibble: 24 x 12
+#>    id    name   year TIERA8 GENESIS_source GENESIS_source_… param_name
+#>    <chr> <chr> <int>  <int> <chr>          <chr>            <chr>     
+#>  1 11    Berl…  2001      3 Allgemeine Ag… 41120            TIERART2  
+#>  2 11    Berl…  2001      0 Allgemeine Ag… 41120            TIERART210
+#>  3 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART3  
+#>  4 11    Berl…  2001     15 Allgemeine Ag… 41120            TIERART304
+#>  5 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART309
+#>  6 11    Berl…  2001      6 Allgemeine Ag… 41120            TIERART4  
+#>  7 11    Berl…  2001      7 Allgemeine Ag… 41120            TIERART502
+#>  8 11    Berl…  2001     37 Allgemeine Ag… 41120            GESAMT    
+#>  9 11    Berl…  2003      0 Allgemeine Ag… 41120            TIERART2  
+#> 10 11    Berl…  2003      9 Allgemeine Ag… 41120            TIERART210
+#> # … with 14 more rows, and 5 more variables: stat_name <chr>,
+#> #   stat_description <chr>, substat_name <chr>, substat_description <chr>,
+#> #   param_description <chr>
 ```
 
 ### AllRegions
@@ -154,23 +164,23 @@ dg_call(nuts_nr = 1,
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8') 
-#> Joining, by = "id"
-#> # A tibble: 48 x 15
-#>    name  year     id TIERART2 TIERART210 TIERART3 TIERART304 TIERART309
-#>    <chr> <chr> <dbl>    <int>      <int>    <int>      <int>      <int>
-#>  1 Saar… 2001     10      199         67      374        383        964
-#>  2 Saar… 2003     10      930        261      374        337        179
-#>  3 Saar… 2007     10      267        792      128        222        316
-#>  4 Berl… 2001     11        3          0        8         15          8
-#>  5 Berl… 2003     11        0          9       12          0          9
-#>  6 Berl… 2007     11        3         11        5          0          0
-#>  7 Bran… 2001     12     3376       1243      449        969        663
-#>  8 Bran… 2003     12     3084        700     1183        899        666
-#>  9 Bran… 2007     12     1043       2913      403        750       1502
-#> 10 Meck… 2001     13      772        497      564       1104        304
-#> # … with 38 more rows, and 7 more variables: TIERART4 <int>,
-#> #   TIERART502 <int>, GESAMT <int>, stat_name <chr>,
-#> #   stat_description <chr>, substat_name <chr>, substat_description <chr>
+#> Joining, by = c("id", "name")
+#> # A tibble: 384 x 12
+#>    name     id  year TIERA8 GENESIS_source GENESIS_source_… param_name
+#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
+#>  1 Saar…    10  2001    199 Allgemeine Ag… 41120            TIERART2  
+#>  2 Saar…    10  2001     67 Allgemeine Ag… 41120            TIERART210
+#>  3 Saar…    10  2001    374 Allgemeine Ag… 41120            TIERART3  
+#>  4 Saar…    10  2001    383 Allgemeine Ag… 41120            TIERART304
+#>  5 Saar…    10  2001    964 Allgemeine Ag… 41120            TIERART309
+#>  6 Saar…    10  2001    275 Allgemeine Ag… 41120            TIERART4  
+#>  7 Saar…    10  2001    237 Allgemeine Ag… 41120            TIERART502
+#>  8 Saar…    10  2001   1494 Allgemeine Ag… 41120            GESAMT    
+#>  9 Saar…    10  2003    930 Allgemeine Ag… 41120            TIERART2  
+#> 10 Saar…    10  2003    261 Allgemeine Ag… 41120            TIERART210
+#> # … with 374 more rows, and 5 more variables: stat_name <chr>,
+#> #   stat_description <chr>, substat_description <chr>,
+#> #   param_description <chr>, year_id <chr>
 ```
 
 ``` r
@@ -179,26 +189,59 @@ dg_call(nuts_nr = 1,
         stat_name =  "BAU018",
         substat_name = "BAUAHZ",
         year = 2016)
-#> Joining, by = "id"
-#> # A tibble: 16 x 14
-#>    name  year     id BAUAHZ1 BAUAHZ2 BAUAHZ3 BAUAHZ4 BAUAHZ5 BAUAHZ6 GESAMT
-#>    <chr> <chr> <dbl>   <int>   <int>   <int>   <int>   <int>   <int>  <int>
-#>  1 Saar… 2016     10       1      93      29     369      13       2    231
-#>  2 Berl… 2016     11     105     121      57      10     305       9      3
-#>  3 Bran… 2016     12      74       8     324     843       6     156    275
-#>  4 Meck… 2016     13      23     172     571      50      10     299     17
-#>  5 Sach… 2016     14      97      15     383       2      86     798   1381
-#>  6 Sach… 2016     15       0      37      32       9     189     438    705
-#>  7 Thür… 2016     16     719      10      29     198       4      37    441
-#>  8 Schl… 2016      1    1143     447     539      87      22       1     47
-#>  9 Hamb… 2016      2      72       2     155      31       6       3     41
-#> 10 Nied… 2016      3     125     121    1755      30    1359       6   3396
-#> 11 Brem… 2016      4      48       1      11      36     105       0      9
-#> 12 Nord… 2016      5       7     144    1452    3666     201      51   1811
-#> 13 Hess… 2016      6     119     720      27     668       5      47   1586
-#> 14 Rhei… 2016      7      49     937    1657      51      14     595     11
-#> 15 Bade… 2016      8     927    1500     105    1609     315       6   4462
-#> 16 Baye… 2016      9    2371     509      47       6     196    4909   8038
-#> # … with 4 more variables: stat_name <chr>, stat_description <chr>,
-#> #   substat_name <chr>, substat_description <chr>
+#> Joining, by = c("id", "name")
+#> # A tibble: 112 x 12
+#>    name     id  year BAUAHZ GENESIS_source GENESIS_source_… param_name
+#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
+#>  1 Saar…    10  2016      1 Statistik der… 31111            BAUAHZ1   
+#>  2 Saar…    10  2016     93 Statistik der… 31111            BAUAHZ2   
+#>  3 Saar…    10  2016     29 Statistik der… 31111            BAUAHZ3   
+#>  4 Saar…    10  2016    369 Statistik der… 31111            BAUAHZ4   
+#>  5 Saar…    10  2016     13 Statistik der… 31111            BAUAHZ5   
+#>  6 Saar…    10  2016      2 Statistik der… 31111            BAUAHZ6   
+#>  7 Saar…    10  2016    231 Statistik der… 31111            GESAMT    
+#>  8 Berl…    11  2016    105 Statistik der… 31111            BAUAHZ1   
+#>  9 Berl…    11  2016    121 Statistik der… 31111            BAUAHZ2   
+#> 10 Berl…    11  2016     57 Statistik der… 31111            BAUAHZ3   
+#> # … with 102 more rows, and 5 more variables: stat_name <chr>,
+#> #   stat_description <chr>, substat_description <chr>,
+#> #   param_description <chr>, year_id <chr>
 ```
+
+``` r
+dg_call(nuts_nr = 2, 
+        stat_name = "GEBWOR", 
+        substat_name = "BAUAT2", 
+        long_format = T)
+#> Joining, by = c("id", "name")
+#> # A tibble: 319 x 12
+#>    name     id  year BAUAT2 GENESIS_source GENESIS_source_… param_name
+#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
+#>  1 Chem…   145  2011 328111 Gebäude- und … 31211            BAUALT000…
+#>  2 Chem…   145  2011 115561 Gebäude- und … 31211            BAUALT191…
+#>  3 Chem…   145  2011  73313 Gebäude- und … 31211            BAUALT194…
+#>  4 Chem…   145  2011  28517 Gebäude- und … 31211            BAUALT197…
+#>  5 Chem…   145  2011  42270 Gebäude- und … 31211            BAUALT198…
+#>  6 Chem…   145  2011   9965 Gebäude- und … 31211            BAUALT199…
+#>  7 Chem…   145  2011  19734 Gebäude- und … 31211            BAUALT199…
+#>  8 Chem…   145  2011   2634 Gebäude- und … 31211            BAUALT200…
+#>  9 Chem…   145  2011  20728 Gebäude- und … 31211            BAUALT200…
+#> 10 Chem…   145  2011   6363 Gebäude- und … 31211            BAUALT200…
+#> # … with 309 more rows, and 5 more variables: stat_name <chr>,
+#> #   stat_description <chr>, substat_description <chr>,
+#> #   param_description <chr>, year_id <chr>
+```
+
+<!-- # ```{r} -->
+
+<!-- # library(datenguideR) -->
+
+<!-- # debugonce(datenguideR:::add_substat_info) -->
+
+<!-- # dg_call(lau_nr = 1, parent_chr = 10041,  -->
+
+<!-- #         stat_name =  "BAU018", -->
+
+<!-- #         substat_name = "BAUAHZ",) -->
+
+<!-- # ``` -->
