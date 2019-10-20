@@ -5,9 +5,9 @@
 \title{dg_call}
 \usage{
 dg_call(region_id = NULL, stat_name = NULL, year = NULL,
-  substat_name = NULL, parameter = NULL, ipp = NULL,
-  nuts_nr = NULL, lau_nr = NULL, parent_chr = NULL,
-  full_descriptions = FALSE, page_nr = NULL, long_format = T)
+  substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
+  lau_nr = NULL, parent_chr = NULL, full_descriptions = FALSE,
+  page_nr = NULL, long_format = T)
 }
 \arguments{
 \item{region_id}{description}
