@@ -4,9 +4,6 @@
 # datenguideR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
-
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Build\_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/datenguideR)](https://cran.r-project.org/package=datenguideR)
 [![Codecov test
