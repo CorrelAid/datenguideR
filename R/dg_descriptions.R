@@ -73,4 +73,4 @@ dg_descriptions <- get_descriptions() %>%
     .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
   )
 
-usethis::use_data(dg_descriptions, overwrite = T)
+usethis::use_data(dg_descriptions, overwrite = TRUE)

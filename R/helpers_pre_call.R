@@ -1,6 +1,3 @@
-# Helper functions for dg_call() that prepare data for API call
-
-#*********************
 #' vector_collapse()
 #'
 #' @param vector Vector to collapse
@@ -11,8 +8,6 @@ vector_collapse <- function(vector) {
     paste0("[", ., "]")
 }
 
-
-#*********************
 #' define_fields
 #'
 #' Converts given variables into field structure which are processed in query_builder().
@@ -105,6 +100,7 @@ define_fields <- function(year,
   )
   
   # Define allRegions fields -----------------------------------------------------
+  
   if (all_regions) {
     page <- list(
       "name" = "page",

@@ -1,7 +1,3 @@
-# Helper functions for dg_call() that process the results of the API Call
-
-
-#*********************
 #' clean_region()
 #' 
 #' Clean retrieved data (if region id provided).
@@ -28,7 +24,6 @@ clean_region <- function(.data) {
   return(tidy_dat)
 }
 
-#*********************
 #' clean_all_regions()
 #' 
 #' Clean retrieved data (if AllRegions endpoint is being called).
@@ -108,8 +103,6 @@ clean_all_regions <- function(raw,
 }
 
 
-
-#*********************
 clean_ar <- function(raw) {
   
   # raw <- get_results(field = field, substat_name = substat_name)
@@ -143,10 +136,6 @@ clean_ar <- function(raw) {
   return(final)
 }
 
-
-  
-
-#*********************
 #' add_substat_info
 #'
 #' Add Substat Info

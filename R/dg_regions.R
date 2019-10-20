@@ -29,4 +29,4 @@ get_region <- function(var = NULL, val = NULL) {
 
 dg_regions <- get_region()
 
-usethis::use_data(dg_regions, overwrite = T)
+usethis::use_data(dg_regions, overwrite = TRUE)

@@ -1,8 +1,8 @@
 #' dg_query_builder.R
 #'
-#' Builds a query in GraphQL Syntax via a recursive function that iterates over 
+#' Builds a query in GraphQL syntax through a recursive function that iterates over 
 #' the fields defined in define_fields(). It checks for possible arguments and
-#' subfields and pastes names and values respectively.
+#' subfields and pastes names and values, respectively.
 #' 
 #' @param field Field of "highest order" where recursive function starts. Usually query_list, defined in
 #' define fields.

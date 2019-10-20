@@ -1,8 +1,7 @@
-# Helper functions for dg_query_builder()
-
-#*********************
 #' paste_nv()
-#' Pastes name(s) and value(s) of fields, used for field arguments in query_builder
+#' 
+#' Pastes name(s) and value(s) of fields, used for field arguments in query_builder.
+#' 
 #' @param field The field whos name and value should be pasted into the query
 
 paste_nv <- function(field) {
@@ -19,7 +18,6 @@ paste_nv <- function(field) {
   return(nv)
 }
 
-#*********************
 #' insert_regname()
 #' 
 #' If given field is of type Region 'id, name,' is inserted in query to 
@@ -36,7 +34,6 @@ insert_regname <- function(field) {
   return(b)
 }
 
-#*********************
 #' insert_page_nr()
 #' 
 #' Insert 'page, total, itemsPerPage,' after allRegions to to 
@@ -52,5 +49,3 @@ insert_page_nr <- function(field) {
   }
   return(b)
 }
-
-
