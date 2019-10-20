@@ -76,10 +76,6 @@ dg_call <- function(region_id = NULL,
     }
   }
   
-  if (missing(year)) {
-    year <- c(1990:format(Sys.Date(), "%Y")) # Does this cover all years?
-  }
-  
   # Errors and warnings -----------------------------------------------------
   
   if (missing(stat_name)) {
