@@ -2,7 +2,7 @@
 % Please edit documentation in R/dg_call.R
 \name{dg_call}
 \alias{dg_call}
-\title{dg_call}
+\title{dg_call()}
 \usage{
 dg_call(region_id = NULL, stat_name = NULL, year = NULL,
   substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
