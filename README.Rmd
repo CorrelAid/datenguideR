@@ -135,3 +135,11 @@ dg_call(nuts_nr = 2,
 ```
 
 
+<!-- # ```{r} -->
+<!-- # library(datenguideR) -->
+<!-- # debugonce(datenguideR:::add_substat_info) -->
+<!-- # dg_call(lau_nr = 1, parent_chr = 10041,  -->
+<!-- #         stat_name =  "BAU018", -->
+<!-- #         substat_name = "BAUAHZ",) -->
+<!-- # ``` -->
+
