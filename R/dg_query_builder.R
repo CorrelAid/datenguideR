@@ -4,12 +4,12 @@
 #' the fields defined in define_fields(). It checks for possible arguments and
 #' subfields and pastes names and values, respectively.
 #' 
-#' @param field Field of "highest order" where recursive function starts. Usually query_list, defined in
+#' @param field Field of "highest order" where the recursive function starts. Usually query_list, defined in
 #' define fields.
-#' @param stat_name Name of Statistic (used currently to deal with case of not given substatistic)
-#' @param substat_name Name of Substatistic (used currently to deal with case of not given substatistic)
+#' @param stat_name Name of the main statistic (used currently to deal with case of not given substatistic).
+#' @param substat_name Name of substatistic (used currently to deal with case of not given substatistic).
 #'
-#' @return Query
+#' @return Query for the GraphQL API
 #'
 #' @examples
 #' dg_query_builder <- function(field, substat_name)

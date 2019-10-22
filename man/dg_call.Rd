@@ -7,32 +7,38 @@
 dg_call(region_id = NULL, stat_name = NULL, year = NULL,
   substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
   lau_nr = NULL, parent_chr = NULL, full_descriptions = FALSE,
-  page_nr = NULL, long_format = T)
+  page_nr = NULL, long_format = TRUE)
 }
 \arguments{
 \item{region_id}{description}
 
-\item{stat_name}{description}
+\item{stat_name}{Character string containing the name of the main statistic.
+Please refer to dg_descriptions for a full list.}
 
-\item{year}{description}
+\item{year}{Numeric year(s) for which you want to retrieve the data.}
 
-\item{substat_name}{description}
+\item{substat_name}{Character string containing the name of the sub-statistic.
+Please refer to dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.}
 
-\item{parameter}{description}
+\item{parameter}{Character string containing the name(s) of the parameter(s) you want to retrieve.
+Please refer to dg_descriptions for a full list. Defaults to all available parameters if not specified.}
 
 \item{ipp}{description}
 
-\item{nuts_nr}{description}
+\item{nuts_nr}{TODO: ADD_FORMAT containing the number of the NUTS level.
+1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.}
 
-\item{lau_nr}{description}
+\item{lau_nr}{TODO: ADD_FORMAT containing the number of the LAU level.
+TODO: Change this as it can currently only be "1!.}
 
 \item{parent_chr}{description}
 
-\item{full_descriptions}{description}
+\item{full_descriptions}{If \code{TRUE}, the returning data frame will contain the full descriptions of the
+statistics as provided by GENESIS. Defaults to \code{FALSE}.}
 
 \item{page_nr}{description}
 
-\item{long_format}{description}
+\item{long_format}{If \code{TRUE}, the returning data frame will be in long format.}
 }
 \value{
 Data frame containing the requested data

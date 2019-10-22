@@ -1,12 +1,13 @@
 #' dg_regions.R
 #'
-#' Imports information on all regions.
+#' Imports geographical information on all regions. The data set contains regional IDs on
+#' the NUTS-1, NUTS-2, NUTS-3 and LAU level.
 #' 
-#' @param var Character string naming variable for filtering. 
+#' @param var Character string naming the variable for filtering. 
 #' Can be either id, name, level or parent.
 #' @param val Character string naming the value for filtering.
 #'
-#' @return Data frame containing information on all regions
+#' @return Data frame containing geographical information on all regions
 #'
 #' @examples
 #' dg_regions <- get_region(var = level, val = "nuts1")

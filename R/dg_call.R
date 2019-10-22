@@ -32,17 +32,23 @@ get_results <- function(field, stat_name, substat_name) {
 #' Makes a call to the Datenguide GraphQL API and returns the results.
 #' 
 #' @param region_id description
-#' @param stat_name description
-#' @param year description
-#' @param substat_name description
-#' @param parameter description
+#' @param stat_name Character string containing the name of the main statistic. 
+#' Please refer to dg_descriptions for a full list.
+#' @param year Numeric year(s) for which you want to retrieve the data. 
+#' @param substat_name Character string containing the name of the sub-statistic.
+#' Please refer to dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.
+#' @param parameter Character string containing the name(s) of the parameter(s) you want to retrieve.
+#' Please refer to dg_descriptions for a full list. Defaults to all available parameters if not specified.
 #' @param ipp description
-#' @param nuts_nr description
-#' @param lau_nr description
+#' @param nuts_nr TODO: ADD_FORMAT containing the number of the NUTS level. 
+#' 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.
+#' @param lau_nr TODO: ADD_FORMAT containing the number of the LAU level.
+#' TODO: Change this as it can currently only be "1!.
 #' @param parent_chr description
-#' @param full_descriptions description
+#' @param full_descriptions If `TRUE`, the returning data frame will contain the full descriptions of the
+#' statistics as provided by GENESIS. Defaults to `FALSE`.
 #' @param page_nr description
-#' @param long_format description
+#' @param long_format If `TRUE`, the returning data frame will be in long format.
 #'
 #' @return Data frame containing the requested data
 #'
@@ -66,11 +72,12 @@ dg_call <- function(region_id = NULL,
                     parent_chr = NULL,
                     full_descriptions = FALSE,
                     page_nr = NULL,
-                    long_format = T) {
+                    long_format = TRUE) {
+  
   if (!is.null(lau_nr)) {
-    yea_right <- usethis::ui_yeah("Using lau_nr as input might take an hour or more. Are you sure you want to continue?")
+    yea_right <- usethis::ui_yeah("Retrieving data on the LAU level might take an hour or more. Are you sure you want to continue?")
     if (!yea_right) {
-      message("That's ok! I'll be here when you have more time :)")
+      message("That's OK! I'll be here when you have more time. :)")
       return(NULL)
     }
   }
@@ -78,7 +85,7 @@ dg_call <- function(region_id = NULL,
   # Errors and warnings -----------------------------------------------------
 
   if (missing(stat_name)) {
-    stop("Please provide the name of the statistic you want to retrieve.")
+    stop("Please provide the name of the main statistic you want to retrieve.")
   }
 
   ## TODO: We should change param input for region_id/nuts_nr/lau_nr so that dg_call accepts both num and char and converts it internally.
@@ -86,7 +93,7 @@ dg_call <- function(region_id = NULL,
   ## We should also implement a function to convert single-digit region ids to two-digits id (eg 3 to 03); otherwise this is misleading given the information in dg_regions!
   ## Alternatively, we need to implement a warning that single-digits regions ids need to have a 0 in front of the number provided in dg_regions.
   if (missing(region_id) & missing(nuts_nr) & missing(lau_nr)) {
-    stop("Please provide either a region ID to query a single region or specify a NUTS or LAU level to query all regions on the selected regional level. See ?dg_call for an example.")
+    stop("Please provide either a region ID to query a single region or specify a NUTS or LAU level to query all regions on the selected regional level.")
   }
 
   if (missing(region_id)) {

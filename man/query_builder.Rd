@@ -7,15 +7,15 @@
 query_builder(field, stat_name, substat_name)
 }
 \arguments{
-\item{field}{Field of "highest order" where recursive function starts. Usually query_list, defined in
+\item{field}{Field of "highest order" where the recursive function starts. Usually query_list, defined in
 define fields.}
 
-\item{stat_name}{Name of Statistic (used currently to deal with case of not given substatistic)}
+\item{stat_name}{Name of the main statistic (used currently to deal with case of not given substatistic).}
 
-\item{substat_name}{Name of Substatistic (used currently to deal with case of not given substatistic)}
+\item{substat_name}{Name of substatistic (used currently to deal with case of not given substatistic).}
 }
 \value{
-Query
+Query for the GraphQL API
 }
 \description{
 Builds a query in GraphQL syntax through a recursive function that iterates over

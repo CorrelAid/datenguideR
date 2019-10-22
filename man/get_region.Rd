@@ -7,16 +7,17 @@
 get_region(var = NULL, val = NULL)
 }
 \arguments{
-\item{var}{Character string naming variable for filtering.
+\item{var}{Character string naming the variable for filtering.
 Can be either id, name, level or parent.}
 
 \item{val}{Character string naming the value for filtering.}
 }
 \value{
-Data frame containing information on all regions
+Data frame containing geographical information on all regions
 }
 \description{
-Imports information on all regions.
+Imports geographical information on all regions. The data set contains regional IDs on
+the NUTS-1, NUTS-2, NUTS-3 and LAU level.
 }
 \examples{
 dg_regions <- get_region(var = level, val = "nuts1")
