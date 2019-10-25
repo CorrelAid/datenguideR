@@ -10,26 +10,22 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
   page_nr = NULL, long_format = TRUE)
 }
 \arguments{
-\item{region_id}{description}
+\item{region_id}{TODO: ADD_FORMAT containing the ID of a specific region.}
 
-\item{stat_name}{Character string containing the name of the main statistic.
-Please refer to dg_descriptions for a full list.}
+\item{stat_name}{Character string containing the name of the main statistic. Please see dg_descriptions for a full list.}
 
 \item{year}{Numeric year(s) for which you want to retrieve the data.}
 
-\item{substat_name}{Character string containing the name of the sub-statistic.
-Please refer to dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.}
+\item{substat_name}{Character string containing the name of the sub-statistic. Please see dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.}
 
-\item{parameter}{Character string containing the name(s) of the parameter(s) you want to retrieve.
-Please refer to dg_descriptions for a full list. Defaults to all available parameters if not specified.}
+\item{parameter}{Character string containing the name(s) of the parameter(s) you want to retrieve. Please see dg_descriptions for a full list. Defaults to all available parameters if not specified.}
 
 \item{ipp}{description}
 
-\item{nuts_nr}{TODO: ADD_FORMAT containing the number of the NUTS level.
-1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.}
+\item{nuts_nr}{TODO: ADD_FORMAT containing the number of the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.}
 
 \item{lau_nr}{TODO: ADD_FORMAT containing the number of the LAU level.
-TODO: Change this as it can currently only be "1!.}
+TODO: Change this as it can currently only be "1".}
 
 \item{parent_chr}{description}
 

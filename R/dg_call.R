@@ -31,19 +31,15 @@ get_results <- function(field, stat_name, substat_name) {
 #'
 #' Makes a call to the Datenguide GraphQL API and returns the results.
 #' 
-#' @param region_id description
-#' @param stat_name Character string containing the name of the main statistic. 
-#' Please refer to dg_descriptions for a full list.
+#' @param region_id TODO: ADD_FORMAT containing the ID of a specific region.
+#' @param stat_name Character string containing the name of the main statistic. Please see dg_descriptions for a full list.
 #' @param year Numeric year(s) for which you want to retrieve the data. 
-#' @param substat_name Character string containing the name of the sub-statistic.
-#' Please refer to dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.
-#' @param parameter Character string containing the name(s) of the parameter(s) you want to retrieve.
-#' Please refer to dg_descriptions for a full list. Defaults to all available parameters if not specified.
+#' @param substat_name Character string containing the name of the sub-statistic. Please see dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.
+#' @param parameter Character string containing the name(s) of the parameter(s) you want to retrieve. Please see dg_descriptions for a full list. Defaults to all available parameters if not specified.
 #' @param ipp description
-#' @param nuts_nr TODO: ADD_FORMAT containing the number of the NUTS level. 
-#' 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.
+#' @param nuts_nr TODO: ADD_FORMAT containing the number of the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.
 #' @param lau_nr TODO: ADD_FORMAT containing the number of the LAU level.
-#' TODO: Change this as it can currently only be "1!.
+#' TODO: Change this as it can currently only be "1".
 #' @param parent_chr description
 #' @param full_descriptions If `TRUE`, the returning data frame will contain the full descriptions of the
 #' statistics as provided by GENESIS. Defaults to `FALSE`.
@@ -104,15 +100,16 @@ dg_call <- function(region_id = NULL,
 
   ## TODO: Add Warning for missing years.
 
-  ### Default value for page_nr should be 0 when all_regions == T
+  # Set default value for page_nr and define fields -----------------------------------------------------
+  
   if (all_regions) {
     page_nr <- 0
   }
-  ## Define Fields, handles allregions vs. regions internally
+  
   field <- define_fields(
-    ## region provided
+    ## region_id provided
     year, stat_name, substat_name, parameter, region_id,
-    ## for allregions
+    ## all regions
     page_nr, ipp, nuts_nr, lau_nr, parent_chr,
     all_regions
   )
@@ -132,9 +129,9 @@ dg_call <- function(region_id = NULL,
   } else {
     api_results <- get_results(field = field, stat_name = stat_name, substat_name = substat_name) %>%
       clean_all_regions(
-        ## region provided
+        ## region_id provided
         year, stat_name, substat_name, parameter, region_id,
-        ## for allregions
+        ## all regions
         page_nr, ipp, nuts_nr, lau_nr, parent_chr,
         all_regions
       )
