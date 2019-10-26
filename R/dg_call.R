@@ -10,10 +10,12 @@
 #'
 #' @export
 
-get_results <- function(field, stat_name, substat_name) {
+get_results <- function(field, substat_name, stat_name) {
   result <- httr::POST(
     url = "https://api-next.datengui.de/graphql",
-    body = list("query" = dg_query_builder(field = field, stat_name = stat_name, substat_name = substat_name)),
+    body = list("query" = dg_query_builder(field = field, 
+                                           substat_name = substat_name, 
+                                           stat_name = stat_name)),
     encode = "json",
     httr::add_headers(.headers = c("Content-Type" = "application/json"))
   )
@@ -113,11 +115,13 @@ dg_call <- function(region_id = NULL,
     page_nr, ipp, nuts_nr, lau_nr, parent_chr,
     all_regions
   )
+  
 
   # Get results -----------------------------------------------------
 
   if (!all_regions) {
-    api_results <- get_results(field = field, stat_name = stat_name, substat_name = substat_name) %>%
+    api_results <- get_results(field = field, substat_name = substat_name, 
+                               stat_name = stat_name) %>%
       clean_region()
 
     if (!long_format) {
@@ -127,7 +131,8 @@ dg_call <- function(region_id = NULL,
       }
     }
   } else {
-    api_results <- get_results(field = field, stat_name = stat_name, substat_name = substat_name) %>%
+    api_results <- get_results(field = field, substat_name = substat_name,
+                               stat_name = stat_name) %>%
       clean_all_regions(
         ## region_id provided
         year, stat_name, substat_name, parameter, region_id,

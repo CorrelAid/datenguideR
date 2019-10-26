@@ -53,7 +53,7 @@ define_fields <- function(year,
       "name" = substat_name,
       "value" = ifelse(length(parameter) == 1, parameter, vector_collapse(parameter)),
       "arguments" = list(),
-      "subfield" = list(),
+      "subfield" = NULL,
       "type" = substat_name
     )    
     

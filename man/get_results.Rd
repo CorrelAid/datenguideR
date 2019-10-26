@@ -4,14 +4,14 @@
 \alias{get_results}
 \title{get_results()}
 \usage{
-get_results(field, stat_name, substat_name)
+get_results(field, substat_name, stat_name)
 }
 \arguments{
 \item{field}{description}
 
-\item{stat_name}{description}
-
 \item{substat_name}{description}
+
+\item{stat_name}{description}
 }
 \value{
 Data frame containing the requested data

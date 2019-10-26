@@ -6,36 +6,34 @@
 #' 
 #' @param field Field of "highest order" where the recursive function starts. Usually query_list, defined in
 #' define fields.
-#' @param stat_name Name of the main statistic (used currently to deal with case of not given substatistic).
-#' @param substat_name Name of substatistic (used currently to deal with case of not given substatistic).
 #'
 #' @return Query for the GraphQL API
 #'
 #' @examples
-#' dg_query_builder <- function(field, substat_name)
+#' dg_query_builder <- function(field, lastfield_name)
 #'
 #' @export
 
 # Recursive query builder -----------------------------------------------------
 
-query_builder <- function(field, stat_name, substat_name) {
-  
-  # check if a substatistic is given
-  if (is.null(substat_name)) {
-    substat_name <- "not given"
-  }
+query_builder <- function(field, substat_name) { 
+    
+    if(is.null(substat_name)){
+      substat_name <- 'not given'
+    }
 
     if (field$name == substat_name) { # stop recursive function on substat-level and paste variables that should be returned
     glue::glue("year, <<substat_name>> : value, source { title_de name }", .open = "<<", .close = ">>")
-  } else {
+    } else {
 
     # check if field has arguments
     if (length(field$arguments) > 1) {
       a <- lapply(field[["arguments"]], paste_nv) %>% # paste names and values of arguments
         unlist(.) %>%
         paste0(., collapse = ", ")
-      if (!(a == "")) {
-        a <- glue::glue("( <<a>> )", .open = "<<", .close = ">>")
+      #if (!(a == "")) {
+      if (!is.null(a)) {
+       a <- glue::glue("( <<a>> )", .open = "<<", .close = ">>")
       } else {
         a <- ""
       }
@@ -43,8 +41,9 @@ query_builder <- function(field, stat_name, substat_name) {
     if (length(field$arguments) == 1) {
       a <- field[["arguments"]][[1]] %>%
         paste_nv(.)
-      if (!(a == "")) {
-        a <- glue::glue("( <<a>> )", .open = "<<", .close = ">>")
+      #if (!(a == "")) {
+      if (!is.null(a)) { 
+       a <- glue::glue("( <<a>> )", .open = "<<", .close = ">>")
       } else {
         a <- ""
       }
@@ -54,8 +53,8 @@ query_builder <- function(field, stat_name, substat_name) {
     }
 
     # check if field has subfields
-    if (length(field$subfield) == 0) {
-      query <- glue::glue("<<field$name>> <<a>> { }", .open = "<<", .close = ">>")
+    if (is.null(field$subfield)) {
+      query <- glue::glue("<<field$name>> <<a>> { year, <<field$name>> : value, source { title_de name } }", .open = "<<", .close = ">>")
     } else {
       subfield <- field$subfield
       field_name <- field$name
@@ -74,16 +73,13 @@ query_builder <- function(field, stat_name, substat_name) {
 
 # Final query builder -----------------------------------------------------
 
-dg_query_builder <- function(field, stat_name, substat_name) {
-  q <- query_builder(field = field, stat_name = stat_name, substat_name = substat_name)
-  
-  ##TODO: This is a hacky solution when substat_name is not given
-  if (is.null(substat_name)) {
-    
-    q <- q %>%
-      stringr::str_replace("\\{ \\}",
-                           glue::glue("{year, <<stat_name>> : value, source { title_de name }}", .open = "<<", .close = ">>"))
-  }
-  
-  query <- glue::glue("query <<q>>", .open = "<<", .close = ">>") # add 'query' at the beginning
+dg_query_builder <- function(field, substat_name, stat_name) { 
+  q <- query_builder(field = field, substat_name = substat_name) 
+  query <- glue::glue("query <<q>>", .open = "<<", .close = ">>") %>%  # add 'query' at the beginning
+    stringr::str_sub(., 1, stringr::str_length(.)-1) # delete last curly bracket
+  # insert metadata call (is this all metadata we want?)
+  qu <- glue::glue('<<query>>,
+                    __type (name: "<<stat_name>>") { kind, name, description
+                    fields { description, deprecationReason } } }', 
+                    .open = "<<", .close = ">>")
 }

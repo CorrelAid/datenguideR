@@ -4,15 +4,11 @@
 \alias{query_builder}
 \title{dg_query_builder.R}
 \usage{
-query_builder(field, stat_name, substat_name)
+query_builder(field, substat_name)
 }
 \arguments{
 \item{field}{Field of "highest order" where the recursive function starts. Usually query_list, defined in
 define fields.}
-
-\item{stat_name}{Name of the main statistic (used currently to deal with case of not given substatistic).}
-
-\item{substat_name}{Name of substatistic (used currently to deal with case of not given substatistic).}
 }
 \value{
 Query for the GraphQL API
@@ -23,6 +19,6 @@ the fields defined in define_fields(). It checks for possible arguments and
 subfields and pastes names and values, respectively.
 }
 \examples{
-dg_query_builder <- function(field, substat_name)
+dg_query_builder <- function(field, lastfield_name)
 
 }
