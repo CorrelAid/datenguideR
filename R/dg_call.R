@@ -101,6 +101,33 @@ dg_call <- function(region_id = NULL,
   }
 
   ## TODO: Add Warning for missing years.
+  
+  # Messages -----------------------------------------------------
+  
+  ## BW
+if (region_id == "08" & stat_name == "TIE003") {
+  message('"A alde Kuah vrgissd gärn, daß se au amol a Kalb gwä isch."')
+}
+
+## BY
+if (region_id == "09" & stat_name == "BEVSTD") {
+  message('"Hintam Berg san a no Leit."')
+}
+
+## BE
+if (region_id == "11" & stat_name == "EKF002") {
+  message('"Jeld macht nich jlücklich, man muss et ooch haben."')
+}
+
+## HE
+if (region_id == "06" & stat_name == "BEV004") {
+  message('"Woann mär ebbes Unangenehmes vor sisch hot, oafach umdrehe. Doann hot märs hinner sisch."')
+}
+
+## RP
+if (region_id == "07" & stat_name == "ERWZ02") {
+  message('"Liewer en Bauch vum Esse wie en Buckel vum Schaffe."')
+}
 
   # Set default value for page_nr and define fields -----------------------------------------------------
   
