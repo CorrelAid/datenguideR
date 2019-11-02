@@ -80,6 +80,7 @@ dg_query_builder <- function(field, substat_name, stat_name) {
   # insert metadata call (is this all metadata we want?)
   qu <- glue::glue('<<query>>,
                     __type (name: "<<stat_name>>") { kind, name, description
-                    fields { name, description } } }', 
+                    fields { name, description } } }',
                     .open = "<<", .close = ">>")
+  return(qu)
 }

@@ -10,9 +10,10 @@ clean_region <- function(.data) {
 
   raw <- .data %>%
     purrr::flatten() %>%
+    purrr::list_modify("__type" = NULL) %>% 
     purrr::flatten() %>%
-    purrr::flatten() %>%
-    tibble::as_tibble()
+    purrr::flatten()  %>%
+    tibble::as_tibble(.name_repair = "unique")
   
   tidy_dat <- raw %>% 
     purrr::discard(is.list) %>%
@@ -95,6 +96,11 @@ clean_all_regions <- function(raw,
         all_regions
       )) %>% 
       purrr::map_dfr(~get_results(.x, stat_name, substat_name) %>% clean_ar)
+    
+    # ss %>%
+    #   .[[2]] %>% 
+    #   # purrr::flatten() %>% 
+    #   dg_query_builder(stat_name, substat_name)
     
   }
   
