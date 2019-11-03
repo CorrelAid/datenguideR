@@ -245,3 +245,11 @@ dg_call(nuts_nr = 2,
 <!-- #         substat_name = "BAUAHZ",) -->
 
 <!-- # ``` -->
+
+## Credits and acknowledgements
+
+datenguideR builds on the amazing work of [Datenguide](https://datengui.de/) and their [GraphQL API](https://github.com/datenguide/datenguide-api). We especially thank [Simon Jockers](https://twitter.com/sjockers), [Simon Wörpel](https://twitter.com/simonwoerpel), and [Christian Rijke](https://twitter.com/crijke) for their constructive feedback, helpful comments, and overall support while developing the package.
+
+The data is retrieved via the Datenguide API from the German Federal Statistical Office and the statistical offices of the German states. Data being used via this package has to be credited according to the [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
+
+This package was created with [devtools](https://github.com/r-lib/devtools), [usethis](https://github.com/r-lib/usethis), and [roxygen2](https://github.com/r-lib/roxygen2). Continuous integration was done with [Travis CI](https://travis-ci.org/).
