@@ -95,7 +95,7 @@ clean_all_regions <- function(raw,
         ipp, nuts_nr, lau_nr, parent_chr,
         all_regions
       )) %>% 
-      purrr::map_dfr(~get_results(.x, stat_name, substat_name) %>% clean_ar)
+      purrr::map_dfr(~get_results(.x, substat_name, stat_name) %>% clean_ar)
     
     # ss %>%
     #   .[[2]] %>% 
