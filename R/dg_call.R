@@ -158,7 +158,7 @@ dg_call <- function(region_id = NULL,
     if (!long_format) {
       if (is.null(substat_name)) {
         api_results <- api_results %>%
-          tidyr::pivot_wider(names_from = year, values_from = stat_name)
+          tidyr::pivot_wider(names_from = year, values_from = value)
       }
     }
   } else {
@@ -186,10 +186,13 @@ dg_call <- function(region_id = NULL,
     )
 
     if (all_regions) {
-      api_results <- api_results %>%
-        dplyr::mutate(id = as.numeric(id)) %>%
-        dplyr::left_join(dg_regions %>% dplyr::select(id, name)) %>%
-        dplyr::select(name, dplyr::everything())
+      suppressMessages(
+        api_results <- api_results %>%
+          dplyr::mutate(id = as.numeric(id)) %>%
+          dplyr::left_join(dg_regions %>% dplyr::select(id, name)) %>%
+          dplyr::select(name, dplyr::everything())        
+      )
+
     }
   }
 

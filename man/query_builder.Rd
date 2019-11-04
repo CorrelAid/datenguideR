@@ -9,6 +9,8 @@ query_builder(field, substat_name)
 \arguments{
 \item{field}{Field of "highest order" where the recursive function starts. Usually query_list, defined in
 define fields.}
+
+\item{substat_name}{name of the desired substat}
 }
 \value{
 Query for the GraphQL API

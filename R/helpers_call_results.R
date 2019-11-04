@@ -198,7 +198,7 @@ add_substat_info <- function(api_results,
         api_results <- api_results %>% 
           dplyr::select(-substat_name) %>% 
           tidyr::pivot_wider(names_from = param_name,
-                         values_from = substat_name, 
+                         values_from = value, 
                          id_cols = year) %>% 
           ## TODO: pivoting removed all previous variables so binding them again
           ## may not be the most elegant solution
@@ -226,7 +226,7 @@ add_substat_info <- function(api_results,
       if (!long_format) {
         api_results <- api_results %>% 
           tidyr::pivot_wider(names_from = param_name,
-                             values_from = substat_name, 
+                             values_from = value, 
                              id_cols = year_id) %>%
           tidyr::separate(year_id, into = c("year", "id"), sep = "_") %>% 
           # dplyr::left_join(api_results %>% dplyr::select(id, name), by = "id") %>% 

@@ -6,6 +6,7 @@
 #' 
 #' @param field Field of "highest order" where the recursive function starts. Usually query_list, defined in
 #' define fields.
+#' @param substat_name name of the desired substat
 #'
 #' @return Query for the GraphQL API
 #'
@@ -23,7 +24,7 @@ query_builder <- function(field, substat_name) {
     }
 
     if (field$name == substat_name) { # stop recursive function on substat-level and paste variables that should be returned
-    glue::glue("year, <<substat_name>> : value, source { title_de name }", .open = "<<", .close = ">>")
+      glue::glue("year, <<substat_name>> , value, source { title_de name }", .open = "<<", .close = ">>")
     } else {
 
     # check if field has arguments
@@ -54,16 +55,16 @@ query_builder <- function(field, substat_name) {
 
     # check if field has subfields
     if (is.null(field$subfield)) {
-      query <- glue::glue("<<field$name>> <<a>> { year, <<field$name>> : value, source { title_de name } }", .open = "<<", .close = ">>")
-    } else {
-      subfield <- field$subfield
-      field_name <- field$name
-      reg_name <- insert_regname(field)
-      page_nr <- insert_page_nr(field)
-      recursive_part <- purrr::map_chr(subfield, query_builder, substat_name = substat_name) # use subfield as anew input for query_builder 
-
-      # paste default return variables for different field types 
-      query <- glue::glue("<<field_name>> <<a>> {<<reg_name>> <<page_nr>> 
+      query <- glue::glue("<<field$name>> <<a>> { year,  value, source { title_de name } }", .open = "<<", .close = ">>")
+      } else {
+        subfield <- field$subfield
+        field_name <- field$name
+        reg_name <- insert_regname(field)
+        page_nr <- insert_page_nr(field)
+        recursive_part <- purrr::map_chr(subfield, query_builder, substat_name = substat_name) # use subfield as anew input for query_builder 
+  
+        # paste default return variables for different field types 
+        query <- glue::glue("<<field_name>> <<a>> {<<reg_name>> <<page_nr>> 
                           <<recursive_part>>}", # query_builder is called again for the subfield
         .open = "<<", .close = ">>"
       )
