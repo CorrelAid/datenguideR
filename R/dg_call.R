@@ -175,15 +175,23 @@ dg_call <- function(region_id = NULL,
 
   ## This is an if statement that handles when we need to get more info on a substat and its parameters
   if (!is.null(substat_name)) {
+    
+    add_substat_info <- purrr::possibly(add_substat_info, otherwise = NULL)
+    
     api_results <- add_substat_info(
-      api_results,
-      stat_name,
-      substat_name,
-      parameter,
-      full_descriptions,
-      all_regions,
-      long_format
+        api_results,
+        stat_name,
+        substat_name,
+        parameter,
+        full_descriptions,
+        all_regions,
+        long_format
     )
+    
+    if (is.null(api_results)) {
+      stop("Sorry, this statistic isn't implemented yet. Please try another one and/or retrieve the data for this statistic via https://www.regionalstatistik.de/genesis/online/")
+    }
+
 
     if (all_regions) {
       suppressMessages(
