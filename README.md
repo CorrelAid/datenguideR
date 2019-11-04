@@ -60,20 +60,20 @@ parameters:
 ``` r
 datenguideR::dg_descriptions
 #> # A tibble: 3,419 x 7
-#>    stat_name stat_description stat_descriptio… substat_name
+#>    stat_name stat_description stat_descriptio~ substat_name
 #>    <chr>     <chr>            <chr>            <chr>       
-#>  1 AENW01    Entsorgte/behan… "**Entsorgte/be… <NA>        
-#>  2 AENW02    Abgelagerte Abf… "**Abgelagerte … <NA>        
-#>  3 AENW03    Entsorg.u.Behan… "**Entsorg.u.Be… <NA>        
-#>  4 AENW04    Entsorgte/behan… "**Entsorgte/be… <NA>        
-#>  5 AENW05    Abgelagerte Abf… "**Abgelagerte … <NA>        
-#>  6 AENW06    Entsorg.u.Behan… "**Entsorg.u.Be… <NA>        
-#>  7 AEW001    Entsorgungs- un… "**Entsorgungs-… <NA>        
-#>  8 AEW001    Entsorgungs- un… "**Entsorgungs-… EBANL1      
-#>  9 AEW001    Entsorgungs- un… "**Entsorgungs-… EBANL1      
-#> 10 AEW001    Entsorgungs- un… "**Entsorgungs-… EBANL1      
-#> # … with 3,409 more rows, and 3 more variables: substat_description <chr>,
-#> #   param_name <chr>, param_description <chr>
+#>  1 AENW01    Entsorgte/behan~ "**Entsorgte/be~ <NA>        
+#>  2 AENW02    Abgelagerte Abf~ "**Abgelagerte ~ <NA>        
+#>  3 AENW03    Entsorg.u.Behan~ "**Entsorg.u.Be~ <NA>        
+#>  4 AENW04    Entsorgte/behan~ "**Entsorgte/be~ <NA>        
+#>  5 AENW05    Abgelagerte Abf~ "**Abgelagerte ~ <NA>        
+#>  6 AENW06    Entsorg.u.Behan~ "**Entsorg.u.Be~ <NA>        
+#>  7 AEW001    Entsorgungs- un~ "**Entsorgungs-~ <NA>        
+#>  8 AEW001    Entsorgungs- un~ "**Entsorgungs-~ EBANL1      
+#>  9 AEW001    Entsorgungs- un~ "**Entsorgungs-~ EBANL1      
+#> 10 AEW001    Entsorgungs- un~ "**Entsorgungs-~ EBANL1      
+#> # ... with 3,409 more rows, and 3 more variables:
+#> #   substat_description <chr>, param_name <chr>, param_description <chr>
 ```
 
 Pick a statistic and put it into `dg_call()` (infos can be retrieved
@@ -89,10 +89,17 @@ For example:
 dg_call(region_id = "11",
         year = 2002,
         stat_name = 'AI0506')
-#> # A tibble: 1 x 6
-#>   id    name    year AI0506 GENESIS_source            GENESIS_source_nr
-#>   <chr> <chr>  <int>  <dbl> <chr>                     <chr>            
-#> 1 11    Berlin  2002   77.6 Regionalatlas Deutschland 99910
+#> New names:
+#> * `` -> ...4
+#> * `` -> ...5
+#> * `` -> ...6
+#> * `` -> ...7
+#> # A tibble: 1 x 14
+#>   message  line column ...4  ...5  ...6  ...7  code  id    name   year
+#>   <chr>   <int>  <int> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <int>
+#> 1 "Float~     3     32 regi~ AI05~ 0     AI05~ INTE~ 11    Berl~  2002
+#> # ... with 3 more variables: AI0506 <lgl>, GENESIS_source <chr>,
+#> #   GENESIS_source_nr <chr>
 ```
 
 A slightly more complex call with substatistics:
@@ -114,17 +121,35 @@ dg_call(region_id = "11",
         stat_name = 'BETR08', 
         substat_name = 'TIERA8', 
         parameter = c("TIERART2", "TIERART3")) 
-#> # A tibble: 6 x 12
-#>   id    name   year TIERA8 GENESIS_source GENESIS_source_… param_name
-#>   <chr> <chr> <int>  <int> <chr>          <chr>            <chr>     
-#> 1 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART2  
-#> 2 11    Berl…  2001      7 Allgemeine Ag… 41120            TIERART3  
-#> 3 11    Berl…  2003      9 Allgemeine Ag… 41120            TIERART2  
-#> 4 11    Berl…  2003      7 Allgemeine Ag… 41120            TIERART3  
-#> 5 11    Berl…  2007     11 Allgemeine Ag… 41120            TIERART2  
-#> 6 11    Berl…  2007      5 Allgemeine Ag… 41120            TIERART3  
-#> # … with 5 more variables: stat_name <chr>, stat_description <chr>,
-#> #   substat_name <chr>, substat_description <chr>, param_description <chr>
+#> New names:
+#> * `` -> ...1
+#> * `` -> ...2
+#> * `` -> ...3
+#> * `` -> ...4
+#> * `` -> ...5
+#> * ... and 43 more problems
+#> # A tibble: 6 x 60
+#>   ...1  ...2  ...3  ...4  ...5  ...6  line...7 column...8 line...9
+#>   <chr> <chr> <chr> <chr> <chr> <chr>    <int>      <int>    <int>
+#> 1 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> 2 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> 3 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> 4 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> 5 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> 6 "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~        4          7        4
+#> # ... with 51 more variables: column...10 <int>, line...11 <int>,
+#> #   column...12 <int>, line...13 <int>, column...14 <int>,
+#> #   line...15 <int>, column...16 <int>, line...17 <int>,
+#> #   column...18 <int>, ...19 <chr>, ...20 <chr>, ...21 <chr>, ...22 <chr>,
+#> #   ...23 <chr>, ...24 <chr>, ...25 <chr>, ...26 <chr>, ...27 <chr>,
+#> #   ...28 <chr>, ...29 <chr>, ...30 <chr>, ...31 <chr>, ...32 <chr>,
+#> #   ...33 <chr>, ...34 <chr>, ...35 <chr>, ...36 <chr>, ...37 <chr>,
+#> #   ...38 <chr>, ...39 <chr>, ...40 <chr>, ...41 <chr>, ...42 <chr>,
+#> #   ...43 <chr>, ...44 <chr>, ...45 <chr>, ...46 <chr>, ...47 <chr>,
+#> #   ...48 <chr>, id <chr>, name <chr>, year <int>, TIERA8 <lgl>,
+#> #   GENESIS_source <chr>, GENESIS_source_nr <chr>, param_name <chr>,
+#> #   stat_name <chr>, stat_description <chr>, substat_name <chr>,
+#> #   substat_description <chr>, param_description <chr>
 ```
 
 If you give no parameters for a substat, it will default to return
@@ -135,22 +160,53 @@ dg_call(region_id = "11",
         year = c(2001, 2003, 2007), 
         stat_name = 'BETR08', 
         substat_name = 'TIERA8') 
-#> # A tibble: 24 x 12
-#>    id    name   year TIERA8 GENESIS_source GENESIS_source_… param_name
-#>    <chr> <chr> <int>  <int> <chr>          <chr>            <chr>     
-#>  1 11    Berl…  2001      3 Allgemeine Ag… 41120            TIERART2  
-#>  2 11    Berl…  2001      0 Allgemeine Ag… 41120            TIERART210
-#>  3 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART3  
-#>  4 11    Berl…  2001     15 Allgemeine Ag… 41120            TIERART304
-#>  5 11    Berl…  2001      8 Allgemeine Ag… 41120            TIERART309
-#>  6 11    Berl…  2001      6 Allgemeine Ag… 41120            TIERART4  
-#>  7 11    Berl…  2001      7 Allgemeine Ag… 41120            TIERART502
-#>  8 11    Berl…  2001     37 Allgemeine Ag… 41120            GESAMT    
-#>  9 11    Berl…  2003      0 Allgemeine Ag… 41120            TIERART2  
-#> 10 11    Berl…  2003      9 Allgemeine Ag… 41120            TIERART210
-#> # … with 14 more rows, and 5 more variables: stat_name <chr>,
-#> #   stat_description <chr>, substat_name <chr>, substat_description <chr>,
-#> #   param_description <chr>
+#> New names:
+#> * `` -> ...1
+#> * `` -> ...2
+#> * `` -> ...3
+#> * `` -> ...4
+#> * `` -> ...5
+#> * ... and 187 more problems
+#> # A tibble: 24 x 204
+#>    ...1   ...2  ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
+#>    <chr>  <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
+#>  1 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  2 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  3 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  4 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  5 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  6 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  7 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  8 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#>  9 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#> 10 "Floa~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~ "Flo~
+#> # ... with 14 more rows, and 192 more variables: ...13 <chr>, ...14 <chr>,
+#> #   ...15 <chr>, ...16 <chr>, ...17 <chr>, ...18 <chr>, ...19 <chr>,
+#> #   ...20 <chr>, ...21 <chr>, ...22 <chr>, ...23 <chr>, ...24 <chr>,
+#> #   line...25 <int>, column...26 <int>, line...27 <int>,
+#> #   column...28 <int>, line...29 <int>, column...30 <int>,
+#> #   line...31 <int>, column...32 <int>, line...33 <int>,
+#> #   column...34 <int>, line...35 <int>, column...36 <int>,
+#> #   line...37 <int>, column...38 <int>, line...39 <int>,
+#> #   column...40 <int>, line...41 <int>, column...42 <int>,
+#> #   line...43 <int>, column...44 <int>, line...45 <int>,
+#> #   column...46 <int>, line...47 <int>, column...48 <int>,
+#> #   line...49 <int>, column...50 <int>, line...51 <int>,
+#> #   column...52 <int>, line...53 <int>, column...54 <int>,
+#> #   line...55 <int>, column...56 <int>, line...57 <int>,
+#> #   column...58 <int>, line...59 <int>, column...60 <int>,
+#> #   line...61 <int>, column...62 <int>, line...63 <int>,
+#> #   column...64 <int>, line...65 <int>, column...66 <int>,
+#> #   line...67 <int>, column...68 <int>, line...69 <int>,
+#> #   column...70 <int>, line...71 <int>, column...72 <int>, ...73 <chr>,
+#> #   ...74 <chr>, ...75 <chr>, ...76 <chr>, ...77 <chr>, ...78 <chr>,
+#> #   ...79 <chr>, ...80 <chr>, ...81 <chr>, ...82 <chr>, ...83 <chr>,
+#> #   ...84 <chr>, ...85 <chr>, ...86 <chr>, ...87 <chr>, ...88 <chr>,
+#> #   ...89 <chr>, ...90 <chr>, ...91 <chr>, ...92 <chr>, ...93 <chr>,
+#> #   ...94 <chr>, ...95 <chr>, ...96 <chr>, ...97 <chr>, ...98 <chr>,
+#> #   ...99 <chr>, ...100 <chr>, ...101 <chr>, ...102 <chr>, ...103 <chr>,
+#> #   ...104 <chr>, ...105 <chr>, ...106 <chr>, ...107 <chr>, ...108 <chr>,
+#> #   ...109 <chr>, ...110 <chr>, ...111 <chr>, ...112 <chr>, ...
 ```
 
 ### AllRegions
@@ -166,19 +222,19 @@ dg_call(nuts_nr = 1,
         substat_name = 'TIERA8') 
 #> Joining, by = c("id", "name")
 #> # A tibble: 384 x 12
-#>    name     id  year TIERA8 GENESIS_source GENESIS_source_… param_name
-#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
-#>  1 Saar…    10  2001    199 Allgemeine Ag… 41120            TIERART2  
-#>  2 Saar…    10  2001     67 Allgemeine Ag… 41120            TIERART210
-#>  3 Saar…    10  2001    374 Allgemeine Ag… 41120            TIERART3  
-#>  4 Saar…    10  2001    383 Allgemeine Ag… 41120            TIERART304
-#>  5 Saar…    10  2001    964 Allgemeine Ag… 41120            TIERART309
-#>  6 Saar…    10  2001    275 Allgemeine Ag… 41120            TIERART4  
-#>  7 Saar…    10  2001    237 Allgemeine Ag… 41120            TIERART502
-#>  8 Saar…    10  2001   1494 Allgemeine Ag… 41120            GESAMT    
-#>  9 Saar…    10  2003    930 Allgemeine Ag… 41120            TIERART2  
-#> 10 Saar…    10  2003    261 Allgemeine Ag… 41120            TIERART210
-#> # … with 374 more rows, and 5 more variables: stat_name <chr>,
+#>    name     id  year TIERA8 GENESIS_source GENESIS_source_~ param_name
+#>    <chr> <dbl> <int> <lgl>  <chr>          <chr>            <chr>     
+#>  1 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART2  
+#>  2 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART210
+#>  3 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART3  
+#>  4 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART304
+#>  5 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART309
+#>  6 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART4  
+#>  7 Saar~    10  2001 NA     Allgemeine Ag~ 41120            TIERART502
+#>  8 Saar~    10  2001 NA     Allgemeine Ag~ 41120            GESAMT    
+#>  9 Saar~    10  2003 NA     Allgemeine Ag~ 41120            TIERART2  
+#> 10 Saar~    10  2003 NA     Allgemeine Ag~ 41120            TIERART210
+#> # ... with 374 more rows, and 5 more variables: stat_name <chr>,
 #> #   stat_description <chr>, substat_description <chr>,
 #> #   param_description <chr>, year_id <chr>
 ```
@@ -191,19 +247,19 @@ dg_call(nuts_nr = 1,
         year = 2016)
 #> Joining, by = c("id", "name")
 #> # A tibble: 112 x 12
-#>    name     id  year BAUAHZ GENESIS_source GENESIS_source_… param_name
-#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
-#>  1 Saar…    10  2016      1 Statistik der… 31111            BAUAHZ1   
-#>  2 Saar…    10  2016     93 Statistik der… 31111            BAUAHZ2   
-#>  3 Saar…    10  2016     29 Statistik der… 31111            BAUAHZ3   
-#>  4 Saar…    10  2016    369 Statistik der… 31111            BAUAHZ4   
-#>  5 Saar…    10  2016     13 Statistik der… 31111            BAUAHZ5   
-#>  6 Saar…    10  2016      2 Statistik der… 31111            BAUAHZ6   
-#>  7 Saar…    10  2016    231 Statistik der… 31111            GESAMT    
-#>  8 Berl…    11  2016    105 Statistik der… 31111            BAUAHZ1   
-#>  9 Berl…    11  2016    121 Statistik der… 31111            BAUAHZ2   
-#> 10 Berl…    11  2016     57 Statistik der… 31111            BAUAHZ3   
-#> # … with 102 more rows, and 5 more variables: stat_name <chr>,
+#>    name     id  year BAUAHZ GENESIS_source GENESIS_source_~ param_name
+#>    <chr> <dbl> <int> <lgl>  <chr>          <chr>            <chr>     
+#>  1 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ1   
+#>  2 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ2   
+#>  3 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ3   
+#>  4 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ4   
+#>  5 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ5   
+#>  6 Saar~    10  2016 NA     Statistik der~ 31111            BAUAHZ6   
+#>  7 Saar~    10  2016 NA     Statistik der~ 31111            GESAMT    
+#>  8 Berl~    11  2016 NA     Statistik der~ 31111            BAUAHZ1   
+#>  9 Berl~    11  2016 NA     Statistik der~ 31111            BAUAHZ2   
+#> 10 Berl~    11  2016 NA     Statistik der~ 31111            BAUAHZ3   
+#> # ... with 102 more rows, and 5 more variables: stat_name <chr>,
 #> #   stat_description <chr>, substat_description <chr>,
 #> #   param_description <chr>, year_id <chr>
 ```
@@ -215,19 +271,19 @@ dg_call(nuts_nr = 2,
         long_format = T)
 #> Joining, by = c("id", "name")
 #> # A tibble: 319 x 12
-#>    name     id  year BAUAT2 GENESIS_source GENESIS_source_… param_name
-#>    <chr> <dbl> <int>  <int> <chr>          <chr>            <chr>     
-#>  1 Chem…   145  2011 328111 Gebäude- und … 31211            BAUALT000…
-#>  2 Chem…   145  2011 115561 Gebäude- und … 31211            BAUALT191…
-#>  3 Chem…   145  2011  73313 Gebäude- und … 31211            BAUALT194…
-#>  4 Chem…   145  2011  28517 Gebäude- und … 31211            BAUALT197…
-#>  5 Chem…   145  2011  42270 Gebäude- und … 31211            BAUALT198…
-#>  6 Chem…   145  2011   9965 Gebäude- und … 31211            BAUALT199…
-#>  7 Chem…   145  2011  19734 Gebäude- und … 31211            BAUALT199…
-#>  8 Chem…   145  2011   2634 Gebäude- und … 31211            BAUALT200…
-#>  9 Chem…   145  2011  20728 Gebäude- und … 31211            BAUALT200…
-#> 10 Chem…   145  2011   6363 Gebäude- und … 31211            BAUALT200…
-#> # … with 309 more rows, and 5 more variables: stat_name <chr>,
+#>    name     id  year BAUAT2 GENESIS_source GENESIS_source_~ param_name
+#>    <chr> <dbl> <int> <lgl>  <chr>          <chr>            <chr>     
+#>  1 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT000~
+#>  2 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT191~
+#>  3 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT194~
+#>  4 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT197~
+#>  5 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT198~
+#>  6 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT199~
+#>  7 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT199~
+#>  8 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT200~
+#>  9 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT200~
+#> 10 Chem~   145  2011 NA     Gebäude- und ~ 31211            BAUALT200~
+#> # ... with 309 more rows, and 5 more variables: stat_name <chr>,
 #> #   stat_description <chr>, substat_description <chr>,
 #> #   param_description <chr>, year_id <chr>
 ```
@@ -248,8 +304,22 @@ dg_call(nuts_nr = 2,
 
 ## Credits and acknowledgements
 
-datenguideR builds on the amazing work of [Datenguide](https://datengui.de/) and their [GraphQL API](https://github.com/datenguide/datenguide-api). We especially thank [Simon Jockers](https://twitter.com/sjockers), [Simon Wörpel](https://twitter.com/simonwoerpel), and [Christian Rijke](https://twitter.com/crijke) for their constructive feedback, helpful comments, and overall support while developing the package.
+datenguideR builds on the amazing work of
+[Datenguide](https://datengui.de/) and their [GraphQL
+API](https://github.com/datenguide/datenguide-api). We especially thank
+[Simon Jockers](https://twitter.com/sjockers), [Simon
+Wörpel](https://twitter.com/simonwoerpel), and [Christian
+Rijke](https://twitter.com/crijke) for their constructive feedback,
+helpful comments, and overall support while developing the package.
 
-The data is retrieved via the Datenguide API from the German Federal Statistical Office and the statistical offices of the German states. Data being used via this package has to be credited according to the [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
+The data is retrieved via the Datenguide API from the German Federal
+Statistical Office and the statistical offices of the German states.
+Data being used via this package has to be credited according to the
+[Datenlizenz Deutschland – Namensnennung –
+Version 2.0](https://www.govdata.de/dl-de/by-2-0).
 
-This package was created with [devtools](https://github.com/r-lib/devtools), [usethis](https://github.com/r-lib/usethis), and [roxygen2](https://github.com/r-lib/roxygen2). Continuous integration was done with [Travis CI](https://travis-ci.org/).
+This package was created with
+[devtools](https://github.com/r-lib/devtools),
+[usethis](https://github.com/r-lib/usethis), and
+[roxygen2](https://github.com/r-lib/roxygen2). Continuous integration
+was done with [Travis CI](https://travis-ci.org/).
