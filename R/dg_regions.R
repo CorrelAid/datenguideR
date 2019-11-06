@@ -16,16 +16,16 @@
 #' @export
 
 get_region <- function(var = NULL, val = NULL) {
+  df <- readr::read_csv(
+      system.file("extdata", "regions.csv", package = "datenguideR"),
+      col_types = "cccc"
+    )
   if (missing(var) | missing(val)) {
-    suppressWarnings(df <- readr::read_csv(system.file("extdata", "regions.csv", package = "datenguideR")))
+    return(df)
   } else {
     var <- rlang::parse_expr(rlang::quo_name(rlang::enquo(var)))
-
-    suppressWarnings(df <- readr::read_csv(system.file("extdata", "regions.csv", package = "datenguideR")) %>%
-      dplyr::filter(!!var == val))
+    dplyr::filter(df, !!var == val)
   }
-
-  return(df)
 }
 
 dg_regions <- get_region()
