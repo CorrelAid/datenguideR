@@ -39,7 +39,7 @@ Imports:
     magrittr,
     purrr,
     readr,
-    rlang,
+    rlang (>= 0.4.0),
     stringr,
     tibble,
     tidyr,

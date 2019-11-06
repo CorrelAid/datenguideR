@@ -23,7 +23,7 @@ get_region <- function(var = NULL, val = NULL) {
   if (missing(var) | missing(val)) {
     return(df)
   } else {
-    dplyr::filter(df, !!rlang::enquo(var)  == val)
+    dplyr::filter(df, {{ var }} == val)
   }
 }
 
