@@ -5,9 +5,9 @@
 \title{dg_call()}
 \usage{
 dg_call(region_id = NULL, stat_name = NULL, year = NULL,
-  substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
+  substat_name = NULL, parameter = NULL, ipp = 100, nuts_nr = NULL,
   lau_nr = NULL, parent_chr = NULL, full_descriptions = FALSE,
-  page_nr = NULL, long_format = TRUE)
+  page_nr = NULL)
 }
 \arguments{
 \item{region_id}{TODO: ADD_FORMAT containing the ID of a specific region.}
@@ -33,8 +33,6 @@ TODO: Change this as it can currently only be "1".}
 statistics as provided by GENESIS. Defaults to \code{FALSE}.}
 
 \item{page_nr}{description}
-
-\item{long_format}{If \code{TRUE}, the returning data frame will be in long format.}
 }
 \value{
 Data frame containing the requested data

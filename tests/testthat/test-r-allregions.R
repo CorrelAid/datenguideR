@@ -23,7 +23,8 @@ test_that("calling number of pigs works nuts 3", {
   dg_call(year = c(2001, 2003, 2007),
           stat_name = 'BETR08',
           substat_name = 'TIERA8',
-          nuts_nr = 3)
+          nuts_nr = 3,
+          parent_chr = "1")
   
   
 })
