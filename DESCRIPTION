@@ -22,7 +22,7 @@ Description: Access and download German regional statistics from Datenguide <htt
     datenguideR provides a wrapper for their GraphQL API and also includes metadata for
     all available statistics and regions.
 License: GPL-3
-Depends: R (>= 3.6.1)
+Depends: R (>= 3.6.0)
 Suggests: 
     testthat (>= 2.1.0),
     covr
