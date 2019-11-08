@@ -22,20 +22,9 @@ get_results <- function(field, substat_name, stat_name) {
 
   # stop if error
   httr::stop_for_status(result)
-  
 
   final <- httr::content(result, as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
-  
-  scroll_contexts <- stringr::str_detect(final$errors$message[[1]], "Trying to create too many scroll contexts.")
-  
-  if (length(scroll_contexts)==0) {
-    scroll_contexts <- F
-  }
-  
-  if (scroll_contexts) {
-    stop(final$errors$message[[1]])
-  }
 
   return(final)
 }
@@ -57,6 +46,7 @@ get_results <- function(field, substat_name, stat_name) {
 #' @param full_descriptions If `TRUE`, the returning data frame will contain the full descriptions of the
 #' statistics as provided by GENESIS. Defaults to `FALSE`.
 #' @param page_nr description
+#' @param long_format If `TRUE`, the returning data frame will be in long format.
 #'
 #' @return Data frame containing the requested data
 #'
@@ -74,12 +64,13 @@ dg_call <- function(region_id = NULL,
                     year = NULL,
                     substat_name = NULL,
                     parameter = NULL,
-                    ipp = 100,
+                    ipp = 150,
                     nuts_nr = NULL,
                     lau_nr = NULL,
                     parent_chr = NULL,
                     full_descriptions = FALSE,
-                    page_nr = NULL) {
+                    page_nr = NULL,
+                    long_format = TRUE) {
   
   if (!is.null(lau_nr)) {
     yea_right <- usethis::ui_yeah("Retrieving data on the LAU level might take an hour or more. Are you sure you want to continue?")
@@ -164,12 +155,12 @@ dg_call <- function(region_id = NULL,
                                stat_name = stat_name) %>%
       clean_region()
 
-    # if (!long_format) {
-    #   if (is.null(substat_name)) {
-    #     api_results <- api_results %>%
-    #       tidyr::pivot_wider(names_from = year, values_from = value)
-    #   }
-    # }
+    if (!long_format) {
+      if (is.null(substat_name)) {
+        api_results <- api_results %>%
+          tidyr::pivot_wider(names_from = year, values_from = value)
+      }
+    }
   } else {
     api_results <- get_results(field = field, substat_name = substat_name,
                                stat_name = stat_name) %>%
@@ -183,35 +174,35 @@ dg_call <- function(region_id = NULL,
   }
 
   # ## This is an if statement that handles when we need to get more info on a substat and its parameters
-  # if (!is.null(substat_name)) {
-  #   
-  #   add_substat_info <- purrr::possibly(add_substat_info, otherwise = NULL)
-  #   
-  #   api_results <- add_substat_info(
-  #       api_results,
-  #       stat_name,
-  #       substat_name,
-  #       parameter,
-  #       full_descriptions,
-  #       all_regions,
-  #       long_format
-  #   )
-  #   
-  #   if (is.null(api_results)) {
-  #     stop("Sorry, this statistic isn't implemented yet. Please try another one and/or retrieve the data for this statistic via https://www.regionalstatistik.de/genesis/online/")
-  #   }
-  # 
-  # 
-  #   if (all_regions) {
-  #     suppressMessages(
-  #       api_results <- api_results %>%
-  #         dplyr::mutate(id = as.numeric(id)) %>%
-  #         dplyr::left_join(dg_regions %>% dplyr::select(id, name)) %>%
-  #         dplyr::select(name, dplyr::everything())        
-  #     )
-  # 
-  #   }
-  # }
+  if (!is.null(substat_name)) {
+
+    # add_substat_info <- purrr::possibly(add_substat_info, otherwise = NULL)
+
+    api_results <- add_substat_info(
+        api_results,
+        stat_name,
+        substat_name,
+        parameter,
+        full_descriptions,
+        all_regions,
+        long_format
+    )
+
+    # if (is.null(api_results)) {
+    #   stop("Sorry, this statistic isn't implemented yet. Please try another one and/or retrieve the data for this statistic via https://www.regionalstatistik.de/genesis/online/")
+    # }
+
+
+    if (all_regions) {
+      suppressMessages(
+        api_results <- api_results %>%
+          dplyr::mutate(id = as.numeric(id)) %>%
+          dplyr::left_join(dg_regions %>% dplyr::select(id, name)) %>%
+          dplyr::select(name, dplyr::everything())
+      )
+
+    }
+  }
 
   return(api_results)
 }
