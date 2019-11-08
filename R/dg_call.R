@@ -193,15 +193,7 @@ dg_call <- function(region_id = NULL,
     # }
 
 
-    if (all_regions) {
-      suppressMessages(
-        api_results <- api_results %>%
-          dplyr::mutate(id = as.numeric(id)) %>%
-          dplyr::left_join(dg_regions %>% dplyr::select(id, name)) %>%
-          dplyr::select(name, dplyr::everything())
-      )
 
-    }
   }
 
   return(api_results)
