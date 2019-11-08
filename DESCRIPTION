@@ -25,7 +25,9 @@ License: GPL-3
 Depends: R (>= 2.10)
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -45,3 +47,4 @@ Imports:
     tidyr,
     usethis,
     utils
+VignetteBuilder: knitr

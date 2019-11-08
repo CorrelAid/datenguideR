@@ -34,7 +34,7 @@ get_results <- function(field, substat_name, stat_name) {
   }
   
   if (scroll_contexts) {
-    stop(final$errors$message[[1]])
+    message(final$errors$message[[1]])
   }
 
   return(final)
