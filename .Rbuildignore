@@ -12,3 +12,4 @@
 ^pkgdown$
 ^datenguideR_hexagon\.png$
 ^codecov\.yml$
+^data-raw$

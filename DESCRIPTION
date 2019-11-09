@@ -30,7 +30,6 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-StagedInstall: no
 Imports:
     dplyr,
     glue,
@@ -38,7 +37,6 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    readr,
     rlang (>= 0.4.0),
     stringr,
     tibble,
