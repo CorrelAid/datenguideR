@@ -134,9 +134,13 @@ clean_ar <- function(raw) {
     purrr::map(~purrr::discard(.x, is.list)) %>%
     purrr::set_names(id_dat$id) %>%
     purrr::map_dfr(~ .x %>% tibble::as_tibble(), .id = "id") %>%
-    dplyr::left_join(id_dat, by = "id")  %>% 
-    cbind(source_dat) %>% 
-    tibble::as_tibble()
+    dplyr::left_join(id_dat, by = "id")
+  
+  if (!(nrow(source_dat)==0)) {
+    final <- final %>% 
+      cbind(source_dat) %>% 
+      tibble::as_tibble()
+  }
   
   
   return(final)
