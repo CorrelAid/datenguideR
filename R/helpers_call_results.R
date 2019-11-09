@@ -136,6 +136,7 @@ clean_ar <- function(raw) {
     purrr::map_dfr(~ .x %>% tibble::as_tibble(), .id = "id") %>%
     dplyr::left_join(id_dat, by = "id")
   
+  ## TODO: This is necessary because Travis (for some reason) sometimes thinks source_dat is empty
   if (!(nrow(source_dat)==0)) {
     final <- final %>% 
       cbind(source_dat) %>% 
