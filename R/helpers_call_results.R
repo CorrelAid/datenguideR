@@ -190,10 +190,10 @@ add_substat_info <- function(api_results,
   
   
   if (!all_regions) {
-    suppressMessages(
+    # suppressMessages(
     api_results <- api_results %>% 
       dplyr::left_join(meta_info) 
-    )
+    # )
     
     if (!is.null(substat_name)) {
       if (!long_format) {   
