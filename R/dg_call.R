@@ -176,7 +176,7 @@ dg_call <- function(region_id = NULL,
   # ## This is an if statement that handles when we need to get more info on a substat and its parameters
   if (!is.null(substat_name)) {
 
-    # add_substat_info <- purrr::possibly(add_substat_info, otherwise = NULL)
+    add_substat_info <- purrr::possibly(add_substat_info, otherwise = NULL)
 
     api_results <- add_substat_info(
         api_results,
