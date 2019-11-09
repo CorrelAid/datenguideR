@@ -135,7 +135,7 @@ clean_ar <- function(raw) {
     purrr::set_names(id_dat$id) %>%
     purrr::map_dfr(~ .x %>% tibble::as_tibble(), .id = "id") %>%
     dplyr::left_join(id_dat, by = "id")  %>% 
-    # cbind(source_dat) %>% 
+    cbind(source_dat) %>% 
     tibble::as_tibble()
   
   
@@ -190,10 +190,10 @@ add_substat_info <- function(api_results,
   
   
   if (!all_regions) {
-    # suppressMessages(
+    suppressMessages(
     api_results <- api_results %>% 
       dplyr::left_join(meta_info, by = substat_name_) 
-    # )
+    )
     
     if (!is.null(substat_name)) {
       if (!long_format) {   
@@ -218,7 +218,7 @@ add_substat_info <- function(api_results,
   } else {
     suppressMessages(    
       api_results <- api_results %>% 
-        dplyr::left_join(meta_info) %>% 
+        dplyr::left_join(meta_info, by = substat_name_) %>% 
         dplyr::select(-substat_name) %>% 
         dplyr::mutate(year_id = paste0(year, "_", id)) #
     )
