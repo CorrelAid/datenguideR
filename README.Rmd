@@ -6,7 +6,6 @@ output: github_document
 
 # datenguideR <img src='man/figures/logo.png' align="right" height="139" />
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -18,7 +17,6 @@ knitr::opts_chunk$set(
 
 ```
 
-
 <!-- badges: start -->
 [![Build_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/datenguideR)](https://cran.r-project.org/package=datenguideR)
@@ -28,7 +26,7 @@ knitr::opts_chunk$set(
 
 ## Usage
 
-First, install package from GitHub:
+First, install datenguideR from GitHub:
 
 ```{r, eval=F}
 devtools::install_github("CorrelAid/datenguideR")
@@ -40,10 +38,10 @@ Load package:
 library(datenguideR)
 ```
 
+
 ## Examples
 
 Get IDs of all available NUTS-1 regions:
-
 
 ```{r}
 datenguideR::dg_regions %>%
@@ -59,7 +57,6 @@ datenguideR::dg_descriptions
 
 Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_descriptions`).
 
-
 For example:
 
  - **Statistic** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
@@ -67,7 +64,7 @@ For example:
 ```{r}
 dg_call(region_id = "11",
         year = 2002,
-        stat_name = 'AI0506')
+        stat_name = "AI0506")
 ```
 
 A slightly more complex call with substatistics:
@@ -78,15 +75,12 @@ A slightly more complex call with substatistics:
     - TIERART2 *(Rinder)*
     - TIERART3 *(Schweine)*
     
-    
 ```{r}
-
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
-        stat_name = 'BETR08', 
-        substat_name = 'TIERA8', 
+        stat_name = "BETR08", 
+        substat_name = "TIERA8", 
         parameter = c("TIERART2", "TIERART3")) 
-
 ```
 
 If you give no parameters for a substat, it will default to return results for all of them.
@@ -99,40 +93,29 @@ dg_call(region_id = "11",
 ```
 
 
-
-
 ### AllRegions
 
 Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr` to get data for multiple regions at once.
 
 ```{r}
-
 dg_call(nuts_nr = 1,
         year = c(2001, 2003, 2007), 
-        stat_name = 'BETR08', 
-        substat_name = 'TIERA8') 
-
-
+        stat_name = "BETR08", 
+        substat_name = "TIERA8") 
 ```
 
-
-
 ```{r}
-
 dg_call(nuts_nr = 1,
         stat_name =  "BAU018",
         substat_name = "BAUAHZ",
         year = 2016)
-
 ```
-
 
 ```{r}
 dg_call(nuts_nr = 2, 
         stat_name = "GEBWOR", 
         substat_name = "BAUAT2")
 ```
-
 
 <!-- # ```{r} -->
 <!-- # library(datenguideR) -->
@@ -142,10 +125,16 @@ dg_call(nuts_nr = 2,
 <!-- #         substat_name = "BAUAHZ",) -->
 <!-- # ``` -->
 
-## Credits and acknowledgements
+
+## Credits and Acknowledgements
 
 datenguideR builds on the amazing work of [Datenguide](https://datengui.de/) and their [GraphQL API](https://github.com/datenguide/datenguide-api). We especially thank [Simon Jockers](https://twitter.com/sjockers), [Simon Wörpel](https://twitter.com/simonwoerpel), and [Christian Rijke](https://twitter.com/crijke) for their constructive feedback, helpful comments, and overall support while developing the package.
 
 The data is retrieved via the Datenguide API from the German Federal Statistical Office and the statistical offices of the German states. Data being used via this package has to be credited according to the [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
 
 This package was created with [devtools](https://github.com/r-lib/devtools), [usethis](https://github.com/r-lib/usethis), and [roxygen2](https://github.com/r-lib/roxygen2). Continuous integration was done with [Travis CI](https://travis-ci.org/).
+
+
+## Code of Conduct
+
+datenguideR is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
