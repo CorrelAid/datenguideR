@@ -81,7 +81,7 @@ from `dg_descriptions`).
 
 For example:
 
-  - **Statistic** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+  - **Statistic:** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
 
 <!-- end list -->
 
@@ -132,8 +132,8 @@ results for all of them.
 ``` r
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
-        stat_name = 'BETR08', 
-        substat_name = 'TIERA8') 
+        stat_name =  "BETR08", 
+        substat_name = "TIERA8") 
 #> # A tibble: 23 x 12
 #>    id    name   year TIERA8 value GENESIS_source GENESIS_source_~ stat_name
 #>    <chr> <chr> <int> <chr>  <int> <chr>          <chr>            <chr>    
