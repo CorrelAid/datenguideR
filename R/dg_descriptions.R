@@ -109,6 +109,7 @@ dg_descriptions <- get_descriptions() %>%
 # en_list %>% dplyr::group_split(id) %>% .[[3]] %>% tidyr::drop_na(stat_description_full_en)
 # en_list %>% dplyr::group_split(id) %>% .[[4]] %>% tidyr::drop_na(substat_description_en)
 
+# load("https://github.com/CorrelAid/datenguideR/blob/master/inst/extdata/en_list.Rdata?raw=true")
 
 # dg_descriptions <- join_en_translation(dg_descriptions, en_list)
 
