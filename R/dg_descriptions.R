@@ -101,8 +101,13 @@ dg_descriptions <- get_descriptions() %>%
     .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
   )
 
-# load("r/sysdata.rda")
 
+# en_list <- readr::read_csv("https://raw.githubusercontent.com/CorrelAid/datenguideR/master/inst/extdata/en_list.csv") 
+# 
+# en_list %>% dplyr::group_split(id) %>% .[[1]] %>% tidyr::drop_na(param_description_en)
+# en_list %>% dplyr::group_split(id) %>% .[[2]] %>% tidyr::drop_na(stat_description_en)
+# en_list %>% dplyr::group_split(id) %>% .[[3]] %>% tidyr::drop_na(stat_description_full_en)
+# en_list %>% dplyr::group_split(id) %>% .[[4]] %>% tidyr::drop_na(substat_description_en)
 
 
 # dg_descriptions <- join_en_translation(dg_descriptions, en_list)
