@@ -101,7 +101,7 @@ dg_descriptions <- get_descriptions() %>%
     .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
   )
 
-load("r/sysdata.rda")
+# load("r/sysdata.rda")
 
 
 dg_descriptions <- join_en_translation(dg_descriptions, en_list)
@@ -109,6 +109,6 @@ dg_descriptions <- join_en_translation(dg_descriptions, en_list)
 # load("r/sysdata.rda")
 # usethis::use_data(en_list, overwrite = TRUE, internal = T)
 
-
-
+# datenguideR:::en_list
+# usethis::use_data(dg_descriptions, overwrite = TRUE)
 usethis::use_data(dg_descriptions, overwrite = TRUE)
