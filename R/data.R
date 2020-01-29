@@ -12,3 +12,11 @@
 #'
 #' @format A data frame with 14,677 obervations and 4 variables.
 "dg_regions"
+
+
+#' Data on English translations
+#'
+#' A dataset containing english translations.
+#'
+#' @format A data frame.
+"en_list"
