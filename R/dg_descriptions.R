@@ -1,3 +1,31 @@
+##' join_en_translation
+##'
+##' This function joins a list of English translations to the dg_descriptions dataset.
+##'
+##' @param dg_descriptions data set which includes all meta data
+##' @param en_list list that includes all English translations
+##' @return Data frame containing all available meta data *with* English translation
+##'
+##' @examples
+##' dg_descriptions <- join_en_translation(datenguideR::dg_descriptions, en_list)
+##' dg_descriptions
+##'
+##' @export
+join_en_translation <- function(dg_descriptions, en_list) {
+  start_dat <- dg_descriptions
+  
+  for (jj in seq_along(en_list)) {
+    start_dat <- start_dat %>% 
+      dplyr::left_join(en_list[[jj]])
+  }
+  
+  start_dat <- start_dat %>% dplyr::mutate_all(~ifelse(.x == "N / a", NA, .x))
+  
+  return(start_dat)
+}
+
+
+
 ##' dg_descriptions.R
 ##'
 ##' Gets all available meta data on statistics, sub-statistics, and parameters.
@@ -72,5 +100,15 @@ dg_descriptions <- get_descriptions() %>%
     .vars = c("param_name", "param_description"),
     .funs = list(~ ifelse(substat_name == "", NA, as.character(.)))
   )
+
+load("r/sysdata.rda")
+
+
+dg_descriptions <- join_en_translation(dg_descriptions, en_list)
+
+# load("r/sysdata.rda")
+# usethis::use_data(en_list, overwrite = TRUE, internal = T)
+
+
 
 usethis::use_data(dg_descriptions, overwrite = TRUE)
