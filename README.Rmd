@@ -76,6 +76,7 @@ A slightly more complex call with substatistics:
     - TIERART3 *(Schweine)*
     
 ```{r}
+
 dg_call(region_id = "11", 
         year = c(2001, 2003, 2007), 
         stat_name = "BETR08", 

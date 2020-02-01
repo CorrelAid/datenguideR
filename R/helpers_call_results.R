@@ -175,7 +175,11 @@ add_substat_info <- function(api_results,
   stat_name_ <- stat_name
   substat_name_ <- substat_name
   
-  meta_names <- c("stat_name", "stat_description", "stat_description_full", "substat_name", "substat_description", substat_name_, "param_description")
+  meta_names <- c("stat_name", "stat_description", 
+                  "stat_description_full", "substat_name",
+                  "substat_description", substat_name_, "param_description", 
+                  "stat_description_en", "stat_description_full_en",
+                  "substat_description_en", "param_description_en")
   
   
   ## get meta data for specific call
