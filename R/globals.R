@@ -8,6 +8,7 @@ utils::globalVariables(
     "param_name",
     "param_description",
     "stat_description_full",
+    "stat_description_full_en",
     "year",
     "year_id",
     "dg_descriptions",

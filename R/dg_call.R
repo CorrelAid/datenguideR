@@ -195,6 +195,25 @@ dg_call <- function(region_id = NULL,
 
 
 
+  } else if (is.null(substat_name)){
+    
+    stat_name_ <- stat_name
+  
+    ## get meta data for specific call
+    meta_info <- dg_descriptions %>%  
+      dplyr::filter(stat_name == stat_name_) 
+      ##TODO: sometimes it says GESAMT sometimes it says INSGESAMT, really odd
+      # dplyr::filter(param_name != "INSGESAMT") 
+    
+    api_results <- api_results %>% 
+      dplyr::mutate(stat_name = stat_name_) %>% 
+      dplyr::left_join(meta_info, by = "stat_name") %>% 
+      dplyr::select_if(~sum(!is.na(.)) > 0)
+
+    if (!full_descriptions) {
+      api_results <- api_results %>% 
+        dplyr::select(-stat_description_full, -stat_description_full_en)
+    }
   }
 
   return(api_results)

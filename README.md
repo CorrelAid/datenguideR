@@ -78,6 +78,34 @@ datenguideR::dg_descriptions
 #> #   param_description_en <chr>
 ```
 
+You can also use `dg_search` to look for a variable of interest. The
+function will match your string with any strings in the data frame,
+returning only rows with those matches.
+
+Looking for variables where the string *“vote”* appeasrs somewhere in
+the description:
+
+``` r
+dg_search("vote")
+#> # A tibble: 90 x 11
+#>    stat_name stat_description stat_descriptio… substat_name
+#>    <chr>     <chr>            <chr>            <chr>       
+#>  1 AI0501    Zweitstimmenant… "**Zweitstimmen… <NA>        
+#>  2 AI0502    Zweitstimmenant… "**Zweitstimmen… <NA>        
+#>  3 AI0503    Zweitstimmenant… "**Zweitstimmen… <NA>        
+#>  4 AI0504    Zweitstimmenant… "**Zweitstimmen… <NA>        
+#>  5 AI0505    Zweitstimmenant… "**Zweitstimmen… <NA>        
+#>  6 AI0506    Wahlbeteiligung… "**Wahlbeteilig… <NA>        
+#>  7 AI0601    Stimmenanteil C… "**Stimmenantei… <NA>        
+#>  8 AI0602    Stimmenanteil S… "**Stimmenantei… <NA>        
+#>  9 AI0603    Stimmenanteil F… "**Stimmenantei… <NA>        
+#> 10 AI0604    Stimmenanteil G… "**Stimmenantei… <NA>        
+#> # … with 80 more rows, and 7 more variables: substat_description <chr>,
+#> #   param_name <chr>, param_description <chr>, stat_description_en <chr>,
+#> #   stat_description_full_en <chr>, substat_description_en <chr>,
+#> #   param_description_en <chr>
+```
+
 Pick a statistic and put it into `dg_call()` (infos can be retrieved
 from `dg_descriptions`).
 
@@ -91,10 +119,12 @@ For example:
 dg_call(region_id = "11",
         year = 2002,
         stat_name = "AI0506")
-#> # A tibble: 1 x 6
-#>   id    name    year value GENESIS_source            GENESIS_source_nr
-#>   <chr> <chr>  <int> <dbl> <chr>                     <chr>            
-#> 1 11    Berlin  2002  77.6 Regionalatlas Deutschland 99910
+#> # A tibble: 1 x 9
+#>   id    name   year value GENESIS_source GENESIS_source_… stat_name
+#>   <chr> <chr> <int> <dbl> <chr>          <chr>            <chr>    
+#> 1 11    Berl…  2002  77.6 Regionalatlas… 99910            AI0506   
+#> # … with 2 more variables: stat_description <chr>,
+#> #   stat_description_en <chr>
 ```
 
 A slightly more complex call with substatistics:
@@ -116,7 +146,7 @@ dg_call(region_id = "11",
         stat_name = "BETR08", 
         substat_name = "TIERA8", 
         parameter = c("TIERART2", "TIERART3")) 
-#> # A tibble: 6 x 16
+#> # A tibble: 6 x 15
 #>   id    name   year TIERA8 value GENESIS_source GENESIS_source_… stat_name
 #>   <chr> <chr> <int> <chr>  <int> <chr>          <chr>            <chr>    
 #> 1 11    Berl…  2001 TIERA…     8 Allgemeine Ag… 41120            BETR08   
@@ -125,10 +155,10 @@ dg_call(region_id = "11",
 #> 4 11    Berl…  2003 TIERA…     7 Allgemeine Ag… 41120            BETR08   
 #> 5 11    Berl…  2007 TIERA…    11 Allgemeine Ag… 41120            BETR08   
 #> 6 11    Berl…  2007 TIERA…     5 Allgemeine Ag… 41120            BETR08   
-#> # … with 8 more variables: stat_description <chr>, substat_name <chr>,
+#> # … with 7 more variables: stat_description <chr>, substat_name <chr>,
 #> #   substat_description <chr>, param_description <chr>,
-#> #   stat_description_en <chr>, stat_description_full_en <chr>,
-#> #   substat_description_en <chr>, param_description_en <chr>
+#> #   stat_description_en <chr>, substat_description_en <chr>,
+#> #   param_description_en <chr>
 ```
 
 If you give no parameters for a substat, it will default to return
@@ -139,7 +169,7 @@ dg_call(region_id = "11",
         year = c(2001, 2003, 2007), 
         stat_name =  "BETR08", 
         substat_name = "TIERA8") 
-#> # A tibble: 23 x 16
+#> # A tibble: 23 x 15
 #>    id    name   year TIERA8 value GENESIS_source GENESIS_source_… stat_name
 #>    <chr> <chr> <int> <chr>  <int> <chr>          <chr>            <chr>    
 #>  1 11    Berl…  2001 GESAMT    37 Allgemeine Ag… 41120            BETR08   
@@ -152,11 +182,10 @@ dg_call(region_id = "11",
 #>  8 11    Berl…  2001 TIERA…    15 Allgemeine Ag… 41120            BETR08   
 #>  9 11    Berl…  2003 GESAMT    33 Allgemeine Ag… 41120            BETR08   
 #> 10 11    Berl…  2003 TIERA…     0 Allgemeine Ag… 41120            BETR08   
-#> # … with 13 more rows, and 8 more variables: stat_description <chr>,
+#> # … with 13 more rows, and 7 more variables: stat_description <chr>,
 #> #   substat_name <chr>, substat_description <chr>,
 #> #   param_description <chr>, stat_description_en <chr>,
-#> #   stat_description_full_en <chr>, substat_description_en <chr>,
-#> #   param_description_en <chr>
+#> #   substat_description_en <chr>, param_description_en <chr>
 ```
 
 ### AllRegions
@@ -169,7 +198,7 @@ dg_call(nuts_nr = 1,
         year = c(2001, 2003, 2007), 
         stat_name = "BETR08", 
         substat_name = "TIERA8") 
-#> # A tibble: 383 x 16
+#> # A tibble: 383 x 15
 #>    id     year TIERA8 value name  GENESIS_source GENESIS_source_… stat_name
 #>    <chr> <int> <chr>  <int> <chr> <chr>          <chr>            <chr>    
 #>  1 10     2001 GESAMT  1494 Saar… Allgemeine Ag… 41120            BETR08   
@@ -182,11 +211,10 @@ dg_call(nuts_nr = 1,
 #>  8 10     2001 TIERA…   383 Saar… Allgemeine Ag… 41120            BETR08   
 #>  9 10     2003 GESAMT  1428 Saar… Allgemeine Ag… 41120            BETR08   
 #> 10 10     2003 TIERA…   337 Saar… Allgemeine Ag… 41120            BETR08   
-#> # … with 373 more rows, and 8 more variables: stat_description <chr>,
+#> # … with 373 more rows, and 7 more variables: stat_description <chr>,
 #> #   substat_description <chr>, param_description <chr>,
-#> #   stat_description_en <chr>, stat_description_full_en <chr>,
-#> #   substat_description_en <chr>, param_description_en <chr>,
-#> #   year_id <chr>
+#> #   stat_description_en <chr>, substat_description_en <chr>,
+#> #   param_description_en <chr>, year_id <chr>
 ```
 
 ``` r
@@ -194,7 +222,7 @@ dg_call(nuts_nr = 1,
         stat_name =  "BAU018",
         substat_name = "BAUAHZ",
         year = 2016)
-#> # A tibble: 112 x 16
+#> # A tibble: 112 x 15
 #>    id     year BAUAHZ value name  GENESIS_source GENESIS_source_… stat_name
 #>    <chr> <int> <chr>  <int> <chr> <chr>          <chr>            <chr>    
 #>  1 10     2016 INSGE…   369 Saar… Statistik der… 31111            BAU018   
@@ -207,18 +235,17 @@ dg_call(nuts_nr = 1,
 #>  8 11     2016 BAUAH…     9 Berl… Statistik der… 31111            BAU018   
 #>  9 11     2016 INSGE…   305 Berl… Statistik der… 31111            BAU018   
 #> 10 11     2016 BAUAH…   105 Berl… Statistik der… 31111            BAU018   
-#> # … with 102 more rows, and 8 more variables: stat_description <chr>,
+#> # … with 102 more rows, and 7 more variables: stat_description <chr>,
 #> #   substat_description <chr>, param_description <chr>,
-#> #   stat_description_en <chr>, stat_description_full_en <chr>,
-#> #   substat_description_en <chr>, param_description_en <chr>,
-#> #   year_id <chr>
+#> #   stat_description_en <chr>, substat_description_en <chr>,
+#> #   param_description_en <chr>, year_id <chr>
 ```
 
 ``` r
 dg_call(nuts_nr = 2, 
         stat_name = "GEBWOR", 
         substat_name = "BAUAT2")
-#> # A tibble: 418 x 16
+#> # A tibble: 418 x 15
 #>    id     year BAUAT2  value name  GENESIS_source GENESIS_source_…
 #>    <chr> <int> <chr>   <int> <chr> <chr>          <chr>           
 #>  1 100    2011 BAUAL…  43520 Saar… Gebäude- und … 31211           
@@ -231,11 +258,11 @@ dg_call(nuts_nr = 2,
 #>  8 100    2011 BAUAL…  47962 Saar… Gebäude- und … 31211           
 #>  9 100    2011 BAUAL…  25318 Saar… Gebäude- und … 31211           
 #> 10 100    2011 BAUAL…   8562 Saar… Gebäude- und … 31211           
-#> # … with 408 more rows, and 9 more variables: stat_name <chr>,
+#> # … with 408 more rows, and 8 more variables: stat_name <chr>,
 #> #   stat_description <chr>, substat_description <chr>,
 #> #   param_description <chr>, stat_description_en <chr>,
-#> #   stat_description_full_en <chr>, substat_description_en <chr>,
-#> #   param_description_en <chr>, year_id <chr>
+#> #   substat_description_en <chr>, param_description_en <chr>,
+#> #   year_id <chr>
 ```
 
 <!-- # ```{r} -->

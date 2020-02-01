@@ -251,7 +251,7 @@ add_substat_info <- function(api_results,
   
   if (!full_descriptions) {
     api_results <- api_results %>% 
-      dplyr::select(-stat_description_full)
+      dplyr::select(-stat_description_full, -stat_description_full_en)
   }
   
   return(api_results)

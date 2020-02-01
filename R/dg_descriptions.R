@@ -76,3 +76,30 @@ get_descriptions <- function() {
 
 # usethis::use_data(dg_descriptions, overwrite = TRUE)
 
+
+
+##' dg_search
+##'
+##' Search for a string in dg_descriptions
+##' @param string String that you want to search for (accepts regex)
+##' @return Data frame containing meta data only containing the search string
+##'
+##' @examples
+##' dg_descriptions <- dg_search("vote")
+##' dg_descriptions
+##'
+##' @export
+dg_search <- function(string) {
+  
+  string <- stringr::str_to_lower(string)
+  
+  final <- dg_descriptions %>% 
+    dplyr::filter_all(
+      .vars_predicate = dplyr::any_vars(
+        stringr::str_detect(
+          stringr::str_to_lower(.), string)
+        )
+    )
+  
+  return(final)
+}

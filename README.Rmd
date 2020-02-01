@@ -55,6 +55,14 @@ Get all available meta data on statistics, substatistics, and parameters:
 datenguideR::dg_descriptions
 ```
 
+You can also use `dg_search` to look for a variable of interest. The function will match your string with any strings in the data frame, returning only rows with those matches.
+
+Looking for variables where the string *"vote"* appears somewhere in the documentation:
+
+```{r}
+dg_search("vote")
+```
+
 Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_descriptions`).
 
 For example:

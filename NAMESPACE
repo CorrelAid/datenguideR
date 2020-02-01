@@ -2,6 +2,7 @@
 
 export("%>%")
 export(dg_call)
+export(dg_search)
 export(get_descriptions)
 export(get_region)
 export(get_results)
