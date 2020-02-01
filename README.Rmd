@@ -63,6 +63,13 @@ Looking for variables where the string *"vote"* appears somewhere in the documen
 dg_search("vote")
 ```
 
+Note: Descriptions of variables are also available in English now! Translated via the [`googleLanguageR`](https://github.com/ropensci/googleLanguageR) package.
+
+```{r}
+dg_search("vote") %>% 
+  dplyr::select(stat_name, dplyr::contains("_en"))
+```
+
 Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_descriptions`).
 
 For example:
