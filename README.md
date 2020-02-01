@@ -135,7 +135,7 @@ from `dg_descriptions`).
 
 For example:
 
-  - **Statistic:** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+  - **Statistic:** AI0506 *(Voter Turnout, Federal Election)*
 
 <!-- end list -->
 

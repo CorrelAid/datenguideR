@@ -74,7 +74,7 @@ Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_de
 
 For example:
 
- - **Statistic:** AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+ - **Statistic:** AI0506 *(Voter Turnout, Federal Election)*
 
 ```{r}
 dg_call(region_id = "11",
