@@ -10,6 +10,7 @@ utils::globalVariables(
     "stat_description_full",
     "stat_description_full_en",
     "year",
+    "n",
     "year_id",
     "dg_descriptions",
     "dg_regions",

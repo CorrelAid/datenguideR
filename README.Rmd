@@ -74,13 +74,19 @@ Pick a statistic and put it into `dg_call()` (infos can be retrieved from `dg_de
 
 For example:
 
- - **Statistic:** AI0506 *(Voter Turnout, Federal Election)*
+ - `stat_name:` AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+ - `region_id` 11 (stands for Berlin)
 
 ```{r}
 dg_call(region_id = "11",
-        year = 2002,
+        year = 2017,
         stat_name = "AI0506")
+
+
+
 ```
+
+
 
 A slightly more complex call with substatistics:
 
@@ -111,7 +117,18 @@ dg_call(region_id = "11",
 
 ### AllRegions
 
-Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr` to get data for multiple regions at once.
+Instead of specifying a `region_id` for individual Bundesland (state) data you can also use `nuts_nr` to receive data for *NUTS-1*, *NUTS-2* and *NUTS-3*.
+
+Just leave `region_id` blank and provide either a `nuts_nr` (or `lau_nr`) to get data for multiple regions at once.
+
+```{r}
+dg_call(nuts_nr = 1,
+        year = 2017,
+        stat_name = "AI0506")
+
+
+
+```
 
 ```{r}
 dg_call(nuts_nr = 1,

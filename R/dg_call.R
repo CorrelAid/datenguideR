@@ -99,6 +99,19 @@ dg_call <- function(region_id = NULL,
   } else {
     all_regions <- FALSE
   }
+  
+  stats_with_subs <- dg_descriptions %>% 
+    dplyr::group_by(stat_name) %>% 
+    dplyr::distinct(substat_name) %>%
+    tidyr::drop_na() %>% 
+    dplyr::count(stat_name, sort = T) %>% 
+    dplyr::filter(n >= 2)
+  
+  if (missing(substat_name) & stat_name %in% stats_with_subs$stat_name) {
+    stop("Please provide a substat for this statistic")
+  }
+  
+
 
   ## TODO: Add Warning for missing years.
   
@@ -209,11 +222,27 @@ dg_call <- function(region_id = NULL,
       dplyr::mutate(stat_name = stat_name_) %>% 
       dplyr::left_join(meta_info, by = "stat_name") %>% 
       dplyr::select_if(~sum(!is.na(.)) > 0)
+    
+    if (nrow(api_results)==0){
+      stop("No data returned. Try different values for year or other combination of inputs.")
+    }
 
     if (!full_descriptions) {
       api_results <- api_results %>% 
         dplyr::select(-stat_description_full, -stat_description_full_en)
     }
+  }
+  
+  if ("value" %in% colnames(api_results)){
+    
+    unique_val <- api_results %>%
+      dplyr::count(value) %>% 
+      nrow() %>% magrittr::equals(1)
+    
+    if(unique_val){
+      message("There may be a problem with the data (all values are equal).")
+    }
+    
   }
 
   return(api_results)

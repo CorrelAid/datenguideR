@@ -117,16 +117,16 @@ dg_search("vote") %>%
 #> # A tibble: 90 x 5
 #>    stat_name stat_descriptio… stat_descriptio… substat_descrip…
 #>    <chr>     <chr>            <chr>            <chr>           
-#>  1 AI0501    Second Vote Sha… "** CDU / CSU S… <NA>            
-#>  2 AI0502    SPD Second Vote… "** SPD Second … <NA>            
-#>  3 AI0503    FDP Second Vote… "** Second Vote… <NA>            
-#>  4 AI0504    Second Vote Sha… "** GREEN Secon… <NA>            
-#>  5 AI0505    Second Vote Sha… "** Second Vote… <NA>            
-#>  6 AI0506    Voter Turnout, … "** Voter Turno… <NA>            
-#>  7 AI0601    CDU / CSU, Euro… "** CDU / CSU V… <NA>            
-#>  8 AI0602    SPD Vote Share,… "** SPD Vote Sh… <NA>            
-#>  9 AI0603    FDP Share of Vo… "** FDP Vote Sh… <NA>            
-#> 10 AI0604    Share of Votes … "** GREEN Share… <NA>            
+#>  1 AI0501    Second Vote Sha… "** CDU / CSU s… <NA>            
+#>  2 AI0502    SPD Second Vote… "** SPD second … <NA>            
+#>  3 AI0503    FDP Second Vote… "** Second vote… <NA>            
+#>  4 AI0504    Second Vote Sha… "** GREEN secon… <NA>            
+#>  5 AI0505    Second Vote Sha… "** Second vote… <NA>            
+#>  6 AI0506    Voter Turnout, … "** Voter turno… <NA>            
+#>  7 AI0601    CDU / CSU, Euro… "** CDU / CSU v… <NA>            
+#>  8 AI0602    SPD Vote Share,… "** SPD vote sh… <NA>            
+#>  9 AI0603    FDP Share of Vo… "** FDP vote sh… <NA>            
+#> 10 AI0604    Share of Votes … "** GREEN share… <NA>            
 #> # … with 80 more rows, and 1 more variable: param_description_en <chr>
 ```
 
@@ -135,18 +135,19 @@ from `dg_descriptions`).
 
 For example:
 
-  - **Statistic:** AI0506 *(Voter Turnout, Federal Election)*
+  - `stat_name:` AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+  - `region_id` 11 (stands for Berlin)
 
 <!-- end list -->
 
 ``` r
 dg_call(region_id = "11",
-        year = 2002,
+        year = 2017,
         stat_name = "AI0506")
 #> # A tibble: 1 x 9
 #>   id    name   year value GENESIS_source GENESIS_source_… stat_name
 #>   <chr> <chr> <int> <dbl> <chr>          <chr>            <chr>    
-#> 1 11    Berl…  2002  77.6 Regionalatlas… 99910            AI0506   
+#> 1 11    Berl…  2017  75.6 Regionalatlas… 99910            AI0506   
 #> # … with 2 more variables: stat_description <chr>,
 #> #   stat_description_en <chr>
 ```
@@ -214,8 +215,39 @@ dg_call(region_id = "11",
 
 ### AllRegions
 
-Just leave `region_id` blank and provide either a `nuts_nr` or `lau_nr`
-to get data for multiple regions at once.
+Instead of specifying a `region_id` for individual Bundesland (state)
+data you can also use `nuts_nr` to receive data for *NUTS-1*, *NUTS-2*
+and *NUTS-3*.
+
+Just leave `region_id` blank and provide either a `nuts_nr` (or
+`lau_nr`) to get data for multiple regions at once.
+
+``` r
+dg_call(nuts_nr = 1,
+        year = 2017,
+        stat_name = "AI0506")
+#> # A tibble: 16 x 9
+#>    id     year value name  GENESIS_source GENESIS_source_… stat_name
+#>    <chr> <int> <dbl> <chr> <chr>          <chr>            <chr>    
+#>  1 10     2017  76.6 Saar… Regionalatlas… 99910            AI0506   
+#>  2 11     2017  75.6 Berl… Regionalatlas… 99910            AI0506   
+#>  3 12     2017  73.7 Bran… Regionalatlas… 99910            AI0506   
+#>  4 13     2017  70.9 Meck… Regionalatlas… 99910            AI0506   
+#>  5 14     2017  75.4 Sach… Regionalatlas… 99910            AI0506   
+#>  6 15     2017  68.1 Sach… Regionalatlas… 99910            AI0506   
+#>  7 16     2017  74.3 Thür… Regionalatlas… 99910            AI0506   
+#>  8 01     2017  76.3 Schl… Regionalatlas… 99910            AI0506   
+#>  9 02     2017  76   Hamb… Regionalatlas… 99910            AI0506   
+#> 10 03     2017  76.4 Nied… Regionalatlas… 99910            AI0506   
+#> 11 04     2017  70.8 Brem… Regionalatlas… 99910            AI0506   
+#> 12 05     2017  75.4 Nord… Regionalatlas… 99910            AI0506   
+#> 13 06     2017  77   Hess… Regionalatlas… 99910            AI0506   
+#> 14 07     2017  77.7 Rhei… Regionalatlas… 99910            AI0506   
+#> 15 08     2017  78.3 Bade… Regionalatlas… 99910            AI0506   
+#> 16 09     2017  78.1 Baye… Regionalatlas… 99910            AI0506   
+#> # … with 2 more variables: stat_description <chr>,
+#> #   stat_description_en <chr>
+```
 
 ``` r
 dg_call(nuts_nr = 1,
