@@ -1,6 +1,14 @@
 
 language: R
 cache: packages
+dist: trusty
+sudo: required	
+
+
+addons:
+  apt:
+    packages:
+      - gdal-bin
 
 jobs:
   include:
@@ -12,6 +20,10 @@ jobs:
 
 r_packages:
   - covr
+  
+r_binary_packages:
+  - rgdal
+
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
