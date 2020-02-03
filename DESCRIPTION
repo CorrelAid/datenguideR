@@ -38,6 +38,8 @@ Imports:
     magrittr,
     purrr,
     rlang (>= 0.4.0),
+    sf,
+    ggplot2,
     stringr,
     tibble,
     tidyr,

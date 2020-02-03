@@ -11,6 +11,8 @@ utils::globalVariables(
     "stat_description_full_en",
     "year",
     "n",
+    "NAME_1",
+    "NUTS_NAME",
     "year_id",
     "dg_descriptions",
     "dg_regions",

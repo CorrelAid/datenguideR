@@ -11,6 +11,23 @@
 coverage](https://codecov.io/gh/CorrelAid/datenguideR/branch/master/graph/badge.svg)](https://codecov.io/gh/CorrelAid/datenguideR?branch=master)
 <!-- badges: end -->
 
+Access and download German regional statistics from Datenguide
+<http://datengui.de>. `datenguideR` provides a wrapper for their GraphQL
+API and also includes metadata for all available statistics and regions.
+
+**Overview**
+
+  - [Usage](https://github.com/openmindplatform/CorrelAid#CorrelAid-cleaning-functions)
+  - [Examples](https://github.com/openmindplatform/CorrelAid#CorrelAid-analysis-functions)
+      - [Search meta data
+        (`dg_search`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+      - [Main function
+        (`dg_call`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+      - [Multiple regions (at
+        once)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+      - [Plot data on maps
+        (`dg_map`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+
 ## Usage
 
 First, install datenguideR from GitHub:
@@ -78,6 +95,8 @@ datenguideR::dg_descriptions
 #> #   param_description_en <chr>
 ```
 
+### `dg_search`
+
 You can also use `dg_search` to look for a variable of interest. The
 function will match your string with any strings in the
 `dg_descriptions` data frame, returning only rows with those matches.
@@ -130,13 +149,18 @@ dg_search("vote") %>%
 #> # … with 80 more rows, and 1 more variable: param_description_en <chr>
 ```
 
-Pick a statistic and put it into `dg_call()` (infos can be retrieved
-from `dg_descriptions`).
+### `dg_call`
+
+The main function of the package is `dg_call`. It gives access to all
+API endpoints.
+
+Simply pick a statistic and put it into `dg_call()` (infos can be
+retrieved from `dg_descriptions`).
 
 For example:
 
-  - `stat_name:` AI0506 *(Wahlbeteiligung, Bundestagswahl)*
-  - `region_id` 11 (stands for Berlin)
+  - `stat_name`: AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+  - `region_id`: 11 (stands for Berlin)
 
 <!-- end list -->
 
@@ -144,6 +168,7 @@ For example:
 dg_call(region_id = "11",
         year = 2017,
         stat_name = "AI0506")
+#> There may be a problem with the data (all values are equal).
 #> # A tibble: 1 x 9
 #>   id    name   year value GENESIS_source GENESIS_source_… stat_name
 #>   <chr> <chr> <int> <dbl> <chr>          <chr>            <chr>    
@@ -154,11 +179,10 @@ dg_call(region_id = "11",
 
 A slightly more complex call with substatistics:
 
-  - **Statistic:** BETR08 *(Landwirtschaftliche Betriebe mit
-    Tierhaltung)*
-  - **Substatistic:** TIERA8 *(Landwirtschaftliche Betriebe mit
+  - `stat_name`: BETR08 *(Landwirtschaftliche Betriebe mit Tierhaltung)*
+  - `substat_name`: TIERA8 *(Landwirtschaftliche Betriebe mit
     Viehhaltung)*
-  - **Parameter:**
+  - `parameter`:
       - TIERART2 *(Rinder)*
       - TIERART3 *(Schweine)*
 
@@ -213,7 +237,7 @@ dg_call(region_id = "11",
 #> #   substat_description_en <chr>, param_description_en <chr>
 ```
 
-### AllRegions
+### Multiple regions with `nuts_nr` or `lau_nr`
 
 Instead of specifying a `region_id` for individual Bundesland (state)
 data you can also use `nuts_nr` to receive data for *NUTS-1*, *NUTS-2*
@@ -221,6 +245,10 @@ and *NUTS-3*.
 
 Just leave `region_id` blank and provide either a `nuts_nr` (or
 `lau_nr`) to get data for multiple regions at once.
+
+  - `stat_name`: AI0506 *(Wahlbeteiligung, Bundestagswahl)*
+
+<!-- end list -->
 
 ``` r
 dg_call(nuts_nr = 1,
@@ -249,6 +277,12 @@ dg_call(nuts_nr = 1,
 #> #   stat_description_en <chr>
 ```
 
+  - `stat_name`: BETR08 *(Landwirtschaftliche Betriebe mit Tierhaltung)*
+  - `substat_name`: TIERA8 *(Landwirtschaftliche Betriebe mit
+    Viehhaltung)*
+
+<!-- end list -->
+
 ``` r
 dg_call(nuts_nr = 1,
         year = c(2001, 2003, 2007), 
@@ -272,6 +306,11 @@ dg_call(nuts_nr = 1,
 #> #   stat_description_en <chr>, substat_description_en <chr>,
 #> #   param_description_en <chr>, year_id <chr>
 ```
+
+  - `stat_name`: BAU018 *Total non-residential buildings*
+  - `substat_name`: BAUAHZ *Main Type of Heating*
+
+<!-- end list -->
 
 ``` r
 dg_call(nuts_nr = 1,
@@ -297,29 +336,15 @@ dg_call(nuts_nr = 1,
 #> #   param_description_en <chr>, year_id <chr>
 ```
 
-``` r
-dg_call(nuts_nr = 2, 
-        stat_name = "GEBWOR", 
-        substat_name = "BAUAT2")
-#> # A tibble: 418 x 15
-#>    id     year BAUAT2  value name  GENESIS_source GENESIS_source_…
-#>    <chr> <int> <chr>   <int> <chr> <chr>          <chr>           
-#>  1 100    2011 BAUAL…  43520 Saar… Gebäude- und … 31211           
-#>  2 100    2011 BAUAL…  13117 Saar… Gebäude- und … 31211           
-#>  3 100    2011 BAUAL…   7663 Saar… Gebäude- und … 31211           
-#>  4 100    2011 BAUAL…   5940 Saar… Gebäude- und … 31211           
-#>  5 100    2011 BAUAL…   2044 Saar… Gebäude- und … 31211           
-#>  6 100    2011 BAUAL… 141389 Saar… Gebäude- und … 31211           
-#>  7 100    2011 BAUAL…  12017 Saar… Gebäude- und … 31211           
-#>  8 100    2011 BAUAL…  47962 Saar… Gebäude- und … 31211           
-#>  9 100    2011 BAUAL…  25318 Saar… Gebäude- und … 31211           
-#> 10 100    2011 BAUAL…   8562 Saar… Gebäude- und … 31211           
-#> # … with 408 more rows, and 8 more variables: stat_name <chr>,
-#> #   stat_description <chr>, substat_description <chr>,
-#> #   param_description <chr>, stat_description_en <chr>,
-#> #   substat_description_en <chr>, param_description_en <chr>,
-#> #   year_id <chr>
-```
+<!-- ```{r} -->
+
+<!-- dg_call(nuts_nr = 2,  -->
+
+<!--         stat_name = "GEBWOR",  -->
+
+<!--         substat_name = "BAUAT2") -->
+
+<!-- ``` -->
 
 <!-- # ```{r} -->
 
@@ -334,6 +359,107 @@ dg_call(nuts_nr = 2,
 <!-- #         substat_name = "BAUAHZ",) -->
 
 <!-- # ``` -->
+
+### `dg_map`
+
+You can also use `dg_map` to plot retrieved data on a Germany map. This
+currently only supports NUTS-1 and NUTS-2. Arguments are (mostly)
+identical to `dg_call`.
+
+``` r
+dg_map(nuts_nr = 1,
+        year = 2017,
+        stat_name = "AI0506")
+```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+The output is a ggplot object and can be manipulated further.
+
+``` r
+dg_map(nuts_nr = 1,
+        year = 2017,
+        stat_name = "AI0506") +
+  ggthemes::theme_map() +
+  ggplot2::scale_fill_viridis_c("Voter Turnout") +
+  ggplot2::ggtitle("Voter Turnout in German Parliamentary Election (2017)") +
+  ggplot2::theme(legend.position = "right")
+```
+
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" /> You
+can also return the data and use your own plotting functions with
+`return_data = TRUE`.
+
+``` r
+turnout_dat <- dg_map(nuts_nr = 1,
+        year = 2017,
+        stat_name = "AI0506",
+        return_data = T)
+
+turnout_dat
+#> Simple feature collection with 16 features and 18 fields
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: 5.866251 ymin: 47.27012 xmax: 15.04181 ymax: 55.05653
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> First 10 features:
+#>    GID_0  NAME_0    GID_1                 NAME_1
+#> 1    DEU Germany  DEU.1_1      Baden-Württemberg
+#> 2    DEU Germany  DEU.2_1                 Bayern
+#> 3    DEU Germany  DEU.3_1                 Berlin
+#> 4    DEU Germany  DEU.4_1            Brandenburg
+#> 5    DEU Germany  DEU.5_1                 Bremen
+#> 6    DEU Germany  DEU.6_1                Hamburg
+#> 7    DEU Germany  DEU.7_1                 Hessen
+#> 8    DEU Germany  DEU.8_1 Mecklenburg-Vorpommern
+#> 9    DEU Germany  DEU.9_1          Niedersachsen
+#> 10   DEU Germany DEU.10_1    Nordrhein-Westfalen
+#>                     VARNAME_1 NL_NAME_1               TYPE_1 ENGTYPE_1
+#> 1                        <NA>      <NA>                 Land     State
+#> 2                     Bavaria      <NA>            Freistaat      <NA>
+#> 3                        <NA>      <NA>                 Land     State
+#> 4                        <NA>      <NA>                 Land     State
+#> 5                        <NA>      <NA>     Freie Hansestadt     State
+#> 6                        <NA>      <NA> Freie und Hansestadt     State
+#> 7                       Hesse      <NA>                 Land     State
+#> 8  Mecklenburg-West Pomerania      <NA>                 Land     State
+#> 9                Lower Saxony      <NA>                 Land     State
+#> 10     North Rhine-Westphalia      <NA>                 Land     State
+#>    CC_1 HASC_1 id year value            GENESIS_source GENESIS_source_nr
+#> 1    08  DE.BW 08 2017  78.3 Regionalatlas Deutschland             99910
+#> 2    09  DE.BY 09 2017  78.1 Regionalatlas Deutschland             99910
+#> 3    11  DE.BE 11 2017  75.6 Regionalatlas Deutschland             99910
+#> 4    12  DE.BR 12 2017  73.7 Regionalatlas Deutschland             99910
+#> 5    04  DE.HB 04 2017  70.8 Regionalatlas Deutschland             99910
+#> 6    02  DE.HH 02 2017  76.0 Regionalatlas Deutschland             99910
+#> 7    06  DE.HE 06 2017  77.0 Regionalatlas Deutschland             99910
+#> 8    13  DE.MV 13 2017  70.9 Regionalatlas Deutschland             99910
+#> 9    03  DE.NI 03 2017  76.4 Regionalatlas Deutschland             99910
+#> 10   05  DE.NW 05 2017  75.4 Regionalatlas Deutschland             99910
+#>    stat_name                stat_description
+#> 1     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 2     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 3     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 4     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 5     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 6     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 7     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 8     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 9     AI0506 Wahlbeteiligung, Bundestagswahl
+#> 10    AI0506 Wahlbeteiligung, Bundestagswahl
+#>                stat_description_en                       geometry
+#> 1  Voter Turnout, Federal Election MULTIPOLYGON (((8.708021 47...
+#> 2  Voter Turnout, Federal Election MULTIPOLYGON (((9.740664 47...
+#> 3  Voter Turnout, Federal Election MULTIPOLYGON (((13.17136 52...
+#> 4  Voter Turnout, Federal Election MULTIPOLYGON (((12.26716 52...
+#> 5  Voter Turnout, Federal Election MULTIPOLYGON (((8.711424 53...
+#> 6  Voter Turnout, Federal Election MULTIPOLYGON (((10.2106 53....
+#> 7  Voter Turnout, Federal Election MULTIPOLYGON (((8.680588 49...
+#> 8  Voter Turnout, Federal Election MULTIPOLYGON (((11.49583 54...
+#> 9  Voter Turnout, Federal Election MULTIPOLYGON (((6.761945 53...
+#> 10 Voter Turnout, Federal Election MULTIPOLYGON (((8.059656 50...
+```
 
 ## Credits and Acknowledgements
 
