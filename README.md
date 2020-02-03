@@ -17,16 +17,21 @@ API and also includes metadata for all available statistics and regions.
 
 **Overview**
 
-  - [Usage](https://github.com/openmindplatform/CorrelAid#CorrelAid-cleaning-functions)
-  - [Examples](https://github.com/openmindplatform/CorrelAid#CorrelAid-analysis-functions)
+  - [Usage](https://github.com/CorrelAid/datenguideR#usage)
+  - [Examples](https://github.com/CorrelAid/datenguideR#examples)
       - [Search meta data
-        (`dg_search`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+        (`dg_search`)](https://github.com/CorrelAid/datenguideR#dg_search)
       - [Main function
-        (`dg_call`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+        (`dg_call`)](https://github.com/CorrelAid/datenguideR#dg_call)
       - [Multiple regions (at
-        once)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+        once)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
       - [Plot data on maps
-        (`dg_map`)](https://github.com/openmindplatform/CorrelAid#CorrelAid-ggplot2-theme)
+        (`dg_map`)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
+  - [Use Cases](https://github.com/CorrelAid/datenguideR#use-cases)
+  - [Credits and
+    Acknowledgements](https://github.com/CorrelAid/datenguideR#credits-and-acknowledgements)
+  - [Code of
+    Conduct](https://github.com/CorrelAid/datenguideR#code-of-conduct)
 
 ## Usage
 
@@ -460,6 +465,13 @@ turnout_dat
 #> 9  Voter Turnout, Federal Election MULTIPOLYGON (((6.761945 53...
 #> 10 Voter Turnout, Federal Election MULTIPOLYGON (((8.059656 50...
 ```
+
+## Use Cases
+
+Check out some use cases. For example here:
+
+  - [Correlaid Meetup - datenguideR
+    workshop](https://github.com/TripLLL/weRnuts3)
 
 ## Credits and Acknowledgements
 
