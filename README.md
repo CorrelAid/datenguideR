@@ -26,7 +26,7 @@ API and also includes metadata for all available statistics and regions.
       - [Multiple regions (at
         once)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
       - [Plot data on maps
-        (`dg_map`)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
+        (`dg_map`)](https://github.com/CorrelAid/datenguideR#dg_map)
   - [Use Cases](https://github.com/CorrelAid/datenguideR#use-cases)
   - [Credits and
     Acknowledgements](https://github.com/CorrelAid/datenguideR#credits-and-acknowledgements)

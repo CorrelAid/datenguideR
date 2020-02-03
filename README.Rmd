@@ -34,7 +34,7 @@ Access and download German regional statistics from Datenguide <http://datengui.
     + [Search meta data (`dg_search`)](https://github.com/CorrelAid/datenguideR#dg_search)
     + [Main function (`dg_call`)](https://github.com/CorrelAid/datenguideR#dg_call)
     + [Multiple regions (at once)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
-    + [Plot data on maps (`dg_map`)](https://github.com/CorrelAid/datenguideR#multiple-regions-with-nuts_nr-or-lau_nr)
+    + [Plot data on maps (`dg_map`)](https://github.com/CorrelAid/datenguideR#dg_map)
 + [Use Cases](https://github.com/CorrelAid/datenguideR#use-cases)
 + [Credits and Acknowledgements](https://github.com/CorrelAid/datenguideR#credits-and-acknowledgements)
 + [Code of Conduct](https://github.com/CorrelAid/datenguideR#code-of-conduct)
