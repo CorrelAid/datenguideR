@@ -233,17 +233,8 @@ dg_call <- function(region_id = NULL,
     }
   }
   
-  if ("value" %in% colnames(api_results)){
-    
-    unique_val <- api_results %>%
-      dplyr::count(value) %>% 
-      nrow() %>% magrittr::equals(1)
-    
-    if(unique_val){
-      message("There may be a problem with the data (all values are equal).")
-    }
-    
-  }
+  api_results <- api_results %>% dplyr::distinct()
+  
 
   return(api_results)
 }
