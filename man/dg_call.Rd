@@ -10,7 +10,7 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
   page_nr = NULL, long_format = TRUE)
 }
 \arguments{
-\item{region_id}{TODO: ADD_FORMAT containing the ID of a specific region.}
+\item{region_id}{Character string containing the ID of a specific region.}
 
 \item{stat_name}{Character string containing the name of the main statistic. Please see dg_descriptions for a full list.}
 
@@ -20,19 +20,16 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
 
 \item{parameter}{Character string containing the name(s) of the parameter(s) you want to retrieve. Please see dg_descriptions for a full list. Defaults to all available parameters if not specified.}
 
-\item{ipp}{description}
+\item{ipp}{Number that defines the items per page for queries with multiple regions. Default is 150.}
 
-\item{nuts_nr}{TODO: ADD_FORMAT containing the number of the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.}
+\item{nuts_nr}{Number defining the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.}
 
-\item{lau_nr}{TODO: ADD_FORMAT containing the number of the LAU level.
-TODO: Change this as it can currently only be "1".}
+\item{lau_nr}{Number defining the LAU level. (At the moment it can only be 1.)}
 
-\item{parent_chr}{description}
+\item{parent_chr}{Character string containing the ID of a super-region to which query should be restricted. Should be a region of higher order than nuts_nr oder lau_nr.}
 
 \item{full_descriptions}{If \code{TRUE}, the returning data frame will contain the full descriptions of the
 statistics as provided by GENESIS. Defaults to \code{FALSE}.}
-
-\item{page_nr}{description}
 
 \item{long_format}{If \code{TRUE}, the returning data frame will be in long format.}
 }

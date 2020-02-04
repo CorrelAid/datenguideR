@@ -33,19 +33,20 @@ get_results <- function(field, substat_name, stat_name) {
 #'
 #' Makes a call to the Datenguide GraphQL API and returns the results.
 #' 
-#' @param region_id TODO: ADD_FORMAT containing the ID of a specific region.
+#' @param region_id Character string containing the ID of a specific region.
 #' @param stat_name Character string containing the name of the main statistic. Please see dg_descriptions for a full list.
 #' @param year Numeric year(s) for which you want to retrieve the data. 
 #' @param substat_name Character string containing the name of the sub-statistic. Please see dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.
 #' @param parameter Character string containing the name(s) of the parameter(s) you want to retrieve. Please see dg_descriptions for a full list. Defaults to all available parameters if not specified.
-#' @param ipp description
-#' @param nuts_nr TODO: ADD_FORMAT containing the number of the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.
-#' @param lau_nr TODO: ADD_FORMAT containing the number of the LAU level.
-#' TODO: Change this as it can currently only be "1".
-#' @param parent_chr description
+#' @param ipp Number that defines the items per page for queries with multiple regions. Default is 150.
+#' @param nuts_nr Number defining the NUTS level. 1 refers to NUTS-1, 2 to NUTS-2, and 3 to NUTS-3.
+#' @param lau_nr Number defining the LAU level. (At the moment it can only be 1.)
+# TODO: Change this as it can currently only be "1".
+#' @param parent_chr Character string containing the ID of a super-region to which query should be restricted. Should be a region of higher order than nuts_nr oder lau_nr.
 #' @param full_descriptions If `TRUE`, the returning data frame will contain the full descriptions of the
 #' statistics as provided by GENESIS. Defaults to `FALSE`.
-#' @param page_nr description
+#  @param page_nr 
+# TODO: Should we keep page_nr? Is it useful for user to be able to define it?
 #' @param long_format If `TRUE`, the returning data frame will be in long format.
 #'
 #' @return Data frame containing the requested data
