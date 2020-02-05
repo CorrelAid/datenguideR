@@ -4,9 +4,16 @@
 \alias{dg_map}
 \title{dg_map}
 \usage{
-dg_map(lookup = "GADM3", b_color = "white", nuts_nr = 1,
-  stat_name = NULL, substat_name = NULL, year = NULL,
-  parameter = NULL, return_data = FALSE)
+dg_map(
+  lookup = "GADM3",
+  b_color = "white",
+  nuts_nr = 1,
+  stat_name = NULL,
+  substat_name = NULL,
+  year = NULL,
+  parameter = NULL,
+  return_data = FALSE
+)
 }
 \arguments{
 \item{lookup}{The method used to find the shapefile to use as the electoral background. Defaults to GADM}
@@ -30,8 +37,10 @@ Produce a map filled with variables queried by \code{dg_call}
 }
 \examples{
 \dontrun{
-turnout_map <- dg_map(nuts_nr = 1,
-                      year = 2017,
-                      stat_name = "AI0506")
+turnout_map <- dg_map(
+  nuts_nr = 1,
+  year = 2017,
+  stat_name = "AI0506"
+)
 }
 }

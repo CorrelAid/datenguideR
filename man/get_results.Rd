@@ -2,7 +2,7 @@
 % Please edit documentation in R/dg_call.R
 \name{get_results}
 \alias{get_results}
-\title{get_results()}
+\title{POST file to the GraphQL API.}
 \usage{
 get_results(field, substat_name, stat_name)
 }

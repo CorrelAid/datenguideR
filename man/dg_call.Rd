@@ -2,23 +2,38 @@
 % Please edit documentation in R/dg_call.R
 \name{dg_call}
 \alias{dg_call}
-\title{dg_call()}
+\title{Call the Datenguide GraphQL API}
 \usage{
-dg_call(region_id = NULL, stat_name = NULL, year = NULL,
-  substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
-  lau_nr = NULL, parent_chr = NULL, full_descriptions = FALSE,
-  page_nr = NULL, long_format = TRUE)
+dg_call(
+  region_id = NULL,
+  stat_name = NULL,
+  year = NULL,
+  substat_name = NULL,
+  parameter = NULL,
+  ipp = 150,
+  nuts_nr = NULL,
+  lau_nr = NULL,
+  parent_chr = NULL,
+  full_descriptions = FALSE,
+  page_nr = NULL,
+  long_format = TRUE
+)
 }
 \arguments{
 \item{region_id}{Character string containing the ID of a specific region.}
 
-\item{stat_name}{Character string containing the name of the main statistic. Please see dg_descriptions for a full list.}
+\item{stat_name}{Character string containing the name of the main statistic.
+Please see \code{?dg_descriptions} for a full list.}
 
 \item{year}{Numeric year(s) for which you want to retrieve the data.}
 
-\item{substat_name}{Character string containing the name of the sub-statistic. Please see dg_descriptions for a full list. Defaults to all available sub-statistics if not specified.}
+\item{substat_name}{Character string containing the name of the
+sub-statistic. Please see \code{?dg_descriptions} for a full list. Defaults to
+all available sub-statistics if not specified.}
 
-\item{parameter}{Character string containing the name(s) of the parameter(s) you want to retrieve. Please see dg_descriptions for a full list. Defaults to all available parameters if not specified.}
+\item{parameter}{Character string containing the name(s) of the parameter(s)
+you want to retrieve. Please see \code{?dg_descriptions} for a full list.
+Defaults to all available parameters if not specified.}
 
 \item{ipp}{Number that defines the items per page for queries with multiple regions. Default is 150.}
 
@@ -26,7 +41,9 @@ dg_call(region_id = NULL, stat_name = NULL, year = NULL,
 
 \item{lau_nr}{Number defining the LAU level. (At the moment it can only be 1.)}
 
-\item{parent_chr}{Character string containing the ID of a super-region to which query should be restricted. Should be a region of higher order than nuts_nr oder lau_nr.}
+\item{parent_chr}{Character string containing the ID of a super-region to
+which query should be restricted. Should be a region of higher order than
+\code{nuts_nr} oder \code{lau_nr}.}
 
 \item{full_descriptions}{If \code{TRUE}, the returning data frame will contain the full descriptions of the
 statistics as provided by GENESIS. Defaults to \code{FALSE}.}
@@ -40,10 +57,11 @@ Data frame containing the requested data
 Makes a call to the Datenguide GraphQL API and returns the results.
 }
 \examples{
-dg_call(region_id = "11", 
-   year = c(2001, 2007), 
-   stat_name = "BETR08",
-   substat_name = 'TIERA8', 
-   parameter = c("TIERART2", "TIERART3"))
-
+dg_call(
+  region_id = "11",
+  year = c(2001, 2007),
+  stat_name = "BETR08",
+  substat_name = "TIERA8",
+  parameter = c("TIERART2", "TIERART3")
+)
 }

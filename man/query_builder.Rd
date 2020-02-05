@@ -2,25 +2,16 @@
 % Please edit documentation in R/dg_query_builder.R
 \name{query_builder}
 \alias{query_builder}
-\title{dg_query_builder.R}
+\title{Recursive query builder}
 \usage{
 query_builder(field, substat_name)
 }
 \arguments{
-\item{field}{Field of "highest order" where the recursive function starts. Usually query_list, defined in
-define fields.}
+\item{field}{Field of "highest order" where the recursive function starts.
+Usually query_list, defined in define fields.}
 
-\item{substat_name}{name of the desired substat}
-}
-\value{
-Query for the GraphQL API
+\item{substat_name}{name of the desired \code{substat}.}
 }
 \description{
-Builds a query in GraphQL syntax through a recursive function that iterates over
-the fields defined in define_fields(). It checks for possible arguments and
-subfields and pastes names and values, respectively.
-}
-\examples{
-dg_query_builder <- function(field, lastfield_name)
-
+Recursive query builder
 }
