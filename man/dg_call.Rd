@@ -4,10 +4,20 @@
 \alias{dg_call}
 \title{dg_call()}
 \usage{
-dg_call(region_id = NULL, stat_name = NULL, year = NULL,
-  substat_name = NULL, parameter = NULL, ipp = 150, nuts_nr = NULL,
-  lau_nr = NULL, parent_chr = NULL, full_descriptions = FALSE,
-  page_nr = NULL, long_format = TRUE)
+dg_call(
+  region_id = NULL,
+  stat_name = NULL,
+  year = NULL,
+  substat_name = NULL,
+  parameter = NULL,
+  ipp = 150,
+  nuts_nr = NULL,
+  lau_nr = NULL,
+  parent_chr = NULL,
+  full_descriptions = FALSE,
+  page_nr = NULL,
+  long_format = TRUE
+)
 }
 \arguments{
 \item{region_id}{Character string containing the ID of a specific region.}
@@ -40,10 +50,11 @@ Data frame containing the requested data
 Makes a call to the Datenguide GraphQL API and returns the results.
 }
 \examples{
-dg_call(region_id = "11", 
-   year = c(2001, 2007), 
-   stat_name = "BETR08",
-   substat_name = 'TIERA8', 
-   parameter = c("TIERART2", "TIERART3"))
-
+dg_call(
+  region_id = "11",
+  year = c(2001, 2007),
+  stat_name = "BETR08",
+  substat_name = "TIERA8",
+  parameter = c("TIERART2", "TIERART3")
+)
 }
