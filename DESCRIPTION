@@ -25,11 +25,12 @@ License: GPL-3
 Depends: R (>= 3.6.0)
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    spelling
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2.9000
 Imports:
     dplyr,
     glue,
@@ -45,3 +46,4 @@ Imports:
     tidyr,
     usethis,
     utils
+Language: en-US

@@ -1,8 +1,8 @@
 #' paste_nv()
-#' 
+#'
 #' Pastes name(s) and value(s) of fields, used for field arguments in query_builder.
-#' 
-#' @param field The field whos name and value should be pasted into the query
+#'
+#' @param field The field whose name and value should be pasted into the query
 
 paste_nv <- function(field) {
   if (!is.null(field$value)) {
@@ -19,8 +19,8 @@ paste_nv <- function(field) {
 }
 
 #' insert_regname()
-#' 
-#' If given field is of type Region 'id, name,' is inserted in query to 
+#'
+#' If given field is of type Region 'id, name,' is inserted in query to
 #' ensure that region id and name are always returned.
 #'
 #' @param field Field to be checked if of type Region.
@@ -35,8 +35,8 @@ insert_regname <- function(field) {
 }
 
 #' insert_page_nr()
-#' 
-#' Insert 'page, total, itemsPerPage,' after allRegions to to 
+#'
+#' Insert 'page, total, itemsPerPage,' after allRegions to to
 #' ensure that those variables are always returned for allRegions queries.
 #'
 #' @param field Field to be checked if of type RegionsResult (allRegions specific type)

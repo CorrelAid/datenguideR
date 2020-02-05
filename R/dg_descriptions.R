@@ -90,16 +90,16 @@ get_descriptions <- function() {
 ##'
 ##' @export
 dg_search <- function(string) {
-  
   string <- stringr::str_to_lower(string)
-  
-  final <- dg_descriptions %>% 
+
+  final <- dg_descriptions %>%
     dplyr::filter_all(
       .vars_predicate = dplyr::any_vars(
         stringr::str_detect(
-          stringr::str_to_lower(.), string)
+          stringr::str_to_lower(.), string
         )
+      )
     )
-  
+
   return(final)
 }

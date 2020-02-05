@@ -4,8 +4,20 @@
 \alias{clean_all_regions}
 \title{clean_all_regions()}
 \usage{
-clean_all_regions(raw, year, stat_name, substat_name, parameter, region_id,
-  page_nr, ipp, nuts_nr, lau_nr, parent_chr, all_regions)
+clean_all_regions(
+  raw,
+  year,
+  stat_name,
+  substat_name,
+  parameter,
+  region_id,
+  page_nr,
+  ipp,
+  nuts_nr,
+  lau_nr,
+  parent_chr,
+  all_regions
+)
 }
 \arguments{
 \item{raw}{description}
