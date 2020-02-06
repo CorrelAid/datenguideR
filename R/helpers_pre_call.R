@@ -11,7 +11,7 @@ vector_collapse <- function(vector) {
 #' define_fields
 #'
 #' Converts given variables into field structure which are processed in query_builder().
-#' 
+#'
 #' @param region_id description
 #' @param stat_name description
 #' @param year description
@@ -23,23 +23,23 @@ vector_collapse <- function(vector) {
 #' @param lau_nr description
 #' @param parent_chr description
 #' @param all_regions all_regions
-#' 
+#'
 #' @return A list
 
-define_fields <- function(year, 
-                          stat_name, 
-                          substat_name, 
-                          parameter, 
+define_fields <- function(year,
+                          stat_name,
+                          substat_name,
+                          parameter,
                           region_id,
                           page_nr,
-                          ipp, 
+                          ipp,
                           nuts_nr,
-                          lau_nr, 
+                          lau_nr,
                           parent_chr,
                           all_regions) {
-  
+
   # Define fields -----------------------------------------------------
-  
+
   years <- list(
     "name" = "year",
     "value" = ifelse(length(year) == 1, year, vector_collapse(year)),
@@ -47,7 +47,7 @@ define_fields <- function(year,
     "subfield" = list(),
     "type" = "Int"
   )
-  
+
   if (!is.null(substat_name)) {
     substat <- list(
       "name" = substat_name,
@@ -55,8 +55,8 @@ define_fields <- function(year,
       "arguments" = list(),
       "subfield" = NULL,
       "type" = substat_name
-    )    
-    
+    )
+
     stat <- list(
       "name" = stat_name,
       "value" = list(),
@@ -65,7 +65,7 @@ define_fields <- function(year,
       "type" = stat_name
     )
   }
-  
+
   if (is.null(substat_name)) {
     stat <- list(
       "name" = stat_name,
@@ -74,7 +74,7 @@ define_fields <- function(year,
       "type" = stat_name
     )
   }
-  
+
   id <- list(
     "name" = "id",
     "value" = region_id,
@@ -82,7 +82,7 @@ define_fields <- function(year,
     "subfield" = list(),
     "type" = "String"
   )
-  
+
   region <- list(
     "name" = "region",
     "value" = list(),
@@ -90,7 +90,7 @@ define_fields <- function(year,
     "subfield" = list(stat),
     "type" = "Region"
   )
-  
+
   query_list <- list(
     "name" = "region",
     "value" = list(),
@@ -98,9 +98,9 @@ define_fields <- function(year,
     "subfield" = list(region),
     "type" = "query"
   )
-  
+
   # Define allRegions fields -----------------------------------------------------
-  
+
   if (all_regions) {
     page <- list(
       "name" = "page",
@@ -109,7 +109,7 @@ define_fields <- function(year,
       "subfield" = list(),
       "type" = "Int"
     )
-    
+
     itemsPerPage <- list(
       "name" = "itemsPerPage",
       "value" = ipp, # if not given graphql default is 10
@@ -117,7 +117,7 @@ define_fields <- function(year,
       "subfield" = list(),
       "type" = "Int"
     )
-    
+
     nuts <- list(
       "name" = "nuts",
       "value" = nuts_nr,
@@ -125,7 +125,7 @@ define_fields <- function(year,
       "subfield" = list(),
       "type" = "Int"
     )
-    
+
     lau <- list(
       "name" = "lau",
       "value" = lau_nr,
@@ -133,7 +133,7 @@ define_fields <- function(year,
       "subfield" = list(),
       "type" = "Int"
     )
-    
+
     parent <- list(
       "name" = "parent",
       "value" = parent_chr,
@@ -141,7 +141,7 @@ define_fields <- function(year,
       "subfield" = list(),
       "type" = "String"
     )
-    
+
     regions <- list(
       "name" = "regions",
       "value" = list(),
@@ -149,7 +149,7 @@ define_fields <- function(year,
       "subfield" = list(stat),
       "type" = "Region"
     )
-    
+
     allRegions <- list(
       "name" = "allRegions",
       "value" = list(),
@@ -157,7 +157,7 @@ define_fields <- function(year,
       "subfield" = list(regions),
       "type" = "RegionsResult"
     )
-    
+
     query_list <- list(
       "name" = "allRegions",
       "value" = list(),
@@ -165,8 +165,7 @@ define_fields <- function(year,
       "subfield" = list(allRegions),
       "type" = "query"
     )
-    
   }
-  
+
   return(query_list)
 }

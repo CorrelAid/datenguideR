@@ -41,7 +41,7 @@ Access and download German regional statistics from Datenguide <http://datengui.
 
 ## Usage
 
-First, install datenguideR from GitHub:
+First, install `datenguideR` from GitHub:
 
 ```{r, eval=F}
 devtools::install_github("CorrelAid/datenguideR")

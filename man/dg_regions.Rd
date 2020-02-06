@@ -4,7 +4,7 @@
 \name{dg_regions}
 \alias{dg_regions}
 \title{Data on all available regions}
-\format{A data frame with 14,677 obervations and 4 variables.}
+\format{A data frame with 14,677 observations and 4 variables.}
 \usage{
 dg_regions
 }
