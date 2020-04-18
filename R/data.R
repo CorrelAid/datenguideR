@@ -3,7 +3,7 @@
 #' A dataset containing the name, description, and source of all available
 #' statistics, substatistics, and parameters.
 #'
-#' @format A data frame with 3,419 obervations and 7 variables.
+#' @format A data frame with 3,419 observations and 7 variables.
 "dg_descriptions"
 
 #' Data on all available regions

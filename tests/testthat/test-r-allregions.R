@@ -44,5 +44,5 @@ test_that("Nichtwohngebäude works", {
   )
 
   expect_is(df4, "tbl_df")
-  expect_equal(dim(df4), c(224L, 15L))
+  expect_equal(dim(df4), c(336L, 15L))
 })
