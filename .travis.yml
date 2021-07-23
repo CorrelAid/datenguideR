@@ -3,26 +3,27 @@ r:
   - oldrel
   - release
   - devel
-
-warnings_are_errors: false
-
-addons:
-  apt:
-    packages:
-      - gdal-bin
-      - libgdal1-dev
-      - libproj-dev
-      - libgsl0-dev
-      - libudunits2-dev
-
+  
 jobs:
   include:
+  - r: oldrel
+    warnings_are_errors: false
   - r: release
     warnings_are_errors: false
   - r: devel
     warnings_are_errors: false
     
+global:
+  - _R_CHECK_FORCE_SUGGESTS_: false
+  
+ apt:
+    packages:
+      - gdal-bin
+      - libgdal1-dev
+      - libproj-dev
+      - libudunits2-dev
 
+    
 r_packages:
   - covr
   
@@ -30,9 +31,9 @@ r_binary_packages:
   - rgdal
   
   
-global:
-  - _R_CHECK_FORCE_SUGGESTS_: false
-
+after_success:
+  - Rscript -e 'library(covr); codecov()'
+  
 
 #before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
 #deploy:
