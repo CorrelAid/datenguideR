@@ -30,10 +30,6 @@ r_binary_packages:
   - rgdal
 
 
-after_success:
-  - Rscript -e 'library(covr); codecov()'
-
-
 #before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
 #deploy:
 #  provider: script
