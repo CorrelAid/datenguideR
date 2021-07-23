@@ -1,9 +1,10 @@
+language: r
+r:
+  - oldrel
+  - release
+  - devel
 
-language: R
-cache: packages
-dist: trusty
-sudo: required	
-
+warnings_are_errors: false
 
 addons:
   apt:
@@ -11,6 +12,8 @@ addons:
       - gdal-bin
       - libgdal1-dev
       - libproj-dev
+      - libgsl0-dev
+      - libudunits2-dev
 
 jobs:
   include:
@@ -29,9 +32,6 @@ r_binary_packages:
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
-  
-apt_packages: libudunits2-dev
-
 
 
 #before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'

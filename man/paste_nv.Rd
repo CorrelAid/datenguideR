@@ -7,7 +7,7 @@
 paste_nv(field)
 }
 \arguments{
-\item{field}{The field whos name and value should be pasted into the query}
+\item{field}{The field whose name and value should be pasted into the query}
 }
 \description{
 Pastes name(s) and value(s) of fields, used for field arguments in query_builder.

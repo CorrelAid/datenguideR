@@ -47,7 +47,7 @@ get_results <- function(field, substat_name, stat_name) {
 #' @param parent_chr Character string containing the ID of a super-region to which query should be restricted. Should be a region of higher order than nuts_nr oder lau_nr.
 #' @param full_descriptions If `TRUE`, the returning data frame will contain the full descriptions of the
 #' statistics as provided by GENESIS. Defaults to `FALSE`.
-#  @param page_nr
+#' @param page_nr Page number.
 # TODO: Should we keep page_nr? Is it useful for user to be able to define it?
 #' @param long_format If `TRUE`, the returning data frame will be in long format.
 #'

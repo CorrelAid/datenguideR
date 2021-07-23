@@ -4,19 +4,8 @@
 \alias{define_fields}
 \title{define_fields}
 \usage{
-define_fields(
-  year,
-  stat_name,
-  substat_name,
-  parameter,
-  region_id,
-  page_nr,
-  ipp,
-  nuts_nr,
-  lau_nr,
-  parent_chr,
-  all_regions
-)
+define_fields(year, stat_name, substat_name, parameter, region_id, page_nr,
+  ipp, nuts_nr, lau_nr, parent_chr, all_regions)
 }
 \arguments{
 \item{year}{description}

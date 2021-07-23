@@ -4,15 +4,8 @@
 \alias{add_substat_info}
 \title{add_substat_info}
 \usage{
-add_substat_info(
-  api_results,
-  stat_name,
-  substat_name,
-  parameter,
-  full_descriptions,
-  all_regions,
-  long_format
-)
+add_substat_info(api_results, stat_name, substat_name, parameter,
+  full_descriptions, all_regions, long_format)
 }
 \arguments{
 \item{api_results}{description}
