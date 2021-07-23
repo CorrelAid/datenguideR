@@ -21,9 +21,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Build_Status](https://travis-ci.org/CorrelAid/datenguideR.svg?branch=master)](https://travis-ci.org/CorrelAid/datenguideR)
-[![Codecov test coverage](https://codecov.io/gh/CorrelAid/datenguideR/branch/master/graph/badge.svg)](https://codecov.io/gh/CorrelAid/datenguideR?branch=master)
 [![R-CMD-check](https://github.com/CorrelAid/datenguideR/workflows/R-CMD-check/badge.svg)](https://github.com/CorrelAid/datenguideR/actions)
+[![Codecov test coverage](https://codecov.io/gh/CorrelAid/datenguideR/branch/master/graph/badge.svg)](https://codecov.io/gh/CorrelAid/datenguideR?branch=master)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 <!-- badges: end -->
 
 Access and download German regional statistics from Datenguide <http://datengui.de>. `datenguideR` provides a wrapper for their GraphQL API and also includes metadata for all available statistics and regions.
